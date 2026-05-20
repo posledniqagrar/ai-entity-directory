@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - AI Services Directory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <h1 class="text-2xl font-bold text-purple-600">Admin Panel</h1>
+                <div class="flex space-x-4">
+                    <a href="/" class="text-gray-600 hover:text-gray-900">View Site</a>
+                    <button onclick="logout()" class="text-red-600 hover:text-red-700">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Stats -->
+        <div id="stats" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"></div>
+
+        <!-- Tabs -->
+        <div class="border-b border-gray-200 mb-6">
+            <button class="tab-button active" data-tab="services" onclick="showTab('services')">Manage Services</button>
+            <button class="tab-button" data-tab="pending" onclick="showTab('pending')">Pending Submissions</button>
+            <button class="tab-button" data-tab="users" onclick="showTab('users')">Manage Users</button>
+        </div>
+
+        <!-- Services Tab -->
+        <div id="services-tab" class="tab-content">
+            <div class="mb-4 flex justify-between items-center">
+                <h2 class="text-2xl font-bold">AI Services</h2>
+                <button onclick="showAddModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">+ Add New Service</button>
+            </div>
+            <div id="services-list" class="space-y-4"></div>
+        </div>
+
+        <!-- Pending Tab -->
+        <div id="pending-tab" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-4">Pending Submissions</h2>
+            <div id="pending-list" class="space-y-4"></div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users-tab" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-4">Registered Users</h2>
+            <div id="users-list" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 id="modal-title" class="text-xl font-bold mb-4">Add Service</h3>
+            <form id="service-form">
+                <input type="hidden" id="service-id">
+                <div class="space-y-4">
+                    <input type="text" id="service-name" placeholder="Service Name" required class="w-full px-3 py-2 border rounded-lg">
+                    <textarea id="service-description" placeholder="Description" required class="w-full px-3 py-2 border rounded-lg" rows="3"></textarea>
+                    <input type="url" id="service-url" placeholder="Website URL" required class="w-full px-3 py-2 border rounded-lg">
+                    <select id="service-category" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="Text">Text</option>
+                        <option value="Image">Image</option>
+                        <option value="Video">Video</option>
+                        <option value="Audio">Audio</option>
+                        <option value="Code">Code</option>
+                        <option value="Productivity">Productivity</option>
+                        <option value="Data">Data</option>
+                    </select>
+                    <input type="url" id="service-logo" placeholder="Logo URL (optional)" class="w-full px-3 py-2 border rounded-lg">
+                </div>
+                <div class="flex justify-end space-x-2 mt-6">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .tab-button {
+            padding: 0.5rem 1rem;
+            color: #4b5563;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .tab-button:hover {
+            color: #1f2937;
+        }
+        .tab-button.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+    </style>
+
+    <script>
+        let currentUser = null;
+
+        async function checkAdmin() {
+            try {
+                const response = await fetch('/api/auth/me', { credentials: 'include' });
+                if (!response.ok) throw new Error('Not authenticated');
+                const data = await response.json();
+                if (data.user.role !== 'admin') {
+                    window.location.href = '/';
+                    return;
+                }
+                currentUser = data.user;
+                loadStats();
+                loadServices();
+                loadUsers();
+                loadPending();
+            } catch (error) {
+                window.location.href = '/login';
+            }
+        }
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/admin/stats', { credentials: 'include' });
+                const stats = await response.json();
+                const statsDiv = document.getElementById('stats');
+                statsDiv.innerHTML = `
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-500 text-sm">Total Services</h3>
+                        <p class="text-3xl font-bold">${stats.totalServices || 0}</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-500 text-sm">Total Users</h3>
+                        <p class="text-3xl font-bold">${stats.totalUsers || 0}</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-500 text-sm">Total Favorites</h3>
+                        <p class="text-3xl font-bold">${stats.totalFavorites || 0}</p>
+                    </div>
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-gray-500 text-sm">Pending Submissions</h3>
+                        <p class="text-3xl font-bold">${stats.pendingSubmissions || 0}</p>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Failed to load stats:', error);
+            }
+        }
+
+        async function loadServices() {
+            try {
+                const response = await fetch('/api/admin/services', { credentials: 'include' });
+                const services = await response.json();
+                const servicesDiv = document.getElementById('services-list');
+                servicesDiv.innerHTML = services.map(service => `
+                    <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center">
+                        <div class="flex-1">
+                            <h3 class="font-semibold">${service.name}</h3>
+                            <p class="text-sm text-gray-600">${service.description.substring(0, 100)}...</p>
+                            <p class="text-xs text-gray-500 mt-1">Category: ${service.category}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="editService(${service.id})" class="text-blue-600 hover:text-blue-700">Edit</button>
+                            <button onclick="deleteService(${service.id})" class="text-red-600 hover:text-red-700">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load services:', error);
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/admin/users', { credentials: 'include' });
+                const users = await response.json();
+                const usersDiv = document.getElementById('users-list');
+                usersDiv.innerHTML = users.map(user => `
+                    <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center">
+                        <div>
+                            <p class="font-semibold">${user.email}</p>
+                            <p class="text-sm text-gray-600">Role: ${user.role} | Status: ${user.is_active ? 'Active' : 'Inactive'} | Joined: ${new Date(user.created_at).toLocaleDateString()}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            ${user.role !== 'admin' ? `
+                                <button onclick="toggleUserStatus(${user.id}, ${user.is_active})" class="text-yellow-600 hover:text-yellow-700">
+                                    ${user.is_active ? 'Deactivate' : 'Activate'}
+                                </button>
+                                <button onclick="deleteUser(${user.id})" class="text-red-600 hover:text-red-700">Delete</button>
+                            ` : '<span class="text-gray-400">Admin Account</span>'}
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Failed to load users:', error);
+            }
+        }
+
+        async function loadPending() {
+            try {
+                const response = await fetch('/api/admin/pending', { credentials: 'include' });
+                const pending = await response.json();
+                const pendingDiv = document.getElementById('pending-list');
+                
+                if (pending.length === 0) {
+                    pendingDiv.innerHTML = '<div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">No pending submissions</div>';
+                    return;
+                }
+                
+                pendingDiv.innerHTML = pending.map(sub => `
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <img src="${sub.logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(sub.name)}&background=3b82f6&color=fff`}" 
+                                         alt="${sub.name}" class="w-12 h-12 rounded-lg">
+                                    <div>
+                                        <h3 class="text-xl font-semibold">${sub.name}</h3>
+                                        <p class="text-sm text-gray-600">Submitted by: ${sub.submitter_email}</p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 mt-2">${sub.description}</p>
+                                <div class="flex items-center gap-3 mt-3">
+                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">${sub.category}</span>
+                                    <a href="${sub.url}" target="_blank" class="text-blue-600 hover:text-blue-700 text-sm">Visit Website →</a>
+                                    <span class="text-xs text-gray-500">Submitted: ${new Date(sub.submitted_at).toLocaleString()}</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 ml-4">
+                                <button onclick="approveSubmission(${sub.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Approve</button>
+                                <button onclick="rejectSubmission(${sub.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Update pending count in tab
+                const pendingButton = document.querySelector('[data-tab="pending"]');
+                if (pendingButton) {
+                    pendingButton.textContent = `Pending Submissions (${pending.length})`;
+                }
+            } catch (error) {
+                console.error('Failed to load pending:', error);
+            }
+        }
+
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById(`${tabName}-tab`);
+            if (selectedTab) {
+                selectedTab.classList.remove('hidden');
+            }
+            
+            // Add active class to clicked button
+            const clickedButton = event?.target || document.querySelector(`[data-tab="${tabName}"]`);
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+        }
+
+        async function approveSubmission(id) {
+            if (confirm('Approve this submission? It will appear in the public directory.')) {
+                await fetch(`/api/admin/approve/${id}`, { method: 'POST', credentials: 'include' });
+                loadPending();
+                loadStats();
+                loadServices();
+                alert('Submission approved successfully!');
+            }
+        }
+
+        async function rejectSubmission(id) {
+            const reason = prompt('Enter rejection reason (optional):');
+            await fetch(`/api/admin/reject/${id}`, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ reason: reason || 'Does not meet our criteria' })
+            });
+            loadPending();
+            alert('Submission rejected');
+        }
+
+        function showAddModal() {
+            document.getElementById('modal-title').textContent = 'Add Service';
+            document.getElementById('service-form').reset();
+            document.getElementById('service-id').value = '';
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        }
+
+        async function editService(id) {
+            const response = await fetch(`/api/services/${id}`);
+            const service = await response.json();
+            document.getElementById('modal-title').textContent = 'Edit Service';
+            document.getElementById('service-id').value = service.id;
+            document.getElementById('service-name').value = service.name;
+            document.getElementById('service-description').value = service.description;
+            document.getElementById('service-url').value = service.url;
+            document.getElementById('service-category').value = service.category;
+            document.getElementById('service-logo').value = service.logo_url || '';
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        }
+
+        async function deleteService(id) {
+            if (confirm('Are you sure you want to delete this service?')) {
+                await fetch(`/api/admin/services/${id}`, { method: 'DELETE', credentials: 'include' });
+                loadServices();
+                loadStats();
+                alert('Service deleted successfully');
+            }
+        }
+
+        async function toggleUserStatus(id, currentStatus) {
+            const action = currentStatus ? 'deactivate' : 'activate';
+            if (confirm(`Are you sure you want to ${action} this user?`)) {
+                await fetch(`/api/admin/users/${id}/toggle-status`, { 
+                    method: 'PUT', 
+                    credentials: 'include' 
+                });
+                loadUsers();
+                loadStats();
+                alert(`User ${action}d successfully`);
+            }
+        }
+
+        async function deleteUser(id) {
+            if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                await fetch(`/api/admin/users/${id}`, { method: 'DELETE', credentials: 'include' });
+                loadUsers();
+                loadStats();
+                alert('User deleted successfully');
+            }
+        }
+
+        document.getElementById('service-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('service-id').value;
+            const service = {
+                name: document.getElementById('service-name').value,
+                description: document.getElementById('service-description').value,
+                url: document.getElementById('service-url').value,
+                category: document.getElementById('service-category').value,
+                logo_url: document.getElementById('service-logo').value
+            };
+
+            const url = id ? `/api/admin/services/${id}` : '/api/admin/services';
+            const method = id ? 'PUT' : 'POST';
+
+            await fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(service)
+            });
+
+            closeModal();
+            loadServices();
+            loadStats();
+            alert(id ? 'Service updated successfully' : 'Service added successfully');
+        });
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+            document.getElementById('modal').classList.remove('flex');
+        }
+
+        async function logout() {
+            await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+            window.location.href = '/';
+        }
+
+        // Initialize
+        checkAdmin();
+    </script>
+</body>
+</html>

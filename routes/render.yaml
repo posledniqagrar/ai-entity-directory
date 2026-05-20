@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: ai-entity-directory
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.1
+      - key: NODE_ENV
+        value: production

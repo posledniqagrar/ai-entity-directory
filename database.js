@@ -1,3 +1,4 @@
+const fs = require('fs');  // ← ADD THIS LINE FIRST
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
 const path = require('path');
@@ -5,7 +6,94 @@ const path = require('path');
 let db;
 
 async function initializeDatabase() {
-const dataDir = process.env.RENDER ? '/var/data' : path.join(__dirname, 'data');  if (!fs.existsSync(dataDir)) {
+  const dataDir = path.join(__dirname, 'data');
+  
+  // Create data directory if it doesn't exist
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+    console.log('Created data directory:', dataDir);
+  }
+
+  const dbPath = path.join(dataDir, 'ai-services.db');
+  console.log('Database path:', dbPath);
+
+  db = await open({
+    filename: dbPath,
+    driver: sqlite3.Database
+  });
+
+  // Create tables (keep your existing table creation code)
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      role TEXT DEFAULT 'user',
+      is_active INTEGER DEFAULT 1,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS services (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT NOT NULL,
+      url TEXT NOT NULL,
+      category TEXT NOT NULL,
+      logo_url TEXT,
+      status TEXT DEFAULT 'approved',
+      submitted_by INTEGER,
+      submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      approved_by INTEGER,
+      approved_at DATETIME,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (submitted_by) REFERENCES users(id),
+      FOREIGN KEY (approved_by) REFERENCES users(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS favorites (
+      user_id INTEGER,
+      service_id INTEGER,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (user_id, service_id),
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS pending_services (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT NOT NULL,
+      url TEXT NOT NULL,
+      category TEXT NOT NULL,
+      logo_url TEXT,
+      submitted_by INTEGER NOT NULL,
+      submitter_email TEXT,
+      status TEXT DEFAULT 'pending',
+      submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      rejection_reason TEXT,
+      FOREIGN KEY (submitted_by) REFERENCES users(id)
+    );
+  `);
+
+  console.log('✅ Database tables created/verified');
+  return db;
+}
+
+function getDb() {
+  return db;
+}
+
+module.exports = { initializeDatabase, getDb };
+const sqlite3 = require('sqlite3');
+const { open } = require('sqlite');
+const path = require('path');
+
+let db;
+
+async function initializeDatabase() {
+  const dataDir = path.join(__dirname, 'data');
+  const fs = require('fs');
+  if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
   }
 

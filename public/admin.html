@@ -3,17 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - AI Services Directory</title>
+    <title>Admin Panel - AI Entity Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+        }
+        
+        .tab-button {
+            padding: 0.75rem 1.25rem;
+            color: rgba(216, 180, 254, 0.6);
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .tab-button:hover {
+            color: #e9d5ff;
+        }
+        .tab-button.active {
+            color: #c084fc;
+            border-bottom-color: #a855f7;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        }
+
+        input, textarea, select {
+            background: rgba(20, 20, 35, 0.8) !important;
+            border: 1px solid rgba(139, 92, 246, 0.2) !important;
+            color: #e5e5e5 !important;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #8b5cf6 !important;
+            outline: none !important;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3) !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <nav class="bg-white shadow-sm">
+<body class="min-h-screen text-white">
+    <!-- Navigation -->
+    <nav class="bg-black/30 backdrop-blur-md border-b border-purple-500/20 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <h1 class="text-2xl font-bold text-purple-600">Admin Panel</h1>
-                <div class="flex space-x-4">
-                    <a href="/" class="text-gray-600 hover:text-gray-900">View Site</a>
-                    <button onclick="logout()" class="text-red-600 hover:text-red-700">Logout</button>
+                <div class="flex items-center space-x-3">
+                    <!-- Company Logo -->
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bg-transparent">
+                        <img src="/images/aie-logo.png" alt="AI Entity logo" class="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                        <a href="/" class="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                            AI Entity
+                        </a>
+                        <p class="text-xs text-purple-300/60">Admin Portal</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="/" class="text-purple-300 hover:text-purple-200 transition text-sm font-medium">View Site</a>
+                    <button onclick="logout()" class="text-red-400 hover:text-red-300 transition text-sm font-medium">Logout</button>
                 </div>
             </div>
         </div>
@@ -24,78 +90,108 @@
         <div id="stats" class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"></div>
 
         <!-- Tabs -->
-        <div class="border-b border-gray-200 mb-6">
+        <div class="border-b border-purple-500/20 mb-8 flex space-x-2">
             <button class="tab-button active" data-tab="services" onclick="showTab(event, 'services')">Manage Services</button>
             <button class="tab-button" data-tab="pending" onclick="showTab(event, 'pending')">Pending Submissions</button>
             <button class="tab-button" data-tab="users" onclick="showTab(event, 'users')">Manage Users</button>
         </div>
 
         <!-- Services Tab -->
-        <div id="services-tab" class="tab-content">
-            <div class="mb-4 flex justify-between items-center">
-                <h2 class="text-2xl font-bold">AI Services</h2>
-                <button onclick="showAddModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">+ Add New Service</button>
+        <div id="services-tab" class="tab-content space-y-6">
+            <div class="flex justify-between items-center flex-wrap gap-4">
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    AI Services
+                </h2>
+                <button onclick="showAddModal()" class="gradient-bg text-white px-5 py-2.5 rounded-xl hover:opacity-90 transition text-sm font-semibold shadow-lg shadow-purple-500/10">
+                    + Add New Service
+                </button>
             </div>
             <div id="services-list" class="space-y-4"></div>
         </div>
 
         <!-- Pending Tab -->
-        <div id="pending-tab" class="tab-content hidden">
-            <h2 class="text-2xl font-bold mb-4">Pending Submissions</h2>
+        <div id="pending-tab" class="tab-content hidden space-y-6">
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Pending Submissions
+            </h2>
             <div id="pending-list" class="space-y-4"></div>
         </div>
 
         <!-- Users Tab -->
-        <div id="users-tab" class="tab-content hidden">
-            <h2 class="text-2xl font-bold mb-4">Registered Users</h2>
+        <div id="users-tab" class="tab-content hidden space-y-6">
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Registered Users
+            </h2>
             <div id="users-list" class="space-y-4"></div>
         </div>
     </div>
 
     <!-- Add/Edit Modal -->
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 id="modal-title" class="text-xl font-bold mb-4">Add Service</h3>
-            <form id="service-form">
+    <div id="modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm hidden items-center justify-center z-50">
+        <div class="bg-gray-950 border border-purple-500/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl shadow-purple-500/5 text-white">
+            <h3 id="modal-title" class="text-xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Add Service
+            </h3>
+            <form id="service-form" class="space-y-5">
                 <input type="hidden" id="service-id">
                 <div class="space-y-4">
-                    <input type="text" id="service-name" placeholder="Service Name" required class="w-full px-3 py-2 border rounded-lg">
-                    <textarea id="service-description" placeholder="Description" required class="w-full px-3 py-2 border rounded-lg" rows="3"></textarea>
-                    <input type="url" id="service-url" placeholder="Website URL" required class="w-full px-3 py-2 border rounded-lg">
-                    <select id="service-category" required class="w-full px-3 py-2 border rounded-lg">
-                        <option value="Text">Text</option>
-                        <option value="Image">Image</option>
-                        <option value="Video">Video</option>
-                        <option value="Audio">Audio</option>
-                        <option value="Code">Code</option>
-                        <option value="Productivity">Productivity</option>
-                        <option value="Data">Data</option>
-                    </select>
-                    <input type="url" id="service-logo" placeholder="Logo URL (optional)" class="w-full px-3 py-2 border rounded-lg">
+                    <div>
+                        <label class="block text-xs text-purple-300 font-semibold mb-1">Service Name *</label>
+                        <input type="text" id="service-name" placeholder="Service Name" required 
+                               class="w-full px-4 py-2.5 rounded-xl transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-purple-300 font-semibold mb-1">Description *</label>
+                        <textarea id="service-description" placeholder="Description" required 
+                                  class="w-full px-4 py-2.5 rounded-xl transition-all" rows="3"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-purple-300 font-semibold mb-1">Website URL *</label>
+                        <input type="url" id="service-url" placeholder="Website URL" required 
+                               class="w-full px-4 py-2.5 rounded-xl transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-purple-300 font-semibold mb-1">Category *</label>
+                        <select id="service-category" required class="w-full px-4 py-2.5 rounded-xl transition-all text-white">
+                            <option value="Text" style="background-color: #111;">Text</option>
+                            <option value="Image" style="background-color: #111;">Image</option>
+                            <option value="Video" style="background-color: #111;">Video</option>
+                            <option value="Audio" style="background-color: #111;">Audio</option>
+                            <option value="Code" style="background-color: #111;">Code</option>
+                            <option value="Productivity" style="background-color: #111;">Productivity</option>
+                            <option value="Data" style="background-color: #111;">Data</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-purple-300 font-semibold mb-1">Logo URL (Optional)</label>
+                        <input type="url" id="service-logo" placeholder="Logo URL (optional)" 
+                               class="w-full px-4 py-2.5 rounded-xl transition-all">
+                    </div>
                 </div>
-                <div class="flex justify-end space-x-2 mt-6">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Save</button>
+                <div class="flex justify-end space-x-3 mt-8">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2.5 border border-purple-500/20 rounded-xl hover:bg-white/5 transition font-semibold text-sm">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 gradient-bg text-white rounded-xl hover:opacity-90 transition font-semibold text-sm shadow-lg shadow-purple-500/10">
+                        Save
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
-    <style>
-        .tab-button {
-            padding: 0.5rem 1rem;
-            color: #4b5563;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
-        }
-        .tab-button:hover {
-            color: #1f2937;
-        }
-        .tab-button.active {
-            color: #2563eb;
-            border-bottom-color: #2563eb;
-        }
-    </style>
+    <!-- Footer -->
+    <footer class="border-t border-purple-500/20 mt-20 py-8 bg-black/20 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center space-x-2 items-center mb-4">
+                <div class="w-6 h-6 rounded flex items-center justify-center overflow-hidden bg-transparent">
+                    <img src="/images/aie-logo.png" alt="AI Entity logo" class="w-full h-full object-cover" />
+                </div>
+                <span class="text-purple-300 font-medium text-sm">AI Entity Directory</span>
+            </div>
+            <p class="text-gray-500 text-sm">© 2026 AI Entity. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         let currentUser = null;
@@ -125,21 +221,21 @@
                 const stats = await response.json();
                 const statsDiv = document.getElementById('stats');
                 statsDiv.innerHTML = `
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-gray-500 text-sm">Total Services</h3>
-                        <p class="text-3xl font-bold">${stats.totalServices || 0}</p>
+                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 p-6 shadow-xl">
+                        <h3 class="text-purple-300/60 text-sm font-medium">Total Services</h3>
+                        <p class="text-4xl font-extrabold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mt-1">${stats.totalServices || 0}</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-gray-500 text-sm">Total Users</h3>
-                        <p class="text-3xl font-bold">${stats.totalUsers || 0}</p>
+                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 p-6 shadow-xl">
+                        <h3 class="text-purple-300/60 text-sm font-medium">Total Users</h3>
+                        <p class="text-4xl font-extrabold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mt-1">${stats.totalUsers || 0}</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-gray-500 text-sm">Total Favorites</h3>
-                        <p class="text-3xl font-bold">${stats.totalFavorites || 0}</p>
+                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 p-6 shadow-xl">
+                        <h3 class="text-purple-300/60 text-sm font-medium">Total Bookmarks</h3>
+                        <p class="text-4xl font-extrabold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mt-1">${stats.totalFavorites || 0}</p>
                     </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-gray-500 text-sm">Pending Submissions</h3>
-                        <p class="text-3xl font-bold">${stats.pendingSubmissions || 0}</p>
+                    <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 p-6 shadow-xl">
+                        <h3 class="text-purple-300/60 text-sm font-medium">Pending Submissions</h3>
+                        <p class="text-4xl font-extrabold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mt-1">${stats.pendingSubmissions || 0}</p>
                     </div>
                 `;
             } catch (error) {
@@ -153,15 +249,17 @@
                 const services = await response.json();
                 const servicesDiv = document.getElementById('services-list');
                 servicesDiv.innerHTML = services.map(service => `
-                    <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center">
+                    <div class="bg-gray-900/40 border border-purple-500/10 rounded-xl p-5 hover:border-purple-500/20 transition flex justify-between items-center flex-wrap gap-4">
                         <div class="flex-1">
-                            <h3 class="font-semibold">${service.name}</h3>
-                            <p class="text-sm text-gray-600">${service.description.substring(0, 100)}...</p>
-                            <p class="text-xs text-gray-500 mt-1">Category: ${service.category}</p>
+                            <h3 class="font-semibold text-lg text-white">${service.name}</h3>
+                            <p class="text-sm text-purple-200/60 mt-1 leading-relaxed">${service.description.substring(0, 150)}...</p>
+                            <div class="flex items-center gap-3 mt-3">
+                                <span class="px-2.5 py-0.5 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-500/30">${service.category}</span>
+                            </div>
                         </div>
-                        <div class="flex space-x-2">
-                            <button onclick="editService(${service.id})" class="text-blue-600 hover:text-blue-700">Edit</button>
-                            <button onclick="deleteService(${service.id})" class="text-red-600 hover:text-red-700">Delete</button>
+                        <div class="flex space-x-3">
+                            <button onclick="editService(${service.id})" class="text-purple-400 hover:text-purple-300 font-semibold text-sm transition">Edit</button>
+                            <button onclick="deleteService(${service.id})" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">Delete</button>
                         </div>
                     </div>
                 `).join('');
@@ -176,18 +274,22 @@
                 const users = await response.json();
                 const usersDiv = document.getElementById('users-list');
                 usersDiv.innerHTML = users.map(user => `
-                    <div class="bg-white rounded-lg shadow p-4 flex justify-between items-center">
+                    <div class="bg-gray-900/40 border border-purple-500/10 rounded-xl p-5 hover:border-purple-500/20 transition flex justify-between items-center flex-wrap gap-4">
                         <div>
-                            <p class="font-semibold">${user.email}</p>
-                            <p class="text-sm text-gray-600">Role: ${user.role} | Status: ${user.is_active ? 'Active' : 'Inactive'} | Joined: ${new Date(user.created_at).toLocaleDateString()}</p>
+                            <p class="font-semibold text-lg text-white">${user.email}</p>
+                            <p class="text-sm text-purple-200/60 mt-1.5">
+                                Role: <span class="capitalize text-purple-300 font-medium">${user.role}</span> | 
+                                Status: <span class="${user.is_active ? 'text-green-400' : 'text-red-400'} font-medium">${user.is_active ? 'Active' : 'Inactive'}</span> | 
+                                Joined: ${new Date(user.created_at).toLocaleDateString()}
+                            </p>
                         </div>
-                        <div class="flex space-x-2">
+                        <div class="flex space-x-3">
                             ${user.role !== 'admin' ? `
-                                <button onclick="toggleUserStatus(${user.id}, ${user.is_active})" class="text-yellow-600 hover:text-yellow-700">
+                                <button onclick="toggleUserStatus(${user.id}, ${user.is_active})" class="text-purple-400 hover:text-purple-300 font-semibold text-sm transition">
                                     ${user.is_active ? 'Deactivate' : 'Activate'}
                                 </button>
-                                <button onclick="deleteUser(${user.id})" class="text-red-600 hover:text-red-700">Delete</button>
-                            ` : '<span class="text-gray-400">Admin Account</span>'}
+                                <button onclick="deleteUser(${user.id})" class="text-red-400 hover:text-red-300 font-semibold text-sm transition">Delete</button>
+                            ` : '<span class="text-purple-300/40 text-sm font-semibold">Admin Account</span>'}
                         </div>
                     </div>
                 `).join('');
@@ -203,32 +305,32 @@
                 const pendingDiv = document.getElementById('pending-list');
                 
                 if (pending.length === 0) {
-                    pendingDiv.innerHTML = '<div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">No pending submissions</div>';
+                    pendingDiv.innerHTML = '<div class="bg-gray-900/30 border border-purple-500/10 rounded-2xl p-12 text-center text-purple-300/40">No pending submissions</div>';
                     return;
                 }
                 
                 pendingDiv.innerHTML = pending.map(sub => `
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex justify-between items-start">
+                    <div class="bg-gray-900/40 border border-purple-500/15 rounded-xl p-6 shadow-lg">
+                        <div class="flex justify-between items-start flex-wrap gap-4">
                             <div class="flex-1">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <img src="${sub.logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(sub.name)}&background=3b82f6&color=fff`}" 
+                                <div class="flex items-center gap-4 mb-3">
+                                    <img src="${sub.logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(sub.name)}&background=8b5cf6&color=fff`}" 
                                          alt="${sub.name}" class="w-12 h-12 rounded-lg">
                                     <div>
-                                        <h3 class="text-xl font-semibold">${sub.name}</h3>
-                                        <p class="text-sm text-gray-600">Submitted by: ${sub.submitter_email}</p>
+                                        <h3 class="text-xl font-semibold text-white">${sub.name}</h3>
+                                        <p class="text-sm text-purple-200/50">Submitted by: ${sub.submitter_email}</p>
                                     </div>
                                 </div>
-                                <p class="text-gray-700 mt-2">${sub.description}</p>
-                                <div class="flex items-center gap-3 mt-3">
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">${sub.category}</span>
-                                    <a href="${sub.url}" target="_blank" class="text-blue-600 hover:text-blue-700 text-sm">Visit Website →</a>
-                                    <span class="text-xs text-gray-500">Submitted: ${new Date(sub.submitted_at).toLocaleString()}</span>
+                                <p class="text-purple-200/80 mt-3 leading-relaxed">${sub.description}</p>
+                                <div class="flex items-center gap-4 mt-4 flex-wrap">
+                                    <span class="px-2.5 py-0.5 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-500/30 font-medium">${sub.category}</span>
+                                    <a href="${sub.url}" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-semibold">Visit Website →</a>
+                                    <span class="text-xs text-purple-400/40">Submitted: ${new Date(sub.submitted_at).toLocaleString()}</span>
                                 </div>
                             </div>
-                            <div class="flex gap-2 ml-4">
-                                <button onclick="approveSubmission(${sub.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Approve</button>
-                                <button onclick="rejectSubmission(${sub.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Reject</button>
+                            <div class="flex gap-3 ml-auto">
+                                <button onclick="approveSubmission(${sub.id})" class="bg-green-600/20 border border-green-500/30 text-green-300 px-4 py-2 rounded-xl hover:bg-green-600/30 transition text-sm font-semibold">Approve</button>
+                                <button onclick="rejectSubmission(${sub.id})" class="bg-red-600/20 border border-red-500/30 text-red-300 px-4 py-2 rounded-xl hover:bg-red-600/30 transition text-sm font-semibold">Reject</button>
                             </div>
                         </div>
                     </div>
@@ -245,23 +347,16 @@
         }
 
         function showTab(event, tabName) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
             });
-            
-            // Remove active class from all buttons
             document.querySelectorAll('.tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
-            // Show selected tab
             const selectedTab = document.getElementById(`${tabName}-tab`);
             if (selectedTab) {
                 selectedTab.classList.remove('hidden');
             }
-            
-            // Add active class to clicked button
             const clickedButton = event?.currentTarget || document.querySelector(`[data-tab="${tabName}"]`);
             if (clickedButton) {
                 clickedButton.classList.add('active');
@@ -380,7 +475,6 @@
             window.location.href = '/';
         }
 
-        // Initialize
         checkAdmin();
     </script>
 </body>

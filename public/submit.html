@@ -3,92 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit AI Service - AI Directory</title>
+    <title>Submit AI Service - AI Entity Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+        }
+        
+        input, textarea, select {
+            background: rgba(20, 20, 35, 0.7) !important;
+            border: 1px solid rgba(139, 92, 246, 0.2) !important;
+            color: #e5e5e5 !important;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #8b5cf6 !important;
+            outline: none !important;
+            box-shadow: 0 0 10px rgba(139, 92, 246, 0.3) !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 4px;
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <nav class="bg-white shadow-sm">
+<body class="min-h-screen text-white">
+    <!-- Navigation -->
+    <nav class="bg-black/30 backdrop-blur-md border-b border-purple-500/20 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="/" class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">AI Directory</a>
-                <div class="flex space-x-4">
-                    <a href="/" class="text-gray-600 hover:text-gray-900">Home</a>
-                    <a href="/profile" class="text-gray-600 hover:text-gray-900">Profile</a>
-                    <button onclick="logout()" class="text-red-600 hover:text-red-700">Logout</button>
+                <div class="flex items-center space-x-3">
+                    <!-- Company Logo -->
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bg-transparent">
+                        <img src="/images/aie-logo.png" alt="AI Entity logo" class="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                        <a href="/" class="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                            AI Entity
+                        </a>
+                        <p class="text-xs text-purple-300/60">Premium AI Directory</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="/" class="text-purple-300 hover:text-purple-200 transition text-sm font-medium">Home</a>
+                    <a href="/profile" class="text-purple-300 hover:text-purple-200 transition text-sm font-medium">Profile</a>
+                    <button onclick="logout()" class="text-red-400 hover:text-red-300 transition text-sm font-medium">Logout</button>
                 </div>
             </div>
         </div>
     </nav>
 
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="bg-white rounded-lg shadow-md p-8">
-            <h1 class="text-3xl font-bold mb-4">Submit an AI Service</h1>
-            <p class="text-gray-600 mb-8">Know a great AI tool? Submit it for review and help grow our community!</p>
+        <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 p-8 shadow-xl">
+            <h1 class="text-3xl font-bold mb-4 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Submit an AI Service
+            </h1>
+            <p class="text-purple-200/70 mb-8">Know a great AI tool? Submit it for review and help grow our community.</p>
             
             <form id="submit-form" class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Service Name *</label>
-                    <input type="text" id="name" required 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium text-purple-300 mb-2">Service Name *</label>
+                    <input type="text" id="name" required placeholder="e.g. Jasper"
+                           class="w-full px-4 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 transition-all">
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
-                    <textarea id="description" rows="3" required 
-                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
-                    <p class="text-xs text-gray-500 mt-1">Brief description of what this AI service does (max 500 chars)</p>
+                    <label class="block text-sm font-medium text-purple-300 mb-2">Description *</label>
+                    <textarea id="description" rows="3" required placeholder="What does this AI service do..."
+                              class="w-full px-4 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 transition-all"></textarea>
+                    <p class="text-xs text-purple-400/50 mt-1">Brief description of what this AI service does (max 500 chars)</p>
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Website URL *</label>
-                    <input type="url" id="url" required 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium text-purple-300 mb-2">Website URL *</label>
+                    <input type="url" id="url" required placeholder="https://example.com"
+                           class="w-full px-4 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 transition-all">
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Category *</label>
-                    <select id="category" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <option value="">Select a category</option>
-                        <option value="Text">Text & Writing</option>
-                        <option value="Image">Image Generation</option>
-                        <option value="Video">Video Creation</option>
-                        <option value="Audio">Audio & Voice</option>
-                        <option value="Code">Code & Development</option>
-                        <option value="Productivity">Productivity</option>
-                        <option value="Data">Data & Analytics</option>
+                    <label class="block text-sm font-medium text-purple-300 mb-2">Category *</label>
+                    <select id="category" required class="w-full px-4 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 transition-all text-white">
+                        <option value="" style="background-color: #1a1a2e;">Select a category</option>
+                        <option value="Text" style="background-color: #1a1a2e;">Text & Writing</option>
+                        <option value="Image" style="background-color: #1a1a2e;">Image Generation</option>
+                        <option value="Video" style="background-color: #1a1a2e;">Video Creation</option>
+                        <option value="Audio" style="background-color: #1a1a2e;">Audio & Voice</option>
+                        <option value="Code" style="background-color: #1a1a2e;">Code & Development</option>
+                        <option value="Productivity" style="background-color: #1a1a2e;">Productivity</option>
+                        <option value="Data" style="background-color: #1a1a2e;">Data & Analytics</option>
                     </select>
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Logo URL (Optional)</label>
-                    <input type="url" id="logo_url" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    <p class="text-xs text-gray-500 mt-1">Leave blank for auto-generated logo</p>
+                    <label class="block text-sm font-medium text-purple-300 mb-2">Logo URL (Optional)</label>
+                    <input type="url" id="logo_url" placeholder="https://example.com/logo.png"
+                           class="w-full px-4 py-3 rounded-xl focus:ring-2 focus:ring-purple-500 transition-all">
+                    <p class="text-xs text-purple-400/50 mt-1">Leave blank for auto-generated avatar logo</p>
                 </div>
                 
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p class="text-sm text-blue-800">
-                        <strong>📝 Review Process:</strong> Your submission will be reviewed by an admin. 
-                        You'll receive an email notification once it's approved or rejected.
+                <div class="bg-purple-950/30 border border-purple-500/20 rounded-xl p-4">
+                    <p class="text-sm text-purple-300">
+                        <strong>📝 Review Process:</strong> Your submission will be reviewed by our team. 
+                        You will see its updated status under "My Submissions" below once it is processed.
                     </p>
                 </div>
                 
                 <button type="submit" 
-                        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium">
+                        class="w-full gradient-bg text-white py-3.5 rounded-xl hover:opacity-90 transition font-semibold shadow-lg shadow-purple-500/20">
                     Submit for Review
                 </button>
             </form>
             
-            <div id="success-message" class="hidden mt-4 bg-green-50 border border-green-200 rounded-lg p-4 text-green-800"></div>
-            <div id="error-message" class="hidden mt-4 bg-red-50 border border-red-200 rounded-lg p-4 text-red-800"></div>
+            <div id="success-message" class="hidden mt-6 bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-green-300 text-sm"></div>
+            <div id="error-message" class="hidden mt-6 bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-red-300 text-sm"></div>
         </div>
         
         <!-- My Submissions -->
-        <div class="bg-white rounded-lg shadow-md p-8 mt-8">
-            <h2 class="text-2xl font-bold mb-4">My Submissions</h2>
-            <div id="submissions-list"></div>
+        <div class="bg-gray-900/50 backdrop-blur-sm rounded-2xl border border-purple-500/20 p-8 mt-8 shadow-xl">
+            <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                My Submissions
+            </h2>
+            <div id="submissions-list" class="space-y-4"></div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-purple-500/20 mt-20 py-8 bg-black/20 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center space-x-2 items-center mb-4">
+                <div class="w-6 h-6 rounded flex items-center justify-center overflow-hidden bg-transparent">
+                    <img src="/images/aie-logo.png" alt="AI Entity logo" class="w-full h-full object-cover" />
+                </div>
+                <span class="text-purple-300 font-medium text-sm">AI Entity Directory</span>
+            </div>
+            <p class="text-gray-500 text-sm">© 2026 AI Entity. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         let currentUser = null;
@@ -115,21 +182,21 @@
                 
                 const container = document.getElementById('submissions-list');
                 if (submissions.length === 0) {
-                    container.innerHTML = '<p class="text-gray-500">You haven\'t submitted any services yet.</p>';
+                    container.innerHTML = '<p class="text-purple-300/50">You haven\'t submitted any services yet.</p>';
                     return;
                 }
                 
                 container.innerHTML = submissions.map(sub => `
-                    <div class="border rounded-lg p-4 mb-3">
+                    <div class="border border-purple-500/10 bg-black/20 rounded-xl p-5 hover:border-purple-500/20 transition-all">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h3 class="font-semibold">${sub.name}</h3>
-                                <p class="text-sm text-gray-600 mt-1">${sub.description.substring(0, 100)}...</p>
-                                <div class="flex items-center gap-3 mt-2">
-                                    <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(sub.status)}">${sub.status}</span>
-                                    <span class="text-xs text-gray-500">Submitted: ${new Date(sub.submitted_at).toLocaleDateString()}</span>
+                                <h3 class="font-semibold text-lg text-white">${sub.name}</h3>
+                                <p class="text-purple-200/60 text-sm mt-1.5 leading-relaxed">${sub.description.substring(0, 150)}...</p>
+                                <div class="flex items-center gap-4 mt-3">
+                                    <span class="px-2.5 py-1 text-xs rounded-full font-medium ${getStatusColor(sub.status)}">${sub.status}</span>
+                                    <span class="text-xs text-purple-400/50">Submitted: ${new Date(sub.submitted_at).toLocaleDateString()}</span>
                                 </div>
-                                ${sub.rejection_reason ? `<p class="text-sm text-red-600 mt-2">Reason: ${sub.rejection_reason}</p>` : ''}
+                                ${sub.rejection_reason ? `<div class="mt-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-300"><strong>Rejection Reason:</strong> ${sub.rejection_reason}</div>` : ''}
                             </div>
                         </div>
                     </div>
@@ -141,10 +208,10 @@
 
         function getStatusColor(status) {
             switch(status) {
-                case 'pending': return 'bg-yellow-100 text-yellow-800';
-                case 'approved': return 'bg-green-100 text-green-800';
-                case 'rejected': return 'bg-red-100 text-red-800';
-                default: return 'bg-gray-100 text-gray-800';
+                case 'pending': return 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30';
+                case 'approved': return 'bg-green-500/20 text-green-300 border border-green-500/30';
+                case 'rejected': return 'bg-red-500/20 text-red-300 border border-red-500/30';
+                default: return 'bg-gray-800 text-gray-400 border border-gray-700';
             }
         }
 
@@ -174,7 +241,7 @@
                 });
                 
                 if (response.ok) {
-                    successDiv.textContent = '✅ Service submitted successfully! Admin will review it shortly.';
+                    successDiv.textContent = 'Service submitted successfully. Admin will review it shortly.';
                     successDiv.classList.remove('hidden');
                     document.getElementById('submit-form').reset();
                     loadMySubmissions();

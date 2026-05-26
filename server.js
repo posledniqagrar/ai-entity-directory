@@ -44,6 +44,10 @@ const allowedOrigins = (() => {
     console.warn('No FRONTEND_URL or FRONTEND_ORIGINS configured in production — falling back to https://aientity.co.uk and https://www.aientity.co.uk. Please set FRONTEND_URL in your environment.');
     addOrigin('https://aientity.co.uk');
   }
+
+  // Ensure the deployed live site origins are allowed even if NODE_ENV is not set.
+  addOrigin('https://aientity.co.uk');
+  addOrigin('https://www.aientity.co.uk');
   // Local dev origins
   set.add('http://localhost:3000');
   set.add('http://127.0.0.1:3000');

@@ -2,6 +2,7 @@ const fs = require('fs');
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
 const path = require('path');
+const bcrypt = require('bcrypt');
 const { aiServices } = require('./seed-data');
 
 let db;
@@ -78,7 +79,29 @@ async function initializeDatabase() {
 
   await migrateSchema();
   await seedServices();
+  await seedAdminUser();
   return db;
+}
+
+async function seedAdminUser() {
+  const adminEmail = 's.arsov@gmail.com';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'fbdZsIJUScN4LUFknYUom7O8';
+  const existingAdmin = await db.get('SELECT id FROM users WHERE email = ?', adminEmail);
+  if (existingAdmin) {
+    console.log(`Admin user already exists with id=${existingAdmin.id}`);
+    return;
+  }
+
+  const passwordHash = await bcrypt.hash(adminPassword, 12);
+  const result = await db.run(
+    'INSERT INTO users (email, password_hash, role, is_active) VALUES (?, ?, ?, 1)',
+    [adminEmail, passwordHash, 'admin']
+  );
+
+  console.log(`Seeded admin user id=${result.lastID}, email=${adminEmail}`);
+  if (!process.env.ADMIN_PASSWORD) {
+    console.log('Using default ADMIN_PASSWORD from code; change it with the ADMIN_PASSWORD environment variable.');
+  }
 }
 
 async function migrateSchema() {

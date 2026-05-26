@@ -11,7 +11,7 @@ router.post('/submit', authenticate, [
   body('description').notEmpty().trim().isLength({ min: 10, max: 500 }),
   body('url').isURL(),
   body('category').notEmpty(),
-  body('logo_url').optional().isURL()
+  body('logo_url').trim().custom(val => !val || val.length === 0 || /^https?:\/\//.test(val))
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

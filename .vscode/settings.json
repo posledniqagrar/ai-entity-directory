@@ -1,0 +1,12 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^sqlite3 data/ai-services\\.db \"\\.schema pending_services\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^railway project list$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

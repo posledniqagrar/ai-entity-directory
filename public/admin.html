@@ -25,9 +25,9 @@
 
         <!-- Tabs -->
         <div class="border-b border-gray-200 mb-6">
-            <button class="tab-button active" data-tab="services" onclick="showTab('services')">Manage Services</button>
-            <button class="tab-button" data-tab="pending" onclick="showTab('pending')">Pending Submissions</button>
-            <button class="tab-button" data-tab="users" onclick="showTab('users')">Manage Users</button>
+            <button class="tab-button active" data-tab="services" onclick="showTab(event, 'services')">Manage Services</button>
+            <button class="tab-button" data-tab="pending" onclick="showTab(event, 'pending')">Pending Submissions</button>
+            <button class="tab-button" data-tab="users" onclick="showTab(event, 'users')">Manage Users</button>
         </div>
 
         <!-- Services Tab -->
@@ -244,7 +244,7 @@
             }
         }
 
-        function showTab(tabName) {
+        function showTab(event, tabName) {
             // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.add('hidden');
@@ -262,7 +262,7 @@
             }
             
             // Add active class to clicked button
-            const clickedButton = event?.target || document.querySelector(`[data-tab="${tabName}"]`);
+            const clickedButton = event?.currentTarget || document.querySelector(`[data-tab="${tabName}"]`);
             if (clickedButton) {
                 clickedButton.classList.add('active');
             }

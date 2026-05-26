@@ -5,6 +5,24 @@ const { getDb } = require('../database');
 const { generateToken } = require('../middleware/auth');
 
 const router = express.Router();
+// Cookie options: in production (likely behind HTTPS and possibly cross-site),
+// use Secure + SameSite=None. For local dev we keep defaults for convenience.
+const cookieOptions = (() => {
+  const isProd = process.env.NODE_ENV === 'production';
+  const opts = {
+    httpOnly: true,
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  };
+  if (isProd) {
+    opts.secure = true;
+    opts.sameSite = 'None';
+    if (process.env.COOKIE_DOMAIN) opts.domain = process.env.COOKIE_DOMAIN;
+  } else {
+    opts.secure = false;
+    opts.sameSite = 'Lax';
+  }
+  return opts;
+})();
 
 // Register
 router.post('/register', [
@@ -26,7 +44,7 @@ router.post('/register', [
     const user = await db.get('SELECT id, email, role FROM users WHERE email = ?', [email]);
     const token = generateToken(user.id, user.email, user.role);
     
-    res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+    res.cookie('token', token, cookieOptions);
     res.json({ user, token });
   } catch (error) {
     if (error.message.includes('UNIQUE constraint')) {
@@ -53,7 +71,7 @@ router.post('/login', async (req, res) => {
   }
   
   const token = generateToken(user.id, user.email, user.role);
-  res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 });
+  res.cookie('token', token, cookieOptions);
   res.json({ user: { id: user.id, email: user.email, role: user.role }, token });
 });
 

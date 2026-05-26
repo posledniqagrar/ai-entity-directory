@@ -1,0 +1,83 @@
+name: CI and Deploy
+
+on:
+  push:
+    branches: [ staging ]
+    tags: ['v*', 'release/*']
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests (if any)
+        run: npm test --if-present
+
+      - name: Install Railway CLI
+        run: curl -sSL https://raw.githubusercontent.com/railwayapp/cli/master/install.sh | sh
+
+      - name: Set Railway environment variables from secret (staging)
+        if: ${{ secrets.RAILWAY_ENV_VARS != '' && github.ref == 'refs/heads/staging' }}
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_ENV_VARS: ${{ secrets.RAILWAY_ENV_VARS }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_STAGING }}
+        run: |
+          railway login --apiKey "$RAILWAY_API_KEY"
+          railway link --project "$RAILWAY_PROJECT_ID" || true
+          echo "Setting Railway environment variables from RAILWAY_ENV_VARS (staging)"
+          echo "$RAILWAY_ENV_VARS" | while IFS= read -r line || [ -n "$line" ]; do
+            [[ -z "$line" || "$line" =~ ^# ]] && continue
+            key="${line%%=*}"
+            value="${line#*=}"
+            echo "Setting $key"
+            railway variables set "$key" "$value" || echo "Warning: failed to set $key"
+          done
+
+      - name: Set Railway environment variables from secret (production)
+        if: ${{ secrets.RAILWAY_ENV_VARS != '' && startsWith(github.ref, 'refs/tags/') }}
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_ENV_VARS: ${{ secrets.RAILWAY_ENV_VARS }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_PROD }}
+        run: |
+          railway login --apiKey "$RAILWAY_API_KEY"
+          railway link --project "$RAILWAY_PROJECT_ID" || true
+          echo "Setting Railway environment variables from RAILWAY_ENV_VARS (production)"
+          echo "$RAILWAY_ENV_VARS" | while IFS= read -r line || [ -n "$line" ]; do
+            [[ -z "$line" || "$line" =~ ^# ]] && continue
+            key="${line%%=*}"
+            value="${line#*=}"
+            echo "Setting $key"
+            railway variables set "$key" "$value" || echo "Warning: failed to set $key"
+          done
+
+      - name: Deploy to Railway (staging)
+        if: ${{ github.ref == 'refs/heads/staging' }}
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_STAGING }}
+        run: |
+          railway login --apiKey "$RAILWAY_API_KEY"
+          railway link --project "$RAILWAY_PROJECT_ID" || true
+          railway up --yes
+
+      - name: Deploy to Railway (production)
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        env:
+          RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_PROD }}
+        run: |
+          railway login --apiKey "$RAILWAY_API_KEY"
+          railway link --project "$RAILWAY_PROJECT_ID" || true
+          railway up --yes

@@ -1,0 +1,211 @@
+﻿{
+  "buckets": {
+    "edges": []
+  },
+  "deletedAt": null,
+  "environments": {
+    "edges": [
+      {
+        "node": {
+          "canAccess": true,
+          "deletedAt": null,
+          "id": "1b88f6a8-4465-4f59-8edb-b0cc35acac7a",
+          "name": "production",
+          "serviceInstances": {
+            "edges": [
+              {
+                "node": {
+                  "activeDeployments": [
+                    {
+                      "createdAt": "2026-05-23T09:28:24.260Z",
+                      "deploymentStopped": false,
+                      "id": "6df9f1c7-889d-4ec2-ad0e-13ac4ac5945e",
+                      "instances": [
+                        {
+                          "id": "3aff5358-6108-4ec3-bf9c-9aaa793fe203",
+                          "status": "RUNNING"
+                        }
+                      ],
+                      "meta": {
+                        "buildOnly": false,
+                        "configFile": "/railway.json",
+                        "fileServiceManifest": {
+                          "build": {
+                            "builder": "NIXPACKS"
+                          },
+                          "deploy": {
+                            "restartPolicyMaxRetries": 10,
+                            "restartPolicyType": "ON_FAILURE",
+                            "startCommand": "node server.js"
+                          }
+                        },
+                        "imageDigest": "sha256:1b640afb59c3c8387800935b96c219ce1bb7d2a0dfbe3d77574f86dfc19402f7",
+                        "logsV2": true,
+                        "nixpacksProviders": [],
+                        "propertyFileMapping": {
+                          "build.builder": "$.build.builder",
+                          "deploy.restartPolicyMaxRetries": "$.deploy.restartPolicyMaxRetries",
+                          "deploy.restartPolicyType": "$.deploy.restartPolicyType",
+                          "deploy.startCommand": "$.deploy.startCommand"
+                        },
+                        "reason": "deploy",
+                        "rootDirectory": null,
+                        "runtime": "V2",
+                        "serviceManifest": {
+                          "build": {
+                            "buildCommand": null,
+                            "buildEnvironment": "V3",
+                            "builder": "NIXPACKS",
+                            "dockerfilePath": null,
+                            "nixpacksConfigPath": null,
+                            "nixpacksPlan": null,
+                            "watchPatterns": []
+                          },
+                          "deploy": {
+                            "cronSchedule": null,
+                            "drainingSeconds": null,
+                            "healthcheckPath": null,
+                            "healthcheckTimeout": null,
+                            "ipv6EgressEnabled": false,
+                            "limitOverride": null,
+                            "multiRegionConfig": {
+                              "iad": {
+                                "numReplicas": 1
+                              }
+                            },
+                            "numReplicas": 1,
+                            "overlapSeconds": null,
+                            "preDeployCommand": null,
+                            "region": null,
+                            "registryCredentials": null,
+                            "requiredMountPath": null,
+                            "restartPolicyMaxRetries": 10,
+                            "restartPolicyType": "ON_FAILURE",
+                            "runtime": "V2",
+                            "sleepApplication": false,
+                            "startCommand": "node server.js",
+                            "useLegacyStacker": false
+                          }
+                        },
+                        "volumeMounts": []
+                      },
+                      "status": "SUCCESS"
+                    }
+                  ],
+                  "cronSchedule": null,
+                  "domains": {
+                    "customDomains": [],
+                    "serviceDomains": []
+                  },
+                  "environmentId": "1b88f6a8-4465-4f59-8edb-b0cc35acac7a",
+                  "id": "680d55bf-a745-4687-b145-ba5193e07dae",
+                  "latestDeployment": {
+                    "canRedeploy": true,
+                    "createdAt": "2026-05-23T09:28:24.260Z",
+                    "deploymentStopped": false,
+                    "id": "6df9f1c7-889d-4ec2-ad0e-13ac4ac5945e",
+                    "instances": [
+                      {
+                        "id": "3aff5358-6108-4ec3-bf9c-9aaa793fe203",
+                        "status": "RUNNING"
+                      }
+                    ],
+                    "meta": {
+                      "buildOnly": false,
+                      "configFile": "/railway.json",
+                      "fileServiceManifest": {
+                        "build": {
+                          "builder": "NIXPACKS"
+                        },
+                        "deploy": {
+                          "restartPolicyMaxRetries": 10,
+                          "restartPolicyType": "ON_FAILURE",
+                          "startCommand": "node server.js"
+                        }
+                      },
+                      "imageDigest": "sha256:1b640afb59c3c8387800935b96c219ce1bb7d2a0dfbe3d77574f86dfc19402f7",
+                      "logsV2": true,
+                      "nixpacksProviders": [],
+                      "propertyFileMapping": {
+                        "build.builder": "$.build.builder",
+                        "deploy.restartPolicyMaxRetries": "$.deploy.restartPolicyMaxRetries",
+                        "deploy.restartPolicyType": "$.deploy.restartPolicyType",
+                        "deploy.startCommand": "$.deploy.startCommand"
+                      },
+                      "reason": "deploy",
+                      "rootDirectory": null,
+                      "runtime": "V2",
+                      "serviceManifest": {
+                        "build": {
+                          "buildCommand": null,
+                          "buildEnvironment": "V3",
+                          "builder": "NIXPACKS",
+                          "dockerfilePath": null,
+                          "nixpacksConfigPath": null,
+                          "nixpacksPlan": null,
+                          "watchPatterns": []
+                        },
+                        "deploy": {
+                          "cronSchedule": null,
+                          "drainingSeconds": null,
+                          "healthcheckPath": null,
+                          "healthcheckTimeout": null,
+                          "ipv6EgressEnabled": false,
+                          "limitOverride": null,
+                          "multiRegionConfig": {
+                            "iad": {
+                              "numReplicas": 1
+                            }
+                          },
+                          "numReplicas": 1,
+                          "overlapSeconds": null,
+                          "preDeployCommand": null,
+                          "region": null,
+                          "registryCredentials": null,
+                          "requiredMountPath": null,
+                          "restartPolicyMaxRetries": 10,
+                          "restartPolicyType": "ON_FAILURE",
+                          "runtime": "V2",
+                          "sleepApplication": false,
+                          "startCommand": "node server.js",
+                          "useLegacyStacker": false
+                        }
+                      },
+                      "volumeMounts": []
+                    },
+                    "status": "SUCCESS"
+                  },
+                  "nextCronRunAt": null,
+                  "numReplicas": null,
+                  "serviceId": "361d8b1b-6ff5-4836-8094-6009cc01d1cd",
+                  "serviceName": "ai-services-directory",
+                  "source": null,
+                  "startCommand": null
+                }
+              }
+            ]
+          },
+          "unmergedChangesCount": null,
+          "volumeInstances": {
+            "edges": []
+          }
+        }
+      }
+    ]
+  },
+  "id": "b8446e38-e66a-480a-aac1-c7d3051be8b9",
+  "name": "ai-services-directory",
+  "services": {
+    "edges": [
+      {
+        "node": {
+          "id": "361d8b1b-6ff5-4836-8094-6009cc01d1cd",
+          "name": "ai-services-directory"
+        }
+      }
+    ]
+  },
+  "workspace": {
+    "name": "posledniqagrar's Projects"
+  }
+}

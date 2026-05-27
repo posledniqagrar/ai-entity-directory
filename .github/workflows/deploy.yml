@@ -26,7 +26,7 @@ jobs:
         run: npm test --if-present
 
       - name: Install Railway CLI
-        run: curl -sSL https://raw.githubusercontent.com/railwayapp/cli/master/install.sh | sh
+        run: npm install -g @railway/cli
 
       - name: Set Railway environment variables from secret (staging)
         if: ${{ env.RAILWAY_ENV_VARS_VAL != '' && github.ref == 'refs/heads/staging' }}

@@ -31,11 +31,9 @@ jobs:
       - name: Set Railway environment variables from secret (staging)
         if: ${{ env.RAILWAY_ENV_VARS_VAL != '' && github.ref == 'refs/heads/staging' }}
         env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
           RAILWAY_ENV_VARS: ${{ secrets.RAILWAY_ENV_VARS }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_STAGING }}
         run: |
-          railway link --project "$RAILWAY_PROJECT_ID" || true
           echo "Setting Railway environment variables from RAILWAY_ENV_VARS (staging)"
           echo "$RAILWAY_ENV_VARS" | while IFS= read -r line || [ -n "$line" ]; do
             [[ -z "$line" || "$line" =~ ^# ]] && continue
@@ -48,11 +46,9 @@ jobs:
       - name: Set Railway environment variables from secret (production)
         if: ${{ env.RAILWAY_ENV_VARS_VAL != '' && startsWith(github.ref, 'refs/tags/') }}
         env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
           RAILWAY_ENV_VARS: ${{ secrets.RAILWAY_ENV_VARS }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_PROD }}
         run: |
-          railway link --project "$RAILWAY_PROJECT_ID" || true
           echo "Setting Railway environment variables from RAILWAY_ENV_VARS (production)"
           echo "$RAILWAY_ENV_VARS" | while IFS= read -r line || [ -n "$line" ]; do
             [[ -z "$line" || "$line" =~ ^# ]] && continue
@@ -65,17 +61,13 @@ jobs:
       - name: Deploy to Railway (staging)
         if: ${{ github.ref == 'refs/heads/staging' }}
         env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_STAGING }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
-          railway link --project "$RAILWAY_PROJECT_ID" || true
-          railway up --yes
+          railway up
 
       - name: Deploy to Railway (production)
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_PROD }}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
-          railway link --project "$RAILWAY_PROJECT_ID" || true
-          railway up --yes
+          railway up

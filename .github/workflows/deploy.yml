@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      RAILWAY_ENV_VARS_VAL: ${{ secrets.RAILWAY_ENV_VARS }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +29,7 @@ jobs:
         run: curl -sSL https://raw.githubusercontent.com/railwayapp/cli/master/install.sh | sh
 
       - name: Set Railway environment variables from secret (staging)
-        if: ${{ secrets.RAILWAY_ENV_VARS != '' && github.ref == 'refs/heads/staging' }}
+        if: ${{ env.RAILWAY_ENV_VARS_VAL != '' && github.ref == 'refs/heads/staging' }}
         env:
           RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
           RAILWAY_ENV_VARS: ${{ secrets.RAILWAY_ENV_VARS }}
@@ -45,7 +47,7 @@ jobs:
           done
 
       - name: Set Railway environment variables from secret (production)
-        if: ${{ secrets.RAILWAY_ENV_VARS != '' && startsWith(github.ref, 'refs/tags/') }}
+        if: ${{ env.RAILWAY_ENV_VARS_VAL != '' && startsWith(github.ref, 'refs/tags/') }}
         env:
           RAILWAY_API_KEY: ${{ secrets.RAILWAY_API_KEY }}
           RAILWAY_ENV_VARS: ${{ secrets.RAILWAY_ENV_VARS }}

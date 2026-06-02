@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
     params.push(category);
   }
   
-  query += ' ORDER BY name LIMIT ? OFFSET ?';
+  query += ' ORDER BY is_featured DESC, name LIMIT ? OFFSET ?';
   const services = await db.all(query, [...params, limit, offset]);
   
   const countResult = await db.get(countQuery, params);

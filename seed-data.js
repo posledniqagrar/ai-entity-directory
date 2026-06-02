@@ -1,20 +1,20 @@
 const aiServices = [
   // Text & Writing
-  { name: "ChatGPT", description: "Advanced language model for conversation, writing, coding, and analysis", category: "Text", url: "https://chat.openai.com", logo_url: "https://ui-avatars.com/api/?name=ChatGPT&background=10a37f&color=fff" },
-  { name: "Claude", description: "Anthropic's helpful, harmless AI assistant for complex tasks", category: "Text", url: "https://claude.ai", logo_url: "https://ui-avatars.com/api/?name=Claude&background=d97757&color=fff" },
-  { name: "Gemini", description: "Google's multimodal AI model for text, images, and code", category: "Text", url: "https://gemini.google.com", logo_url: "https://ui-avatars.com/api/?name=Gemini&background=4285f4&color=fff" },
-  { name: "Perplexity AI", description: "AI-powered search engine with citations and real-time info", category: "Text", url: "https://perplexity.ai", logo_url: "https://ui-avatars.com/api/?name=Perplexity&background=1a1a1a&color=fff" },
-  { name: "Jasper", description: "AI content creation platform for marketing and blogs", category: "Text", url: "https://jasper.ai", logo_url: "https://ui-avatars.com/api/?name=Jasper&background=6c47ff&color=fff" },
+  { name: "ChatGPT", description: "Advanced language model for conversation, writing, coding, and analysis", category: "Text", url: "https://chat.openai.com", logo_url: "https://ui-avatars.com/api/?name=ChatGPT&background=10a37f&color=fff", is_featured: 1 },
+  { name: "Claude", description: "Anthropic's helpful, harmless AI assistant for complex tasks", category: "Text", url: "https://claude.ai", logo_url: "https://ui-avatars.com/api/?name=Claude&background=d97757&color=fff", is_featured: 1 },
+  { name: "Gemini", description: "Google's multimodal AI model for text, images, and code", category: "Text", url: "https://gemini.google.com", logo_url: "https://ui-avatars.com/api/?name=Gemini&background=4285f4&color=fff", is_featured: 1 },
+  { name: "Perplexity AI", description: "AI-powered search engine with citations and real-time info", category: "Text", url: "https://perplexity.ai", logo_url: "https://ui-avatars.com/api/?name=Perplexity&background=1a1a1a&color=fff", is_featured: 1 },
+  { name: "Jasper", description: "AI content creation platform for marketing and blogs", category: "Text", url: "https://jasper.ai", logo_url: "https://ui-avatars.com/api/?name=Jasper&background=6c47ff&color=fff", is_featured: 1 },
   { name: "Copy.ai", description: "Generate marketing copy, product descriptions, and social posts", category: "Text", url: "https://copy.ai", logo_url: "https://ui-avatars.com/api/?name=Copy&background=30b57b&color=fff" },
   { name: "Wordtune", description: "AI writing companion for rewriting and paraphrasing", category: "Text", url: "https://wordtune.com", logo_url: "https://ui-avatars.com/api/?name=Wordtune&background=0099cc&color=fff" },
   { name: "Quillbot", description: "Paraphrasing tool and grammar checker", category: "Text", url: "https://quillbot.com", logo_url: "https://ui-avatars.com/api/?name=Quillbot&background=1a73e8&color=fff" },
-  { name: "Grammarly", description: "AI writing assistant for grammar and style improvement", category: "Text", url: "https://grammarly.com", logo_url: "https://ui-avatars.com/api/?name=Grammarly&background=15c39a&color=fff" },
+  { name: "Grammarly", description: "AI writing assistant for grammar and style improvement", category: "Text", url: "https://grammarly.com", logo_url: "https://ui-avatars.com/api/?name=Grammarly&background=15c39a&color=fff", is_featured: 1 },
   { name: "DeepL Write", description: "AI-enhanced writing and translation quality editor", category: "Text", url: "https://www.deepl.com/write", logo_url: "https://ui-avatars.com/api/?name=DeepL&background=0062ff&color=fff" },
   { name: "Writesonic", description: "AI copywriting and content generation platform", category: "Text", url: "https://writesonic.com", logo_url: "https://ui-avatars.com/api/?name=Writesonic&background=2d9cdb&color=fff" },
   { name: "Character.AI", description: "Create and chat with custom AI characters", category: "Text", url: "https://beta.character.ai", logo_url: "https://ui-avatars.com/api/?name=Character.AI&background=1f2937&color=fff" },
   { name: "Anyword", description: "AI marketing copy optimization for ads and landing pages", category: "Text", url: "https://anyword.com", logo_url: "https://ui-avatars.com/api/?name=Anyword&background=0f172a&color=fff" },
   { name: "AI21 Studio", description: "Advanced developer tools for natural language generation and semantic text", category: "Text", url: "https://www.ai21.com/studio", logo_url: "https://ui-avatars.com/api/?name=AI21+Studio&background=ef4444&color=fff" },
-  { name: "Notion AI", description: "AI-powered workspace for notes, docs, and knowledge management", category: "Productivity", url: "https://notion.so", logo_url: "https://ui-avatars.com/api/?name=Notion&background=000000&color=fff" },
+  { name: "Notion AI", description: "AI-powered workspace for notes, docs, and knowledge management", category: "Productivity", url: "https://notion.so", logo_url: "https://ui-avatars.com/api/?name=Notion&background=000000&color=fff", is_featured: 1 },
   { name: "Scribe", description: "Automatically document workflows and how-to guides with AI", category: "Productivity", url: "https://scribehow.com", logo_url: "https://ui-avatars.com/api/?name=Scribe&background=2563eb&color=fff" },
   { name: "Fathom", description: "AI meeting summary and note-taking assistant", category: "Productivity", url: "https://fathom.video", logo_url: "https://ui-avatars.com/api/?name=Fathom&background=0f172a&color=fff" },
   { name: "Sembly AI", description: "AI meeting assistant for transcripts, highlights, and actions", category: "Productivity", url: "https://sembly.ai", logo_url: "https://ui-avatars.com/api/?name=Sembly&background=0f172a&color=fff" },
@@ -28,9 +28,9 @@ const aiServices = [
   { name: "Browse AI", description: "Extract and monitor web data with AI", category: "Productivity", url: "https://browse.ai", logo_url: "https://ui-avatars.com/api/?name=Browse&background=0052cc&color=fff" },
 
   // Image Generation
-  { name: "Midjourney", description: "AI art generator with unique artistic styles", category: "Image", url: "https://midjourney.com", logo_url: "https://ui-avatars.com/api/?name=Midjourney&background=000000&color=fff" },
-  { name: "DALL-E 3", description: "OpenAI's image generation model with high accuracy", category: "Image", url: "https://openai.com/dall-e-3", logo_url: "https://ui-avatars.com/api/?name=DALL-E&background=10a37f&color=fff" },
-  { name: "Stable Diffusion", description: "Open-source text-to-image generation model", category: "Image", url: "https://stability.ai", logo_url: "https://ui-avatars.com/api/?name=Stable&background=4d25a1&color=fff" },
+  { name: "Midjourney", description: "AI art generator with unique artistic styles", category: "Image", url: "https://midjourney.com", logo_url: "https://ui-avatars.com/api/?name=Midjourney&background=000000&color=fff", is_featured: 1 },
+  { name: "DALL-E 3", description: "OpenAI's image generation model with high accuracy", category: "Image", url: "https://openai.com/dall-e-3", logo_url: "https://ui-avatars.com/api/?name=DALL-E&background=10a37f&color=fff", is_featured: 1 },
+  { name: "Stable Diffusion", description: "Open-source text-to-image generation model", category: "Image", url: "https://stability.ai", logo_url: "https://ui-avatars.com/api/?name=Stable&background=4d25a1&color=fff", is_featured: 1 },
   { name: "Leonardo.ai", description: "AI image and video generation platform for creators", category: "Image", url: "https://leonardo.ai", logo_url: "https://ui-avatars.com/api/?name=Leonardo&background=2b3b5a&color=fff" },
   { name: "Adobe Firefly", description: "Creative generative AI in Adobe apps", category: "Image", url: "https://firefly.adobe.com", logo_url: "https://ui-avatars.com/api/?name=Firefly&background=ff0000&color=fff" },
   { name: "Pixlr AI", description: "AI-powered image editing and generation", category: "Image", url: "https://pixlr.com", logo_url: "https://ui-avatars.com/api/?name=Pixlr&background=1d7e6c&color=fff" },
@@ -42,7 +42,7 @@ const aiServices = [
   { name: "NightCafe Studio", description: "AI art generator with style transfer and painting modes", category: "Image", url: "https://nightcafe.studio", logo_url: "https://ui-avatars.com/api/?name=NightCafe&background=7c3aed&color=fff" },
 
   // Video
-  { name: "Runway ML", description: "AI video editing and generation tools", category: "Video", url: "https://runwayml.com", logo_url: "https://ui-avatars.com/api/?name=Runway&background=000000&color=fff" },
+  { name: "Runway ML", description: "AI video editing and generation tools", category: "Video", url: "https://runwayml.com", logo_url: "https://ui-avatars.com/api/?name=Runway&background=000000&color=fff", is_featured: 1 },
   { name: "Synthesia", description: "AI video generation with digital avatars", category: "Video", url: "https://synthesia.io", logo_url: "https://ui-avatars.com/api/?name=Synthesia&background=1a237e&color=fff" },
   { name: "Tome.app", description: "AI-powered storytelling and presentation tool", category: "Video", url: "https://tome.app", logo_url: "https://ui-avatars.com/api/?name=Tome&background=6200ea&color=fff" },
   { name: "Gamma", description: "AI presentation generator", category: "Video", url: "https://gamma.app", logo_url: "https://ui-avatars.com/api/?name=Gamma&background=ff4d4d&color=fff" },
@@ -53,7 +53,7 @@ const aiServices = [
   { name: "Runway Gen-2", description: "Advanced text-to-video generation from the Runway platform", category: "Video", url: "https://runwayml.com/gen-2", logo_url: "https://ui-avatars.com/api/?name=RunwayGen2&background=000000&color=fff" },
 
   // Audio
-  { name: "ElevenLabs", description: "AI voice synthesis and text-to-speech", category: "Audio", url: "https://elevenlabs.io", logo_url: "https://ui-avatars.com/api/?name=Eleven&background=0a0a0a&color=fff" },
+  { name: "ElevenLabs", description: "AI voice synthesis and text-to-speech", category: "Audio", url: "https://elevenlabs.io", logo_url: "https://ui-avatars.com/api/?name=Eleven&background=0a0a0a&color=fff", is_featured: 1 },
   { name: "Murf", description: "AI voice generator for podcasts and videos", category: "Audio", url: "https://murf.ai", logo_url: "https://ui-avatars.com/api/?name=Murf&background=662d91&color=fff" },
   { name: "Descript", description: "AI-powered audio/video editing with transcription", category: "Audio", url: "https://descript.com", logo_url: "https://ui-avatars.com/api/?name=Descript&background=2c2c2c&color=fff" },
   { name: "Otter.ai", description: "AI meeting transcription and notes", category: "Audio", url: "https://otter.ai", logo_url: "https://ui-avatars.com/api/?name=Otter&background=36a9e0&color=fff" },
@@ -65,10 +65,10 @@ const aiServices = [
   { name: "Play.ht", description: "AI text-to-speech and voice cloning for content creators", category: "Audio", url: "https://play.ht", logo_url: "https://ui-avatars.com/api/?name=Play.ht&background=111827&color=fff" },
 
   // Code & Development
-  { name: "GitHub Copilot", description: "AI pair programmer for code suggestions", category: "Code", url: "https://github.com/features/copilot", logo_url: "https://ui-avatars.com/api/?name=Copilot&background=000000&color=fff" },
+  { name: "GitHub Copilot", description: "AI pair programmer for code suggestions", category: "Code", url: "https://github.com/features/copilot", logo_url: "https://ui-avatars.com/api/?name=Copilot&background=000000&color=fff", is_featured: 1 },
   { name: "Tabnine", description: "AI code completion for multiple IDEs", category: "Code", url: "https://tabnine.com", logo_url: "https://ui-avatars.com/api/?name=Tabnine&background=00b09b&color=fff" },
   { name: "Mutable.ai", description: "AI-powered code generation and refactoring", category: "Code", url: "https://mutable.ai", logo_url: "https://ui-avatars.com/api/?name=Mutable&background=009688&color=fff" },
-  { name: "v0.dev", description: "Generative UI component builder", category: "Code", url: "https://v0.dev", logo_url: "https://ui-avatars.com/api/?name=v0&background=000000&color=fff" },
+  { name: "v0.dev", description: "Generative UI component builder", category: "Code", url: "https://v0.dev", logo_url: "https://ui-avatars.com/api/?name=v0&background=000000&color=fff", is_featured: 1 },
   { name: "Replit AI", description: "AI coding assistant in the browser", category: "Code", url: "https://replit.com", logo_url: "https://ui-avatars.com/api/?name=Replit&background=f26207&color=fff" },
   { name: "Amazon CodeWhisperer", description: "AI coding suggestions inside AWS and IDE tools", category: "Code", url: "https://aws.amazon.com/codewhisperer", logo_url: "https://ui-avatars.com/api/?name=CodeWhisperer&background=232f3e&color=fff" },
   { name: "Sourcegraph Cody", description: "AI code search and reasoning across repos", category: "Code", url: "https://sourcegraph.com/cody", logo_url: "https://ui-avatars.com/api/?name=Cody&background=065f46&color=fff" },

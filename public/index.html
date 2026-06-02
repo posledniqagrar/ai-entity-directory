@@ -358,7 +358,7 @@
             }
 
             gridDiv.innerHTML = services.map(service => `
-                <div class="bg-gray-900/50 backdrop-blur-sm rounded-xl overflow-hidden card-hover transition-all border border-purple-500/20">
+                <div class="backdrop-blur-sm rounded-xl overflow-hidden card-hover transition-all border ${service.is_featured ? 'border-purple-500/40 shadow-[0_0_20px_rgba(139,92,246,0.15)] bg-gradient-to-br from-purple-950/20 to-gray-900/50' : 'border-purple-500/20 bg-gray-900/50'}">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-3">
                             <div class="flex items-center space-x-3">
@@ -368,14 +368,17 @@
                             </div>
                             ${currentUser ? `
                                 <button onclick="${favorites.includes(service.id) ? `removeFromFavorites(${service.id})` : `addToFavorites(${service.id})`}" 
-                                        class="text-2xl transition ${favorites.includes(service.id) ? 'text-yellow-400' : 'text-gray-500 hover:text-yellow-400'}">
-                                    ${favorites.includes(service.id) ? '★' : '☆'}
-                                </button>
+                                         class="text-2xl transition ${favorites.includes(service.id) ? 'text-yellow-400' : 'text-gray-500 hover:text-yellow-400'}">
+                                     ${favorites.includes(service.id) ? '★' : '☆'}
+                                 </button>
                             ` : ''}
                         </div>
                         <p class="text-gray-400 text-sm mb-3 leading-relaxed">${service.description}</p>
                         <div class="flex items-center justify-between mt-4">
-                            <span class="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-500/30">${service.category}</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-500/30">${service.category}</span>
+                                ${service.is_featured ? `<span class="px-2 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[10px] font-bold rounded-md uppercase tracking-wider">★ Featured</span>` : ''}
+                            </div>
                             <a href="${service.url}" target="_blank" rel="noopener noreferrer" 
                                class="text-purple-400 hover:text-purple-300 text-sm font-medium transition">Visit →</a>
                         </div>

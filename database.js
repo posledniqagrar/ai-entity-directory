@@ -40,6 +40,7 @@ async function initializeDatabase() {
       category TEXT NOT NULL,
       logo_url TEXT,
       status TEXT DEFAULT 'approved',
+      is_featured INTEGER DEFAULT 0,
       submitted_by INTEGER,
       submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       approved_by INTEGER,
@@ -113,6 +114,7 @@ async function migrateSchema() {
 
   await ensureColumns('services', [
     { name: 'status', def: "TEXT DEFAULT 'approved'" },
+    { name: 'is_featured', def: 'INTEGER DEFAULT 0' },
     { name: 'submitted_by', def: 'INTEGER' },
     { name: 'submitted_at', def: 'DATETIME' },
     { name: 'approved_by', def: 'INTEGER' },
@@ -140,24 +142,28 @@ async function ensureColumns(table, columns) {
 
 async function seedServices() {
   const countResult = await db.get('SELECT COUNT(*) as count FROM services');
-  if (countResult && countResult.count > 0) {
-    console.log(`Services already seeded: ${countResult.count}`);
-    return;
-  }
-
   let insertedCount = 0;
-  for (const service of aiServices) {
-    const result = await db.run(`
-      INSERT OR IGNORE INTO services (name, description, url, category, logo_url, status)
-      VALUES (?, ?, ?, ?, ?, 'approved')
-    `, [service.name, service.description, service.url, service.category, service.logo_url]);
+  if (!countResult || countResult.count === 0) {
+    for (const service of aiServices) {
+      const result = await db.run(`
+        INSERT OR IGNORE INTO services (name, description, url, category, logo_url, status, is_featured)
+        VALUES (?, ?, ?, ?, ?, 'approved', ?)
+      `, [service.name, service.description, service.url, service.category, service.logo_url, service.is_featured || 0]);
 
-    if (result.changes > 0) {
-      insertedCount++;
+      if (result.changes > 0) {
+        insertedCount++;
+      }
     }
+    console.log(`Seeded ${insertedCount} default AI services`);
   }
 
-  console.log(`Seeded ${insertedCount} default AI services`);
+  // Update existing/new services with correct featured status from seed-data.js
+  for (const service of aiServices) {
+    await db.run(`
+      UPDATE services SET is_featured = ? WHERE name = ?
+    `, [service.is_featured || 0, service.name]);
+  }
+  console.log('Updated is_featured status for default AI services');
 }
 
 function getDb() {

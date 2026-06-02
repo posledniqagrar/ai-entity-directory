@@ -3,7 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Entity - Premium AI Services Directory</title>
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>AI Entity - Free AI Services & Tools Directory</title>
+    <meta name="description" content="Discover, compare, and submit the best AI services, tools, and SaaS platforms. Explore 85+ curated artificial intelligence resources for writing, coding, images, and audio. 100% free to use.">
+    <meta name="keywords" content="ai directory, ai tools directory, free ai tools, best artificial intelligence software, writing assistant, image generator, code completion, voice generator, saas directory">
+    <meta name="author" content="AI Entity">
+    <link rel="canonical" href="https://aientity.co.uk">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aientity.co.uk/">
+    <meta property="og:title" content="AI Entity - Free AI Services & Tools Directory">
+    <meta property="og:description" content="Discover, compare, and submit the best AI services, tools, and SaaS platforms. Explore 85+ curated artificial intelligence resources. 100% free to use.">
+    <meta property="og:image" content="https://aientity.co.uk/images/aie-logo.png?v=3">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://aientity.co.uk/">
+    <meta property="twitter:title" content="AI Entity - Free AI Services & Tools Directory">
+    <meta property="twitter:description" content="Discover, compare, and submit the best AI services, tools, and SaaS platforms. Explore 85+ curated artificial intelligence resources. 100% free to use.">
+    <meta property="twitter:image" content="https://aientity.co.uk/images/aie-logo.png?v=3">
+
+    <!-- JSON-LD Structured Data for Directory / Website -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "AI Entity",
+      "url": "https://aientity.co.uk",
+      "description": "Discover, review, and share the best AI services and tools in one curated, free directory.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://aientity.co.uk/?search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -92,9 +132,9 @@
                         <img src="/images/aie-logo.png?v=3" alt="AI Entity logo" class="w-full h-full object-cover" />
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                        <div class="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                             AI Entity
-                        </h1>
+                        </div>
                         <p class="text-xs text-purple-300/60">Premium AI Directory</p>
                     </div>
                 </div>
@@ -115,8 +155,13 @@
             <h1 class="text-3xl md:text-4xl font-bold mb-1 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-clip-text text-transparent glow-text">
                 AI Entity
             </h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8">Discover the Most Advanced AI Tools in One Place</p>
-            <p class="text-gray-400 max-w-2xl mx-auto">Curated directory of 85+ cutting-edge AI services for professionals, creators, and innovators</p>
+            <p class="text-xl md:text-2xl text-gray-300 mb-2">Discover the Most Advanced AI Tools in One Place</p>
+            <div class="flex justify-center mb-6">
+                <span class="px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded-full border border-green-500/20 font-medium">
+                    🟢 100% Free & Open Community Directory
+                </span>
+            </div>
+            <p class="text-gray-400 max-w-2xl mx-auto">Curated directory of 85+ cutting-edge AI services for professionals, creators, and innovators. Submit your tool or platform for free to get started.</p>
         </div>
     </div>
 
@@ -216,7 +261,7 @@
             if (currentUser) {
                 authDiv.innerHTML = `
                     <span class="text-purple-300 text-sm">${currentUser.email.split('@')[0]}</span>
-                    <a href="/submit" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-sm font-medium">+ Submit AI</a>
+                    <a href="/submit" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition text-sm font-medium">+ Submit Free AI</a>
                     <a href="/profile" class="text-purple-300 hover:text-purple-200 transition">Profile</a>
                     ${currentUser.role === 'admin' ? '<a href="/admin" class="text-blue-400 hover:text-blue-300 transition">Admin</a>' : ''}
                     <button onclick="logout()" class="text-red-400 hover:text-red-300 transition">Logout</button>

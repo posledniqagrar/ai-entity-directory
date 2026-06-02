@@ -63,13 +63,11 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
-          railway link --project ${{ secrets.RAILWAY_PROJECT_STAGING }} --service ai-services-directory
-          railway up
+          railway up --project ${{ secrets.RAILWAY_PROJECT_STAGING }} --service ai-services-directory --environment staging
 
       - name: Deploy to Railway (production)
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
-          railway link --project b8446e38-e66a-480a-aac1-c7d3051be8b9 --service ai-services-directory --environment production
-          railway up
+          railway up --project b8446e38-e66a-480a-aac1-c7d3051be8b9 --service ai-services-directory --environment production

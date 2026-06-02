@@ -63,6 +63,7 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_STAGING }} --service ai-services-directory
           railway up
 
       - name: Deploy to Railway (production)
@@ -70,4 +71,5 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
+          railway link --project ${{ secrets.RAILWAY_PROJECT_PROD }} --service ai-services-directory
           railway up

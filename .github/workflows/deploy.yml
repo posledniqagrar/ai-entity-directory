@@ -71,5 +71,5 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_API_KEY }}
         run: |
-          railway link --project ${{ secrets.RAILWAY_PROJECT_PROD }} --service ai-services-directory
+          railway link --project b8446e38-e66a-480a-aac1-c7d3051be8b9 --service ai-services-directory --environment production
           railway up

@@ -255,7 +255,7 @@
     <div class="desktop-env flex flex-col justify-between relative p-0 m-0">
 
         <!-- Top/Middle Area: Desktop Workspace -->
-        <div class="flex-grow flex p-6 relative h-[calc(100vh-48px)] overflow-hidden">
+        <div class="flex-grow flex p-2 sm:p-6 relative h-[calc(100vh-48px)] overflow-hidden">
 
             <!-- Desktop Icon Grid (Left Sidebar) -->
             <div class="hidden md:flex flex-col space-y-4 w-28 select-none z-10">
@@ -368,14 +368,14 @@
                 </div>
 
                 <!-- Navigation Bar (Address Bar & Search) -->
-                <div class="p-2.5 bg-black/35 border-b border-white/10 flex flex-col sm:flex-row gap-3 items-center justify-between z-10">
+                <div class="p-2.5 bg-black/35 border-b border-white/10 flex flex-row gap-3 items-center justify-between z-10">
                     <!-- Navigation Address Path -->
-                    <div class="flex items-center space-x-1 flex-grow w-full sm:w-auto bg-[#1a1b32]/80 border border-white/10 rounded-md px-3 py-1.5 text-xs text-white/90">
+                    <div class="hidden sm:flex items-center space-x-1 flex-grow bg-[#1a1b32]/80 border border-white/10 rounded-md px-3 py-1.5 text-xs text-white/90">
                         <span class="text-sm">🖥️</span>
                         <span id="explorer-address-path" class="font-medium truncate">Computer > AI Entity > All Services</span>
                     </div>
                     <!-- Search Field -->
-                    <div class="w-full sm:w-72 relative">
+                    <div class="w-full sm:w-72 relative flex-grow sm:flex-grow-0">
                         <input type="text" id="explorer-search-input" placeholder="Search services..." 
                                class="w-full pl-8 pr-3 py-1.5 rounded-md text-xs text-white bg-[#1a1b32]/80 border border-white/10 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 transition-all outline-none">
                         <span class="absolute left-2.5 top-2 text-xs">🔍</span>
@@ -443,7 +443,7 @@
             </div>
 
             <!-- Taskbar Tabs Center (Active Windows) -->
-            <div id="taskbar-active-tabs" class="flex-grow max-w-lg mx-6 flex space-x-2 overflow-x-auto custom-scrollbar h-9">
+            <div id="taskbar-active-tabs" class="hidden sm:flex flex-grow max-w-lg mx-6 space-x-2 overflow-x-auto custom-scrollbar h-9">
                 <!-- Populate app tab status dynamically -->
             </div>
 
@@ -711,7 +711,7 @@
                 startCats.innerHTML = categories.map(cat => `
                     <div onclick="selectCategory('${cat}'); toggleStartMenu();" class="flex items-center space-x-3 px-3 py-1.5 rounded hover:bg-white/10 text-white/90 text-xs font-medium transition">
                         <span>📁</span>
-                        <span>${cat} Services</span>
+                        <span>${cat} AI</span>
                     </div>
                 `).join('');
             }

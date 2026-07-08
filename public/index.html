@@ -372,7 +372,10 @@
                                 <div class="flex items-center space-x-3">
                                     <img src="${service.logo_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(service.name)}&background=8b5cf6&color=fff`}" 
                                          alt="${service.name}" class="w-12 h-12 rounded-lg">
-                                    <h3 class="text-lg font-semibold text-white">${service.name}</h3>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-white">${service.name}</h3>
+                                        ${service.is_featured ? `<span class="inline-block mt-1 px-2 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[9px] font-bold rounded uppercase tracking-wider">★ Featured</span>` : ''}
+                                    </div>
                                 </div>
                                 ${currentUser ? `
                                     <button onclick="${favorites.includes(service.id) ? `removeFromFavorites(${service.id})` : `addToFavorites(${service.id})`}" 
@@ -389,7 +392,6 @@
                         <div class="flex items-center justify-between mt-4 border-t border-purple-500/10 pt-4">
                             <div class="flex items-center space-x-2">
                                 <span class="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-500/30">${service.category}</span>
-                                ${service.is_featured ? `<span class="px-2 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 text-[10px] font-bold rounded-md uppercase tracking-wider">★ Featured</span>` : ''}
                             </div>
                             <div class="flex items-center space-x-2">
                                 <button onclick="showServiceDetails(${service.id})" class="text-purple-400 hover:text-purple-300 text-sm font-medium transition focus:outline-none">Details</button>

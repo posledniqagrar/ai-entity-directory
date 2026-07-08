@@ -577,6 +577,60 @@
             <div id="google_translate_element" class="w-full text-xs"></div>
         </div>
 
+        <!-- AI Assistant Floating Orb -->
+        <div id="assistant-orb-container" class="fixed bottom-16 right-4 sm:right-6 z-40 select-none flex flex-col items-end">
+            <!-- Speech Bubble Hint -->
+            <div id="assistant-bubble" class="aero-glass px-3 py-1.5 rounded-xl text-[10px] text-white/95 border border-white/20 shadow-md mb-2 max-w-[160px] text-center transition-all duration-500 relative">
+                <span>Need help? Ask me!</span>
+                <div class="absolute bottom-[-6px] right-5 w-2 h-2 bg-[#16172d]/90 border-r border-b border-white/20 transform rotate-45"></div>
+            </div>
+            <!-- Orb Avatar -->
+            <button onclick="toggleAssistantChat(event)" class="w-11 h-11 rounded-full start-orb flex items-center justify-center text-xl hover:scale-105 active:scale-95 transition-all duration-200 shadow-lg relative">
+                <div class="absolute inset-0 rounded-full animate-ping bg-purple-500/20 pointer-events-none"></div>
+                🤖
+            </button>
+        </div>
+
+        <!-- AI Assistant Chat Window -->
+        <div id="assistant-chat-window" class="aero-glass fixed bottom-16 right-4 sm:right-6 w-80 h-[380px] hidden flex-col overflow-hidden rounded-xl border border-white/25 z-40 shadow-2xl">
+            <!-- Title Bar -->
+            <div class="h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+                <div class="flex items-center space-x-2">
+                    <span>🤖</span>
+                    <span class="text-xs font-semibold text-white/90">AI Entity Assistant</span>
+                </div>
+                <button onclick="toggleAssistantChat(event)" class="win-btn win-btn-close bg-white/5 text-lg">×</button>
+            </div>
+            <!-- Chat Body -->
+            <div class="flex-grow bg-[#16172d]/90 p-3.5 flex flex-col justify-between overflow-hidden">
+                <!-- Messages Stream -->
+                <div id="assistant-messages" class="flex-grow overflow-y-auto custom-scrollbar space-y-3.5 pr-1 text-xs mb-3">
+                    <div class="flex items-start space-x-2">
+                        <div class="w-6 h-6 rounded-full bg-purple-600/40 flex items-center justify-center flex-shrink-0 select-none">🤖</div>
+                        <div class="bg-[#1b1c35]/80 border border-white/10 rounded-lg p-2.5 text-white/90 leading-relaxed max-w-[85%]">
+                            Hi! I'm your AI Entity Assistant. I can recommend tools, filter categories, or search the directory for you. What are you looking to create today?
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Suggestions Chips -->
+                <div class="flex flex-wrap gap-1.5 mb-2.5">
+                    <button onclick="handleAssistantSuggest('Recommend copywriting AI')" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-0.5 rounded text-[10px] text-white/80 transition">Writing AI</button>
+                    <button onclick="handleAssistantSuggest('Find image generators')" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-0.5 rounded text-[10px] text-white/80 transition">Image AI</button>
+                    <button onclick="handleAssistantSuggest('How do I bookmark?')" class="bg-white/5 hover:bg-white/10 border border-white/10 px-2 py-0.5 rounded text-[10px] text-white/80 transition">Help Info</button>
+                </div>
+
+                <!-- Input Row -->
+                <form id="assistant-input-form" onsubmit="handleAssistantSubmit(event)" class="flex items-center space-x-2">
+                    <input type="text" id="assistant-input" placeholder="Type a request..." required autocomplete="off"
+                           class="flex-grow px-2.5 py-1.5 rounded text-xs bg-[#101126]/80 border border-white/15 outline-none focus:border-purple-500 text-white placeholder-white/40">
+                    <button type="submit" class="aero-btn aero-btn-blue px-3 py-1.5 rounded text-xs font-semibold">
+                        ➔
+                    </button>
+                </form>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -1281,6 +1335,133 @@
             currentPage = 1;
             loadServices();
         });
+
+        // AI Assistant Functions
+        let isAssistantOpen = false;
+
+        function toggleAssistantChat(e) {
+            if (e) e.stopPropagation();
+            isAssistantOpen = !isAssistantOpen;
+            const chatWindow = document.getElementById('assistant-chat-window');
+            const bubble = document.getElementById('assistant-bubble');
+            
+            if (isAssistantOpen) {
+                chatWindow.classList.remove('hidden');
+                chatWindow.classList.add('flex');
+                if (bubble) bubble.classList.add('hidden');
+                document.getElementById('assistant-input').focus();
+            } else {
+                chatWindow.classList.add('hidden');
+                chatWindow.classList.remove('flex');
+            }
+        }
+
+        function handleAssistantSuggest(text) {
+            document.getElementById('assistant-input').value = text;
+            const form = document.getElementById('assistant-input-form');
+            form.dispatchEvent(new Event('submit'));
+        }
+
+        function handleAssistantSubmit(e) {
+            if (e) e.preventDefault();
+            const input = document.getElementById('assistant-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            appendAssistantMessage('user', query);
+            input.value = '';
+
+            setTimeout(() => {
+                const response = processAssistantQuery(query);
+                appendAssistantMessage('assistant', response);
+            }, 300);
+        }
+
+        function appendAssistantMessage(sender, text) {
+            const container = document.getElementById('assistant-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex items-start space-x-2 ${sender === 'user' ? 'justify-end' : ''}`;
+            
+            if (sender === 'user') {
+                msgDiv.innerHTML = `
+                    <div class="bg-purple-600/30 border border-purple-500/25 rounded-lg p-2.5 text-white/90 leading-relaxed max-w-[85%]">
+                        ${text}
+                    </div>
+                    <div class="w-6 h-6 rounded-full bg-blue-600/40 flex items-center justify-center flex-shrink-0 select-none">👤</div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="w-6 h-6 rounded-full bg-purple-600/40 flex items-center justify-center flex-shrink-0 select-none">🤖</div>
+                    <div class="bg-[#1b1c35]/80 border border-white/10 rounded-lg p-2.5 text-white/90 leading-relaxed max-w-[85%]">
+                        ${text}
+                    </div>
+                `;
+            }
+            
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function processAssistantQuery(query) {
+            const lower = query.toLowerCase();
+
+            if (lower.includes('bookmark') || lower.includes('favorite') || lower.includes('star') || lower.includes('save')) {
+                return "To bookmark a service, click the ★ icon on its card. You can find all your saved tools inside the **Favorites Folder** on the desktop or sidebar.";
+            }
+
+            if (lower.includes('submit') || lower.includes('add tool') || lower.includes('add service') || lower.includes('register service')) {
+                return "You can list a new AI tool by double-clicking the **Submit AI Folder** on the desktop, or selecting it from the Start Menu. Submissions are 100% free!";
+            }
+
+            if (lower.includes('text') || lower.includes('writing') || lower.includes('write') || lower.includes('copywrite') || lower.includes('article')) {
+                selectCategory('Text');
+                return "I've loaded the **Text AI** folder for you! Here are copywriting, translation, and article generators. Check out the updated grid.";
+            }
+            if (lower.includes('image') || lower.includes('picture') || lower.includes('photo') || lower.includes('art') || lower.includes('paint') || lower.includes('draw')) {
+                selectCategory('Image');
+                return "I've opened the **Images AI** category! Perfect for creating photos, digital artwork, and design assets.";
+            }
+            if (lower.includes('video') || lower.includes('movie') || lower.includes('animation') || lower.includes('generator video')) {
+                selectCategory('Video');
+                return "Navigated to **Video AI**! Here are tools to edit clips, generate animations, or script videos.";
+            }
+            if (lower.includes('audio') || lower.includes('voice') || lower.includes('speech') || lower.includes('sound') || lower.includes('music')) {
+                selectCategory('Audio');
+                return "I've loaded the **Audio AI** category! Perfect for voiceovers, text-to-speech, or generating music tracks.";
+            }
+            if (lower.includes('code') || lower.includes('programming') || lower.includes('developer') || lower.includes('coding') || lower.includes('html')) {
+                selectCategory('Code');
+                return "I've filtered the directory for **Code & Development** AI tools, perfect for scripting, debugging, and building sites.";
+            }
+            if (lower.includes('productivity') || lower.includes('work') || lower.includes('excel') || lower.includes('document')) {
+                selectCategory('Productivity');
+                return "I've opened the **Productivity** category to help optimize your day-to-day workflow!";
+            }
+            if (lower.includes('data') || lower.includes('analytic') || lower.includes('chart') || lower.includes('graph')) {
+                selectCategory('Data');
+                return "Navigated to **Data & Analytics**! Great for parsing datasets and charts.";
+            }
+
+            if (allLoadedServices && allLoadedServices.length > 0) {
+                const matchedService = allLoadedServices.find(s => lower.includes(s.name.toLowerCase()));
+                if (matchedService) {
+                    openDetailsModal(matchedService.id);
+                    return `I found **${matchedService.name}** in our database and opened its file properties dialog for you! Let me know if you need help finding anything else.`;
+                }
+            }
+
+            currentSearch = query;
+            const searchBar1 = document.getElementById('explorer-search-input');
+            if (searchBar1) searchBar1.value = query;
+            loadServices();
+            return `I've run a system-wide search for "${query}" across the database and filtered the Explorer grid. Take a look!`;
+        }
+
+        // Auto-fade speech bubble hint
+        setTimeout(() => {
+            const bubble = document.getElementById('assistant-bubble');
+            if (bubble) bubble.classList.add('opacity-0', 'pointer-events-none');
+        }, 8000);
 
         // Initialize Desktop app
         checkAuth();

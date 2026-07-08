@@ -1544,11 +1544,8 @@
                 }
             }
 
-            currentSearch = query;
-            const searchBar1 = document.getElementById('explorer-search-input');
-            if (searchBar1) searchBar1.value = query;
-            loadServices();
-            return `I've run a system-wide search for "${query}" across the database and filtered the Explorer grid. Take a look!`;
+            // Fallback for unmatched queries: direct to personal email
+            return `For any personal inquiries, custom development requests, or business questions, please feel free to reach out directly to the developer at **<a href="mailto:s.arsov@gmail.com" class="text-blue-400 hover:underline">s.arsov@gmail.com</a>**. We pay close attention to detail and are ready to help!`;
         }
 
         // Auto-fade speech bubble hint

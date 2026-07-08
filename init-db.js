@@ -106,11 +106,11 @@ async function initDatabase() {
     }
   }
 
-  // Update existing services with correct featured status
+  // Update existing services with correct featured status and descriptions
   for (const service of aiServices) {
     await db.run(`
-      UPDATE services SET is_featured = ? WHERE name = ?
-    `, [service.is_featured || 0, service.name]);
+      UPDATE services SET is_featured = ?, description = ? WHERE name = ?
+    `, [service.is_featured || 0, service.description, service.name]);
   }
   
   console.log(`Database initialized successfully!`);

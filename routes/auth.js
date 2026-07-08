@@ -26,22 +26,24 @@ const cookieOptions = (() => {
 
 // Register
 router.post('/register', [
-  body('email').isEmail().normalizeEmail(),
-  body('password').isLength({ min: 6 })
+  body('email').isEmail().withMessage('Please enter a valid email address'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    const errorMsg = errors.array()[0].msg;
+    return res.status(400).json({ error: errorMsg });
   }
   
   const { email, password } = req.body;
   const db = getDb();
+  const normalizedEmail = (email || '').trim().toLowerCase();
   
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await db.run('INSERT INTO users (email, password_hash) VALUES (?, ?)', [email, hashedPassword]);
+    await db.run('INSERT INTO users (email, password_hash) VALUES (?, ?)', [normalizedEmail, hashedPassword]);
     
-    const user = await db.get('SELECT id, email, role FROM users WHERE email = ?', [email]);
+    const user = await db.get('SELECT id, email, role FROM users WHERE email = ?', [normalizedEmail]);
     const token = generateToken(user.id, user.email, user.role);
     
     res.cookie('token', token, cookieOptions);
@@ -59,8 +61,9 @@ router.post('/register', [
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   const db = getDb();
+  const normalizedEmail = (email || '').trim().toLowerCase();
   
-  const user = await db.get('SELECT * FROM users WHERE email = ?', [email]);
+  const user = await db.get('SELECT * FROM users WHERE email = ?', [normalizedEmail]);
   if (!user) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }

@@ -230,6 +230,12 @@
                     <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Submit AI</span>
                 </div>
 
+                <!-- Recycle Bin Shortcut -->
+                <div onclick="showRecycleBin()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
+                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🗑️</div>
+                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Recycle Bin</span>
+                </div>
+
                 <!-- Horizontal Separator Line -->
                 <div class="border-b border-white/10 mx-2 my-2"></div>
 
@@ -273,13 +279,44 @@
                 </div>
 
                 <!-- Menu Bar (Classic OS Menus) -->
-                <div class="hidden sm:flex h-7 bg-black/20 border-b border-white/5 items-center px-4 space-x-4 select-none text-xs text-white/70">
-                    <span class="hover:text-white cursor-pointer transition">File</span>
-                    <span class="hover:text-white cursor-pointer transition">Edit</span>
-                    <span class="hover:text-white cursor-pointer transition">View</span>
-                    <span class="hover:text-white cursor-pointer transition font-semibold" onclick="goToFavoritesPage()">Favorites</span>
-                    <span class="hover:text-white cursor-pointer transition">Tools</span>
-                    <span class="hover:text-white cursor-pointer transition">Help</span>
+                <div class="hidden sm:flex h-7 bg-black/20 border-b border-white/5 items-center px-4 space-x-4 select-none text-xs text-white/70 relative z-30">
+                    <div class="relative">
+                        <span class="hover:text-white cursor-pointer transition py-1 px-1" onclick="toggleMenuDropdown('file', event)">File</span>
+                        <div id="menu-dd-file" class="hidden absolute top-6 left-0 bg-[#16172d] border border-white/20 rounded shadow-xl py-1 w-36 z-50 text-[11px] text-white/95">
+                            <div onclick="goToSubmitPage()" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">New Submission</div>
+                            <div onclick="selectCategory('all'); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Explore All</div>
+                            <hr class="border-white/10 my-1">
+                            <div onclick="closeExplorer(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Close Explorer</div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <span class="hover:text-white cursor-pointer transition py-1 px-1" onclick="toggleMenuDropdown('edit', event)">Edit</span>
+                        <div id="menu-dd-edit" class="hidden absolute top-6 left-0 bg-[#16172d] border border-white/20 rounded shadow-xl py-1 w-36 z-50 text-[11px] text-white/95">
+                            <div onclick="clearSearch(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Clear Search</div>
+                            <div onclick="loadServices(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Refresh Grid</div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <span class="hover:text-white cursor-pointer transition py-1 px-1" onclick="toggleMenuDropdown('view', event)">View</span>
+                        <div id="menu-dd-view" class="hidden absolute top-6 left-0 bg-[#16172d] border border-white/20 rounded shadow-xl py-1 w-40 z-50 text-[11px] text-white/95">
+                            <div onclick="toggleSidebar(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Toggle Navigation Pane</div>
+                            <div onclick="maximizeExplorer(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Maximize / Restore</div>
+                        </div>
+                    </div>
+                    <span class="hover:text-white cursor-pointer transition font-semibold animate-pulse" onclick="goToFavoritesPage()">Favorites</span>
+                    <div class="relative">
+                        <span class="hover:text-white cursor-pointer transition py-1 px-1" onclick="toggleMenuDropdown('tools', event)">Tools</span>
+                        <div id="menu-dd-tools" class="hidden absolute top-6 left-0 bg-[#16172d] border border-white/20 rounded shadow-xl py-1 w-36 z-50 text-[11px] text-white/95">
+                            <div onclick="goToFavoritesPage()" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Favorites Folder</div>
+                            <div onclick="goToAdminPage(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Control Panel</div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <span class="hover:text-white cursor-pointer transition py-1 px-1" onclick="toggleMenuDropdown('help', event)">Help</span>
+                        <div id="menu-dd-help" class="hidden absolute top-6 left-0 bg-[#16172d] border border-white/20 rounded shadow-xl py-1 w-40 z-50 text-[11px] text-white/95">
+                            <div onclick="showAboutProperties(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">About AI Entity...</div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Navigation Bar (Address Bar & Search) -->
@@ -366,8 +403,8 @@
             <div class="flex items-center space-x-3">
                 <!-- System Tray Indicators -->
                 <div class="hidden sm:flex items-center space-x-2.5 text-white/70 text-sm">
-                    <span class="cursor-pointer hover:text-white">📶</span>
-                    <span class="cursor-pointer hover:text-white">🔊</span>
+                    <span class="cursor-pointer hover:text-white" onclick="toggleNetworkPopup(event)">📶</span>
+                    <span class="cursor-pointer hover:text-white" onclick="toggleVolumePopup(event)">🔊</span>
                 </div>
                 <!-- Tray Clock -->
                 <div id="tray-clock" class="bg-white/5 border border-white/10 px-3 py-0.5 rounded flex flex-col justify-center min-w-[90px]">
@@ -461,6 +498,27 @@
             </div>
         </div>
 
+        <!-- Volume Control Tray Popup -->
+        <div id="volume-popup" class="aero-glass fixed bottom-14 right-8 rounded-lg border border-white/25 w-16 h-36 hidden flex-col items-center justify-between p-3 z-50">
+            <div class="text-[10px] text-white/70 font-semibold mb-1 select-none">Vol</div>
+            <input type="range" min="0" max="100" value="80" class="w-6 h-20 accent-purple-500 cursor-pointer" style="writing-mode: vertical-lr; direction: rtl;" oninput="updateVolumeIcon(this.value)">
+            <span id="volume-indicator" class="text-[10px] text-white font-semibold mt-1">80%</span>
+        </div>
+
+        <!-- Network Control Tray Popup -->
+        <div id="network-popup" class="aero-glass fixed bottom-14 right-14 rounded-lg border border-white/25 w-44 p-3 hidden flex-col z-50 select-none">
+            <div class="text-[10px] text-white/40 font-bold uppercase tracking-wider mb-2">Network Status</div>
+            <div class="flex items-center space-x-2">
+                <span class="text-base text-green-400">🟢</span>
+                <div class="flex flex-col">
+                    <span class="text-xs text-white font-semibold">Connected</span>
+                    <span class="text-[10px] text-white/60">AI Entity Fiber 5G</span>
+                </div>
+            </div>
+            <hr class="border-white/10 my-2">
+            <div class="text-[9px] text-white/50 text-right">Speed: 1.2 Gbps</div>
+        </div>
+
     </div>
 
     <script>
@@ -475,6 +533,9 @@
         let isStartMenuOpen = false;
         let activePropertiesTab = 'general';
         let activePropertiesServiceId = null;
+        
+        let isVolumeOpen = false;
+        let isNetworkOpen = false;
 
         async function checkAuth() {
             try {
@@ -572,7 +633,17 @@
                         <span>📁</span>
                         <span>${cat}</span>
                     </div>
-                `).join('');
+                `).join('') + `
+                    <div class="border-b border-white/10 my-2"></div>
+                    <div onclick="goToFavoritesPage()" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg cursor-pointer hover:bg-white/10 text-white/90 text-xs font-medium transition">
+                        <span>⭐</span>
+                        <span>Favorites Folder</span>
+                    </div>
+                    <div onclick="goToSubmitPage()" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg cursor-pointer hover:bg-white/10 text-white/90 text-xs font-medium transition">
+                        <span>📝</span>
+                        <span>Submit AI Folder</span>
+                    </div>
+                `;
             }
             
             // Populate start menu categories list
@@ -829,14 +900,143 @@
             }
         }
 
-        // Close start menu when clicking outside
+        // Comprehensive click-outside and menu closing listener
         document.addEventListener('click', (e) => {
+            const volPopup = document.getElementById('volume-popup');
+            const netPopup = document.getElementById('network-popup');
             const startMenu = document.getElementById('start-menu');
             const startBtn = document.querySelector('.start-orb');
+            
+            // Close Start Menu
             if (isStartMenuOpen && !startMenu.contains(e.target) && !startBtn.contains(e.target)) {
                 toggleStartMenu();
             }
+            
+            // Close Volume/Network Popups
+            if (isVolumeOpen && !volPopup.contains(e.target)) {
+                volPopup.classList.add('hidden');
+                isVolumeOpen = false;
+            }
+            if (isNetworkOpen && !netPopup.contains(e.target)) {
+                netPopup.classList.add('hidden');
+                isNetworkOpen = false;
+            }
+            
+            // Close explorer dropdown menu items
+            closeAllDropdowns();
         });
+
+        // Dropdowns, Sidebar, and system utility functions
+        function closeAllDropdowns() {
+            const dropdowns = ['file', 'edit', 'view', 'tools', 'help'];
+            dropdowns.forEach(d => {
+                const el = document.getElementById(`menu-dd-${d}`);
+                if (el) el.classList.add('hidden');
+            });
+        }
+
+        function toggleMenuDropdown(menuId, event) {
+            if (event) event.stopPropagation();
+            const el = document.getElementById(`menu-dd-${menuId}`);
+            if (!el) return;
+            const isHidden = el.classList.contains('hidden');
+            closeAllDropdowns();
+            if (isHidden) {
+                el.classList.remove('hidden');
+            }
+        }
+
+        function clearSearch() {
+            currentSearch = '';
+            const searchBar1 = document.getElementById('explorer-search-input');
+            const searchBar2 = document.getElementById('search-input');
+            if (searchBar1) searchBar1.value = '';
+            if (searchBar2) searchBar2.value = '';
+            loadServices();
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('#explorer-window div[class*="w-52"]');
+            if (sidebar) {
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('md:flex');
+            }
+        }
+
+        function showAboutProperties() {
+            const modal = document.getElementById('details-modal');
+            const modalContent = document.getElementById('modal-details-content');
+            
+            document.getElementById('prop-window-title').textContent = "About AI Entity System";
+            
+            const tabGen = document.getElementById('tab-general');
+            const tabDet = document.getElementById('tab-details');
+            tabGen.classList.add('active');
+            tabDet.classList.add('hidden');
+            
+            modalContent.innerHTML = `
+                <div class="flex items-start space-x-4 mb-4 select-text">
+                    <img src="/images/aie-logo.png?v=3" alt="AI Entity Logo" class="w-14 h-14 object-contain flex-shrink-0">
+                    <div>
+                        <h2 class="text-lg font-bold text-white mb-0.5">AI Entity Portal</h2>
+                        <p class="text-[10px] text-white/50">Version 1.2.1 (Build 7601: Service Pack 1)</p>
+                        <p class="text-[10px] text-white/40 mt-1">Copyright © 2026 AI Entity Corporation. All rights reserved.</p>
+                    </div>
+                </div>
+                
+                <hr class="border-white/10 my-4 select-none">
+                
+                <div class="space-y-3.5 text-xs select-text">
+                    <p class="text-white/80 leading-relaxed">
+                        The AI Entity Directory system is an advanced search and categorizing environment built to organize the world's most cutting-edge artificial intelligence services into a navigable directory. 
+                    </p>
+                    <p class="text-white/85">
+                        This product is licensed under the Microsoft-inspired nostalgic terms of Frutiger Aero design.
+                    </p>
+                    <div class="flex pt-2">
+                        <span class="w-28 text-white/50 select-none">Installed Memory:</span>
+                        <span class="text-white/90">8.00 GB (AI-enhanced RAM)</span>
+                    </div>
+                    <div class="flex">
+                        <span class="w-28 text-white/50 select-none">System Type:</span>
+                        <span class="text-white/90">64-bit Operating System, x64-based Processor</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end mt-6 pt-4 border-t border-white/10 select-none">
+                    <button onclick="closeDetailsModal(); document.getElementById('tab-details').classList.remove('hidden');" class="aero-btn px-5 py-2 rounded text-xs font-semibold">
+                       OK
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function showRecycleBin() {
+            alert("The Recycle Bin is empty.");
+        }
+
+        function toggleVolumePopup(e) {
+            if (e) e.stopPropagation();
+            isVolumeOpen = !isVolumeOpen;
+            isNetworkOpen = false;
+            document.getElementById('volume-popup').classList.toggle('hidden', !isVolumeOpen);
+            document.getElementById('network-popup').classList.add('hidden');
+        }
+
+        function toggleNetworkPopup(e) {
+            if (e) e.stopPropagation();
+            isNetworkOpen = !isNetworkOpen;
+            isVolumeOpen = false;
+            document.getElementById('network-popup').classList.toggle('hidden', !isNetworkOpen);
+            document.getElementById('volume-popup').classList.add('hidden');
+        }
+
+        function updateVolumeIcon(val) {
+            document.getElementById('volume-indicator').textContent = `${val}%`;
+        }
 
         // Tray Clock Function
         function updateClock() {

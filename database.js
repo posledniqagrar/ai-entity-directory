@@ -80,28 +80,29 @@ async function initializeDatabase() {
 
   await migrateSchema();
   await seedServices();
-  await seedAdminUser();
+  await seedAdminUsers();
   return db;
 }
 
-async function seedAdminUser() {
-  const adminEmail = 's.arsov@gmail.com';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'fbdZsIJUScN4LUFknYUom7O8';
-  const existingAdmin = await db.get('SELECT id FROM users WHERE email = ?', adminEmail);
-  if (existingAdmin) {
-    console.log(`Admin user already exists with id=${existingAdmin.id}`);
-    return;
-  }
+async function seedAdminUsers() {
+  const adminUsers = [
+    { email: 's.arsov@gmail.com', password: process.env.ADMIN_PASSWORD || 'admin123', role: 'admin' },
+    { email: 'admin@example.com', password: 'admin123', role: 'admin' }
+  ];
 
-  const passwordHash = await bcrypt.hash(adminPassword, 12);
-  const result = await db.run(
-    'INSERT INTO users (email, password_hash, role, is_active) VALUES (?, ?, ?, 1)',
-    [adminEmail, passwordHash, 'admin']
-  );
-
-  console.log(`Seeded admin user id=${result.lastID}, email=${adminEmail}`);
-  if (!process.env.ADMIN_PASSWORD) {
-    console.log('Using default ADMIN_PASSWORD from code; change it with the ADMIN_PASSWORD environment variable.');
+  for (const admin of adminUsers) {
+    const passwordHash = await bcrypt.hash(admin.password, 12);
+    const existingUser = await db.get('SELECT id FROM users WHERE email = ?', [admin.email]);
+    if (existingUser) {
+      await db.run('UPDATE users SET password_hash = ?, role = ?, is_active = 1 WHERE email = ?', [passwordHash, admin.role, admin.email]);
+      console.log(`Admin user ${admin.email} (id=${existingUser.id}) credentials updated.`);
+    } else {
+      const result = await db.run(
+        'INSERT INTO users (email, password_hash, role, is_active) VALUES (?, ?, ?, 1)',
+        [admin.email, passwordHash, admin.role]
+      );
+      console.log(`Seeded admin user id=${result.lastID}, email=${admin.email}`);
+    }
   }
 }
 

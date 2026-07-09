@@ -9,19 +9,12 @@ const router = express.Router();
 // use Secure + SameSite=None. For local dev we keep defaults for convenience.
 const cookieOptions = (() => {
   const isProd = process.env.NODE_ENV === 'production';
-  const opts = {
+  return {
     httpOnly: true,
-    maxAge: 7 * 24 * 60 * 60 * 1000
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    secure: isProd,
+    sameSite: 'Lax'
   };
-  if (isProd) {
-    opts.secure = true;
-    opts.sameSite = 'None';
-    if (process.env.COOKIE_DOMAIN) opts.domain = process.env.COOKIE_DOMAIN;
-  } else {
-    opts.secure = false;
-    opts.sameSite = 'Lax';
-  }
-  return opts;
 })();
 
 // Register

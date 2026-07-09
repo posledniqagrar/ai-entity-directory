@@ -290,6 +290,9 @@
                     <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Contact Us</span>
                 </div>
 
+                <!-- Auth Shortcuts Dynamic Placeholder -->
+                <div id="auth-shortcuts" class="contents"></div>
+
                 <!-- Horizontal Separator Line -->
                 <div class="border-b border-white/10 mx-2 my-2"></div>
 
@@ -363,6 +366,8 @@
                         <div id="menu-dd-tools" class="hidden absolute top-6 left-0 bg-[#16172d] border border-white/20 rounded shadow-xl py-1 w-36 z-50 text-[11px] text-white/95">
                             <div onclick="goToFavoritesPage()" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Favorites Folder</div>
                             <div onclick="goToAdminPage(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Control Panel</div>
+                            <hr class="border-white/10 my-1">
+                            <div id="menu-tools-auth" onclick="handleMenuAuthAction(); closeAllDropdowns();" class="px-3 py-1.5 hover:bg-purple-600/80 cursor-pointer transition">Log Off</div>
                         </div>
                     </div>
                     <div class="relative">
@@ -763,12 +768,22 @@
             }
         }
 
+        function handleMenuAuthAction() {
+            if (currentUser) {
+                logout();
+            } else {
+                goToLoginPage();
+            }
+        }
+
         function updateUserInterface() {
             // Update Start Menu User Info
             const nameEl = document.getElementById('start-menu-username');
             const roleEl = document.getElementById('start-menu-user-role');
             const adminLink = document.getElementById('start-admin-link');
             const shutdownDiv = document.getElementById('start-shutdown-action');
+            const authShortcuts = document.getElementById('auth-shortcuts');
+            const toolsAuthEl = document.getElementById('menu-tools-auth');
             
             if (currentUser) {
                 nameEl.textContent = currentUser.email.split('@')[0];
@@ -787,16 +802,43 @@
                         <span>Log Off</span>
                     </button>
                 `;
+                
+                if (authShortcuts) authShortcuts.innerHTML = '';
             } else {
                 nameEl.textContent = "Guest User";
                 roleEl.textContent = "Visitor";
                 adminLink.innerHTML = '';
                 shutdownDiv.innerHTML = `
-                    <button onclick="goToLoginPage()" class="aero-btn px-4 py-1.5 rounded flex items-center space-x-2 text-xs font-semibold">
-                        <span>🔑</span>
-                        <span>Log In</span>
-                    </button>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="goToLoginPage()" class="aero-btn aero-btn-blue px-3 py-1.5 rounded flex items-center space-x-1.5 text-xs font-semibold shadow">
+                            <span>🔑</span>
+                            <span>Log In</span>
+                        </button>
+                        <button onclick="window.location.href='/register'" class="aero-btn px-3 py-1.5 rounded flex items-center space-x-1.5 text-xs font-semibold shadow">
+                            <span>📝</span>
+                            <span>Register</span>
+                        </button>
+                    </div>
                 `;
+                
+                if (authShortcuts) {
+                    authShortcuts.innerHTML = `
+                        <!-- Log In Shortcut -->
+                        <div onclick="goToLoginPage()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer border border-green-500/20 rounded-xl bg-green-500/5 hover:bg-green-500/10">
+                            <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🔑</div>
+                            <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Log In</span>
+                        </div>
+                        <!-- Register Shortcut -->
+                        <div onclick="window.location.href='/register'" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer border border-blue-500/20 rounded-xl bg-blue-500/5 hover:bg-blue-500/10">
+                            <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">👤</div>
+                            <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Register</span>
+                        </div>
+                    `;
+                }
+            }
+            
+            if (toolsAuthEl) {
+                toolsAuthEl.textContent = currentUser ? 'Log Off' : 'Log In...';
             }
             
             updateTaskbarTabs();

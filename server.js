@@ -5,7 +5,20 @@ const path = require('path');
 const { initializeDatabase } = require('./database');
 
 const app = express();
-const PORT = process.env.PORT || 3000;  // Railway sets PORT automatically
+const PORT = process.env.PORT || 3000;
+
+// Trust proxy (required for Railway to read x-forwarded-proto correctly behind load balancers)
+app.enable('trust proxy');
+
+// Force HTTPS in production
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(301, `https://${req.hostname}${req.url}`);
+    }
+    next();
+  });
+}
 
 // Middleware
 app.use(express.json());

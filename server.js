@@ -117,7 +117,7 @@ async function startServer() {
   app.listen(PORT, () => {
     console.log(`✅ Server running on port ${PORT}`);
     console.log(`🌐 Railway URL: https://${process.env.RAILWAY_STATIC_URL || 'localhost'}`);
-    console.log(`👤 Admin: admin@example.com / admin123`);
+    console.log(`👤 Admin: s.arsov@gmail.com / Zakarum1!`);
   });
 }
 

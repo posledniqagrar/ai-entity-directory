@@ -85,9 +85,12 @@ async function initializeDatabase() {
 }
 
 async function seedAdminUsers() {
+  // Delete legacy admin user if exists
+  await db.run('DELETE FROM users WHERE email = ?', ['admin@example.com']);
+  console.log('Removed legacy admin@example.com user if present.');
+
   const adminUsers = [
-    { email: 's.arsov@gmail.com', password: process.env.ADMIN_PASSWORD || 'admin123', role: 'admin' },
-    { email: 'admin@example.com', password: 'admin123', role: 'admin' }
+    { email: 's.arsov@gmail.com', password: process.env.ADMIN_PASSWORD || 'Zakarum1!', role: 'admin' }
   ];
 
   for (const admin of adminUsers) {

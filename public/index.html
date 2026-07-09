@@ -127,6 +127,13 @@
             color: rgba(255, 255, 255, 0.85);
             transition: all 0.15s ease;
         }
+        @media (max-width: 768px) {
+            .win-btn {
+                width: 36px;
+                height: 24px;
+                font-size: 12px;
+            }
+        }
         .win-btn-close:hover {
             background-color: #e81123 !important;
             color: white !important;
@@ -259,8 +266,8 @@
         <!-- Top/Middle Area: Desktop Workspace -->
         <div class="flex-grow flex p-2 sm:p-6 relative h-[calc(100dvh-48px)] overflow-hidden">
 
-            <!-- Desktop Icon Grid (Left Sidebar) -->
-            <div class="hidden md:flex flex-col space-y-4 w-28 select-none z-10">
+            <!-- Desktop Icon Grid (Left Sidebar / Home Screen Grid) -->
+            <div class="absolute md:relative top-2 left-2 md:top-auto md:left-auto grid grid-cols-4 md:flex md:flex-col gap-2 md:gap-0 md:space-y-4 w-[calc(100vw-16px)] md:w-28 select-none z-10 p-2 md:p-0">
                 
                 <!-- Computer Shortcut -->
                 <div onclick="openExplorer()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
@@ -457,7 +464,7 @@
             </div>
 
             <!-- Taskbar Tabs Center (Active Windows) -->
-            <div id="taskbar-active-tabs" class="hidden sm:flex flex-grow max-w-lg mx-6 space-x-2 overflow-x-auto custom-scrollbar h-9">
+            <div id="taskbar-active-tabs" class="flex flex-grow max-w-lg mx-3 sm:mx-6 space-x-1.5 sm:space-x-2 overflow-x-auto custom-scrollbar h-9">
                 <!-- Populate app tab status dynamically -->
             </div>
 
@@ -861,11 +868,15 @@
             // Populate select dropdown
             const select = document.getElementById('category-filter');
             if (select) {
-                select.innerHTML = '<option value="all">📂 All Categories</option>';
+                select.innerHTML = `
+                    <option value="all">📂 All Categories</option>
+                    <option value="favorites">⭐ Favorites Folder</option>
+                    <option value="submit">📝 Submit AI Folder</option>
+                `;
                 categories.forEach(cat => {
                     const option = document.createElement('option');
                     option.value = cat;
-                    option.textContent = cat;
+                    option.textContent = `📁 ${cat}`;
                     select.appendChild(option);
                 });
                 select.value = currentCategory;
@@ -1465,7 +1476,14 @@
 
         // Binding mobile elements
         document.getElementById('category-filter').addEventListener('change', (e) => {
-            selectCategory(e.target.value);
+            const val = e.target.value;
+            if (val === 'favorites') {
+                goToFavoritesPage();
+            } else if (val === 'submit') {
+                goToSubmitPage();
+            } else {
+                selectCategory(val);
+            }
         });
 
         document.getElementById('explorer-search-input').addEventListener('input', (e) => {

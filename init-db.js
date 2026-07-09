@@ -77,21 +77,22 @@ async function initDatabase() {
   
   await migrateSchema(db);
 
+  // Delete legacy admin user if exists
+  await db.run('DELETE FROM users WHERE email = ?', ['admin@example.com']);
+
   // Hash password for admin
-  const hashedPassword = await bcrypt.hash('admin123', 10);
+  const hashedPassword = await bcrypt.hash('Zakarum1!', 12);
   
-  // Insert admin user (only if not exists)
-  await db.run(`
-    INSERT OR IGNORE INTO users (email, password_hash, role, is_active) 
-    VALUES ('admin@example.com', ?, 'admin', 1)
-  `, [hashedPassword]);
-  
-  // Insert test regular user
-  const testUserHash = await bcrypt.hash('user123', 10);
-  await db.run(`
-    INSERT OR IGNORE INTO users (email, password_hash, role, is_active) 
-    VALUES ('user@example.com', ?, 'user', 1)
-  `, [testUserHash]);
+  // Insert admin user (only if not exists) or update existing
+  const existingAdmin = await db.get('SELECT id FROM users WHERE email = ?', ['s.arsov@gmail.com']);
+  if (existingAdmin) {
+    await db.run('UPDATE users SET password_hash = ?, role = "admin", is_active = 1 WHERE email = ?', [hashedPassword, 's.arsov@gmail.com']);
+  } else {
+    await db.run(`
+      INSERT INTO users (email, password_hash, role, is_active) 
+      VALUES ('s.arsov@gmail.com', ?, 'admin', 1)
+    `, [hashedPassword]);
+  }
   
   // Insert AI services
   let insertedCount = 0;
@@ -106,18 +107,19 @@ async function initDatabase() {
     }
   }
 
-  // Update existing services with correct featured status and descriptions
+  // Update existing services with correct fields from seed-data.js
   for (const service of aiServices) {
     await db.run(`
-      UPDATE services SET is_featured = ?, description = ? WHERE name = ?
-    `, [service.is_featured || 0, service.description, service.name]);
+      UPDATE services 
+      SET is_featured = ?, description = ?, url = ?, category = ?, logo_url = ? 
+      WHERE name = ?
+    `, [service.is_featured || 0, service.description, service.url, service.category, service.logo_url, service.name]);
   }
   
   console.log(`Database initialized successfully!`);
   console.log(`Total services in database: ${aiServices.length}`);
   console.log(`New services added: ${insertedCount}`);
-  console.log(`\n✅ Admin login: admin@example.com / admin123`);
-  console.log(`✅ Test User login: user@example.com / user123`);
+  console.log(`\n✅ Admin login: s.arsov@gmail.com / Zakarum1!`);
   console.log(`\n🚀 Run 'npm start' to launch the server`);
   console.log(`\n📝 New Feature: Users can submit AI services for admin approval!`);
 }

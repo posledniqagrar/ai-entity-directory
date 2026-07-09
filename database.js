@@ -161,13 +161,15 @@ async function seedServices() {
     console.log(`Seeded ${insertedCount} default AI services`);
   }
 
-  // Update existing/new services with correct featured status and descriptions from seed-data.js
+  // Update existing/new services with correct fields from seed-data.js
   for (const service of aiServices) {
     await db.run(`
-      UPDATE services SET is_featured = ?, description = ? WHERE name = ?
-    `, [service.is_featured || 0, service.description, service.name]);
+      UPDATE services 
+      SET is_featured = ?, description = ?, url = ?, category = ?, logo_url = ? 
+      WHERE name = ?
+    `, [service.is_featured || 0, service.description, service.url, service.category, service.logo_url, service.name]);
   }
-  console.log('Updated is_featured status and descriptions for default AI services');
+  console.log('Synced and updated all default AI services from seed-data.js');
 }
 
 function getDb() {

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>My Profile - AI Entity Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -15,7 +15,8 @@
         body {
             background-color: #0f1026;
             overflow-x: hidden;
-            min-h-screen: 100vh;
+            min-height: 100vh;
+            min-height: 100dvh;
         }
         
         /* Desktop Wallpaper Style */
@@ -25,6 +26,7 @@
             background-position: center;
             background-attachment: fixed;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -119,10 +121,10 @@
         }
     </style>
 </head>
-<body class="w-screen min-h-screen overflow-x-hidden">
+<body class="w-screen min-h-[100dvh] overflow-x-hidden">
 
     <!-- Desktop Environment Background wrapper -->
-    <div class="desktop-env min-h-screen flex flex-col justify-between">
+    <div class="desktop-env min-h-[100dvh] flex flex-col justify-between">
 
         <!-- Navigation Bar -->
         <nav class="bg-black/35 backdrop-blur-md border-b border-white/15 sticky top-0 z-50">

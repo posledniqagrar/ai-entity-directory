@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
     <!-- Primary SEO Meta Tags -->
     <title>AI Entity - Free AI Services & Tools Directory</title>
@@ -46,9 +46,11 @@
             background-position: center;
             background-attachment: fixed;
             height: 100vh;
+            height: 100dvh;
             width: 100vw;
             display: flex;
-            flex-col: justify-between;
+            flex-direction: column;
+            justify-content: space-between;
         }
         
         /* Aero Glass Effect */
@@ -249,13 +251,13 @@
         }
     </style>
 </head>
-<body class="w-screen h-screen overflow-hidden">
+<body class="w-screen h-screen h-[100dvh] overflow-hidden">
 
     <!-- Desktop Workspace -->
     <div class="desktop-env flex flex-col justify-between relative p-0 m-0">
 
         <!-- Top/Middle Area: Desktop Workspace -->
-        <div class="flex-grow flex p-2 sm:p-6 relative h-[calc(100vh-48px)] overflow-hidden">
+        <div class="flex-grow flex p-2 sm:p-6 relative h-[calc(100dvh-48px)] overflow-hidden">
 
             <!-- Desktop Icon Grid (Left Sidebar) -->
             <div class="hidden md:flex flex-col space-y-4 w-28 select-none z-10">

@@ -270,6 +270,7 @@
     </style>
 </head>
 <body class="w-screen h-screen h-[100dvh] overflow-hidden">
+    <h1 class="sr-only">AI Entity - Free AI Services & Tools Directory</h1>
 
     <!-- Desktop Workspace -->
     <div class="desktop-env flex flex-col justify-between relative p-0 m-0">
@@ -1356,9 +1357,22 @@
         }
 
         // Properties Tab Dialog System
-        function showServiceDetails(serviceId) {
+        async function showServiceDetails(serviceId) {
             activePropertiesServiceId = serviceId;
-            const service = allLoadedServices.find(s => s.id === serviceId);
+            let service = allLoadedServices.find(s => s.id === serviceId);
+            
+            if (!service) {
+                try {
+                    const res = await fetch(`/api/services/${serviceId}`);
+                    if (res.ok) {
+                        service = await res.json();
+                        allLoadedServices.push(service);
+                    }
+                } catch (e) {
+                    console.error('Failed to load service properties', e);
+                }
+            }
+            
             if (!service) return;
             
             // Set title bar
@@ -1677,13 +1691,49 @@
         }
 
         // Initialize Desktop app
-        checkAuth();
-        loadCategories();
-        loadServices();
+        async function initDesktopApp() {
+            checkAuth();
+            
+            // Parse URL query parameter for category landing pages (SEO/Backlinks support)
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlCat = urlParams.get('category');
+            if (urlCat) {
+                currentCategory = urlCat;
+            }
+            
+            await loadCategories();
+            await loadServices();
+            
+            // Check direct service parameter (SEO/Backlinks support)
+            const urlService = urlParams.get('service');
+            if (urlService) {
+                if (!isNaN(urlService)) {
+                    await showServiceDetails(parseInt(urlService));
+                } else {
+                    try {
+                        const res = await fetch(`/api/services?search=${encodeURIComponent(urlService)}`);
+                        if (res.ok) {
+                            const data = await res.json();
+                            if (data.services && data.services.length > 0) {
+                                await showServiceDetails(data.services[0].id);
+                            }
+                        }
+                    } catch (e) {
+                        console.error(e);
+                    }
+                }
+                // Clean URL params without reloading the page
+                urlParams.delete('service');
+                const newQuery = urlParams.toString();
+                window.history.replaceState({}, '', `${window.location.pathname}${newQuery ? '?' + newQuery : ''}`);
+            }
+            
+            // Start live tray clock
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
         
-        // Start live tray clock
-        updateClock();
-        setInterval(updateClock, 1000);
+        initDesktopApp();
     </script>
 
     <!-- Google Translate API scripts -->

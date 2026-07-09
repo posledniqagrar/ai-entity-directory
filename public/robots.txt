@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/admin/
+Disallow: /api/auth/
+
+Sitemap: https://aientity.co.uk/sitemap.xml

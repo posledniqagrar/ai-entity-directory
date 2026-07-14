@@ -46,7 +46,6 @@
             background-position: center;
             background-attachment: fixed;
             height: 100vh;
-            height: 100dvh;
             width: 100vw;
             display: flex;
             flex-direction: column;
@@ -791,17 +790,20 @@
             #desktop-workspace {
                 padding-top: calc(env(safe-area-inset-top, 24px) + 8px) !important;
             }
+            #explorer-window {
+                min-height: 380px !important;
+            }
         }
     </style>
 </head>
-<body class="w-screen h-screen h-[100dvh] overflow-hidden">
+<body class="w-screen h-screen overflow-hidden">
     <h1 class="sr-only">AI Entity - Free AI Services & Tools Directory</h1>
 
     <!-- Desktop Workspace -->
     <div class="desktop-env flex flex-col justify-between relative p-0 m-0">
 
         <!-- Top/Middle Area: Desktop Workspace -->
-        <div id="desktop-workspace" class="flex-grow flex p-2 sm:p-6 relative h-[calc(100dvh-48px)] overflow-hidden">
+        <div id="desktop-workspace" class="flex-grow flex p-2 sm:p-6 relative h-[calc(100vh-48px)] overflow-hidden">
 
             <!-- Desktop Shortcuts Container (Dynamically Rendered & Draggable) -->
             <div id="desktop-shortcuts-container" class="absolute inset-0 z-10 select-none p-4 pointer-events-none grid grid-cols-4 gap-2 md:block">

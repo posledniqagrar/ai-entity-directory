@@ -618,14 +618,16 @@
             height: 48px !important;
         }
 
-        .theme-win11 #taskbar-main-group {
-            position: absolute !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            width: auto !important;
-            max-width: 60% !important;
-            background: transparent !important;
-            border: none !important;
+        @media (min-width: 768px) {
+            .theme-win11 #taskbar-main-group {
+                position: absolute !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: auto !important;
+                max-width: 60% !important;
+                background: transparent !important;
+                border: none !important;
+            }
         }
 
         .theme-win11 #start-button {
@@ -1434,7 +1436,7 @@
             const startCats = document.getElementById('start-menu-categories');
             if (startCats) {
                 startCats.innerHTML = categories.map(cat => `
-                    <div onclick="selectCategory('${cat}'); toggleStartMenu();" class="flex items-center space-x-3 px-3 py-1.5 rounded hover:bg-white/10 text-white/90 text-xs font-medium transition">
+                    <div onclick="selectCategory('${cat}'); toggleStartMenu();" class="flex items-center space-x-3 px-3 py-1.5 rounded hover:bg-white/10 text-white/90 text-xs font-medium transition cursor-pointer">
                         <span>📁</span>
                         <span>${cat} AI</span>
                     </div>

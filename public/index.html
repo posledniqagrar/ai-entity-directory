@@ -999,7 +999,7 @@
                 <!-- Right Column: System Locations & Actions -->
                 <div class="w-[40%] bg-white/5 border-l border-white/10 p-2.5 flex flex-col justify-between select-none">
                     <div class="space-y-1.5">
-                        <div onclick="openExplorer(); toggleStartMenu();" class="flex items-center space-x-2 px-2 py-1.5 rounded hover:bg-white/10 text-xs text-white/95 font-semibold cursor-pointer">
+                        <div onclick="selectCategory('all'); toggleStartMenu();" class="flex items-center space-x-2 px-2 py-1.5 rounded hover:bg-white/10 text-xs text-white/95 font-semibold cursor-pointer">
                             <span>💻</span>
                             <span>AI Browser</span>
                         </div>
@@ -1458,9 +1458,36 @@
             
             loadCategories();
             
+            // Get customized name and icon based on shortcut configuration
+            let activeTitle = "AI Browser";
+            let activeIcon = "💻";
+            
+            let matchId = '';
+            if (cat === 'all') matchId = 'computer';
+            else if (cat === 'Text') matchId = 'cat-text';
+            else if (cat === 'Image') matchId = 'cat-image';
+            else if (cat === 'Video') matchId = 'cat-video';
+            else if (cat === 'Audio') matchId = 'cat-audio';
+            
+            const shortcut = (typeof desktopShortcuts !== 'undefined') ? desktopShortcuts.find(s => s.id === matchId) : null;
+            if (shortcut) {
+                activeTitle = shortcut.label;
+                activeIcon = shortcut.icon;
+            } else {
+                if (cat === 'Text') { activeTitle = "Text AI"; activeIcon = "✍️"; }
+                else if (cat === 'Image') { activeTitle = "Images AI"; activeIcon = "🖼️"; }
+                else if (cat === 'Video') { activeTitle = "Video AI"; activeIcon = "🎬"; }
+                else if (cat === 'Audio') { activeTitle = "Audio AI"; activeIcon = "🔊"; }
+            }
+            
             const pathEl = document.getElementById('explorer-address-path');
             if (pathEl) {
-                pathEl.textContent = `AI Browser > AI Entity > ${cat === 'all' ? 'All Services' : cat}`;
+                pathEl.textContent = `${activeTitle} > AI Entity > ${cat === 'all' ? 'All Services' : cat}`;
+            }
+            
+            const winTitleEl = document.getElementById('explorer-window-title');
+            if (winTitleEl) {
+                winTitleEl.textContent = activeTitle;
             }
             
             loadServices();
@@ -1684,16 +1711,38 @@
                 return;
             }
             
+            // Get customized name and icon based on shortcut configuration
+            let activeTitle = "AI Browser";
+            let activeIcon = "💻";
+            
+            let matchId = '';
+            if (currentCategory === 'all') matchId = 'computer';
+            else if (currentCategory === 'Text') matchId = 'cat-text';
+            else if (currentCategory === 'Image') matchId = 'cat-image';
+            else if (currentCategory === 'Video') matchId = 'cat-video';
+            else if (currentCategory === 'Audio') matchId = 'cat-audio';
+            
+            const shortcut = (typeof desktopShortcuts !== 'undefined') ? desktopShortcuts.find(s => s.id === matchId) : null;
+            if (shortcut) {
+                activeTitle = shortcut.label;
+                activeIcon = shortcut.icon;
+            } else {
+                if (currentCategory === 'Text') { activeTitle = "Text AI"; activeIcon = "✍️"; }
+                else if (currentCategory === 'Image') { activeTitle = "Images AI"; activeIcon = "🖼️"; }
+                else if (currentCategory === 'Video') { activeTitle = "Video AI"; activeIcon = "🎬"; }
+                else if (currentCategory === 'Audio') { activeTitle = "Audio AI"; activeIcon = "🔊"; }
+            }
+            
             if (isExplorerOpen) {
                 tabsContainer.innerHTML = `
                     <button onclick="toggleExplorer()" class="h-9 px-3 rounded border border-white/20 bg-white/15 flex items-center space-x-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
-                        <span class="text-xs text-white font-semibold">💻 AI Browser</span>
+                        <span class="text-xs text-white font-semibold">${activeIcon} ${activeTitle}</span>
                     </button>
                 `;
             } else {
                 tabsContainer.innerHTML = `
                     <button onclick="toggleExplorer()" class="h-9 px-3 rounded border border-white/5 bg-white/5 flex items-center space-x-1.5 hover:bg-white/10">
-                        <span class="text-xs text-white/50">💻 AI Browser</span>
+                        <span class="text-xs text-white/50">${activeIcon} ${activeTitle}</span>
                     </button>
                 `;
             }
@@ -2422,6 +2471,26 @@
                     shortcut.label = newName;
                     saveShortcutsState();
                     renderDesktopShortcuts();
+                    
+                    // If the renamed folder is currently open in Explorer, update title bars in real-time
+                    let activeCatId = '';
+                    if (currentCategory === 'all') activeCatId = 'computer';
+                    else if (currentCategory === 'Text') activeCatId = 'cat-text';
+                    else if (currentCategory === 'Image') activeCatId = 'cat-image';
+                    else if (currentCategory === 'Video') activeCatId = 'cat-video';
+                    else if (currentCategory === 'Audio') activeCatId = 'cat-audio';
+                    
+                    if (activeCatId === renamingShortcutId) {
+                        const winTitleEl = document.getElementById('explorer-window-title');
+                        if (winTitleEl) winTitleEl.textContent = newName;
+                        
+                        const pathEl = document.getElementById('explorer-address-path');
+                        if (pathEl) {
+                            pathEl.textContent = `${newName} > AI Entity > ${currentCategory === 'all' ? 'All Services' : currentCategory}`;
+                        }
+                    }
+                    
+                    updateTaskbarTabs();
                 }
             }
             

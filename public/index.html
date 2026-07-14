@@ -708,6 +708,81 @@
             background: rgba(255,255,255,0.06) !important;
             border: 1px solid rgba(255,255,255,0.1) !important;
         }
+
+        /* Context Menu and Rename dialog themes */
+        .theme-win98 #desktop-context-menu {
+            background: #c0c0c0 !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            border-radius: 0px !important;
+            color: #000000 !important;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.4) !important;
+        }
+        
+        .theme-win98 #desktop-context-menu div {
+            color: #000000 !important;
+            border-radius: 0px !important;
+        }
+        
+        .theme-win98 #desktop-context-menu div:hover {
+            background: #000080 !important;
+            color: #ffffff !important;
+        }
+        
+        .theme-win98 #desktop-context-menu div:hover span {
+            color: #ffffff !important;
+        }
+
+        .theme-win98 #rename-window {
+            background: #c0c0c0 !important;
+            border-radius: 0px !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #808080, 2px 2px 10px rgba(0,0,0,0.5) !important;
+        }
+
+        .theme-win98 #rename-window > div:last-child {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            border-radius: 0px !important;
+            box-shadow: inset 1px 1px 0px #0a0a0a !important;
+        }
+
+        .theme-win98 #rename-input {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            border-radius: 0px !important;
+            box-shadow: inset 1px 1px 0px #0a0a0a !important;
+        }
+
+        .theme-win11 #desktop-context-menu {
+            background: rgba(32, 32, 32, 0.85) !important;
+            backdrop-filter: blur(25px) !important;
+            border: 1px solid rgba(255,255,255,0.12) !important;
+            border-radius: 8px !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+        }
+        
+        .theme-win11 #desktop-context-menu div {
+            border-radius: 4px !important;
+        }
+
+        .theme-win11 #desktop-context-menu div:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
     </style>
 </head>
 <body class="w-screen h-screen h-[100dvh] overflow-hidden">
@@ -719,71 +794,9 @@
         <!-- Top/Middle Area: Desktop Workspace -->
         <div class="flex-grow flex p-2 sm:p-6 relative h-[calc(100dvh-48px)] overflow-hidden">
 
-            <!-- Desktop Icon Grid (Left Sidebar / Home Screen Grid) -->
-            <div class="absolute md:relative top-2 left-2 md:top-auto md:left-auto grid grid-cols-4 md:flex md:flex-col gap-2 md:gap-0 md:space-y-4 w-[calc(100vw-16px)] md:w-28 select-none z-10 p-2 md:p-0">
-                
-                <!-- Computer Shortcut -->
-                <div onclick="openExplorer()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
-                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">💻</div>
-                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Computer</span>
-                </div>
-
-                <!-- Favorites Folder -->
-                <div onclick="goToFavoritesPage()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
-                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">⭐</div>
-                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Favorites</span>
-                </div>
-
-                <!-- Submit Shortcut -->
-                <div onclick="goToSubmitPage()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
-                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">📝</div>
-                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Submit AI</span>
-                </div>
-
-                <!-- Recycle Bin Shortcut -->
-                <div onclick="showRecycleBin()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
-                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🗑️</div>
-                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Recycle Bin</span>
-                </div>
-
-                <!-- Contact Us Shortcut -->
-                <div onclick="openContactWindow()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
-                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">✉️</div>
-                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Contact Us</span>
-                </div>
-
-                <!-- Personalization Shortcut -->
-                <div onclick="openPersonalizeWindow()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
-                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🎨</div>
-                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Personalize</span>
-                </div>
-
-                <!-- Auth Shortcuts Dynamic Placeholder -->
-                <div id="auth-shortcuts" class="contents"></div>
-
-                <!-- Horizontal Separator Line -->
-                <div class="border-b border-white/10 mx-2 my-2"></div>
-
-                <!-- Categories Quick Folders -->
-                <div onclick="selectCategory('Text')" class="desktop-shortcut flex flex-col items-center justify-center p-2.5 text-center cursor-pointer">
-                    <div class="text-3xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">✍️</div>
-                    <span class="text-[10px] text-white mt-1.5 font-semibold text-shadow">Text AI</span>
-                </div>
-
-                <div onclick="selectCategory('Image')" class="desktop-shortcut flex flex-col items-center justify-center p-2.5 text-center cursor-pointer">
-                    <div class="text-3xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🖼️</div>
-                    <span class="text-[10px] text-white mt-1.5 font-semibold text-shadow">Images AI</span>
-                </div>
-
-                <div onclick="selectCategory('Video')" class="desktop-shortcut flex flex-col items-center justify-center p-2.5 text-center cursor-pointer">
-                    <div class="text-3xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🎬</div>
-                    <span class="text-[10px] text-white mt-1.5 font-semibold text-shadow">Video AI</span>
-                </div>
-
-                <div onclick="selectCategory('Audio')" class="desktop-shortcut flex flex-col items-center justify-center p-2.5 text-center cursor-pointer">
-                    <div class="text-3xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🔊</div>
-                    <span class="text-[10px] text-white mt-1.5 font-semibold text-shadow">Audio AI</span>
-                </div>
+            <!-- Desktop Shortcuts Container (Dynamically Rendered & Draggable) -->
+            <div id="desktop-shortcuts-container" class="absolute inset-0 z-10 select-none p-4 pointer-events-none grid grid-cols-4 gap-2 md:block">
+                <!-- Dynamic absolute shortcuts injected here -->
             </div>
 
             <!-- Main Application Window: AI Entity Explorer -->
@@ -1314,7 +1327,6 @@
             const roleEl = document.getElementById('start-menu-user-role');
             const adminLink = document.getElementById('start-admin-link');
             const shutdownDiv = document.getElementById('start-shutdown-action');
-            const authShortcuts = document.getElementById('auth-shortcuts');
             const toolsAuthEl = document.getElementById('menu-tools-auth');
             
             if (currentUser) {
@@ -1334,8 +1346,6 @@
                         <span>Log Off</span>
                     </button>
                 `;
-                
-                if (authShortcuts) authShortcuts.innerHTML = '';
             } else {
                 nameEl.textContent = "Guest User";
                 roleEl.textContent = "Visitor";
@@ -1352,26 +1362,15 @@
                         </button>
                     </div>
                 `;
-                
-                if (authShortcuts) {
-                    authShortcuts.innerHTML = `
-                        <!-- Log In Shortcut -->
-                        <div onclick="goToLoginPage()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer border border-green-500/20 rounded-xl bg-green-500/5 hover:bg-green-500/10">
-                            <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🔑</div>
-                            <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Log In</span>
-                        </div>
-                        <!-- Register Shortcut -->
-                        <div onclick="window.location.href='/register'" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer border border-blue-500/20 rounded-xl bg-blue-500/5 hover:bg-blue-500/10">
-                            <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">👤</div>
-                            <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Register</span>
-                        </div>
-                    `;
-                }
             }
             
             if (toolsAuthEl) {
                 toolsAuthEl.textContent = currentUser ? 'Log Off' : 'Log In...';
             }
+            
+            // Re-render draggable shortcuts dynamically based on auth status
+            updateAuthShortcutsInArray(currentUser !== null);
+            renderDesktopShortcuts();
             
             updateTaskbarTabs();
         }
@@ -2005,6 +2004,304 @@
             `;
         }
 
+        // ==========================================================================
+        // DRAGGABLE SHORTCUTS & CONTEXT MENU CONTROLLERS
+        // ==========================================================================
+        let desktopShortcuts = [];
+        const DEFAULT_SHORTCUTS = [
+            { id: 'computer', label: 'Computer', defaultLabel: 'Computer', icon: '💻', xIndex: 0, yIndex: 0, action: 'openExplorer()' },
+            { id: 'favorites', label: 'Favorites', defaultLabel: 'Favorites', icon: '⭐', xIndex: 0, yIndex: 1, action: 'goToFavoritesPage()' },
+            { id: 'submit', label: 'Submit AI', defaultLabel: 'Submit AI', icon: '📝', xIndex: 0, yIndex: 2, action: 'goToSubmitPage()' },
+            { id: 'recycle', label: 'Recycle Bin', defaultLabel: 'Recycle Bin', icon: '🗑️', xIndex: 0, yIndex: 3, action: 'showRecycleBin()' },
+            { id: 'contact', label: 'Contact Us', defaultLabel: 'Contact Us', icon: '✉️', xIndex: 0, yIndex: 4, action: 'openContactWindow()' },
+            { id: 'personalize', label: 'Personalize', defaultLabel: 'Personalize', icon: '🎨', xIndex: 0, yIndex: 5, action: 'openPersonalizeWindow()' },
+            { id: 'cat-text', label: 'Text AI', defaultLabel: 'Text AI', icon: '✍️', xIndex: 1, yIndex: 0, action: "selectCategory('Text')" },
+            { id: 'cat-image', label: 'Images AI', defaultLabel: 'Images AI', icon: '🖼️', xIndex: 1, yIndex: 1, action: "selectCategory('Image')" },
+            { id: 'cat-video', label: 'Video AI', defaultLabel: 'Video AI', icon: '🎬', xIndex: 1, yIndex: 2, action: "selectCategory('Video')" },
+            { id: 'cat-audio', label: 'Audio AI', defaultLabel: 'Audio AI', icon: '🔊', xIndex: 1, yIndex: 3, action: "selectCategory('Audio')" }
+        ];
+
+        function initShortcutsState() {
+            const saved = localStorage.getItem('desktop-shortcuts-state');
+            if (saved) {
+                try {
+                    desktopShortcuts = JSON.parse(saved);
+                } catch(e) {
+                    desktopShortcuts = JSON.parse(JSON.stringify(DEFAULT_SHORTCUTS));
+                }
+            } else {
+                desktopShortcuts = JSON.parse(JSON.stringify(DEFAULT_SHORTCUTS));
+            }
+        }
+
+        function updateAuthShortcutsInArray(isAuthenticated) {
+            desktopShortcuts = desktopShortcuts.filter(s => s.id !== 'login' && s.id !== 'register');
+            if (!isAuthenticated) {
+                if (!desktopShortcuts.some(s => s.id === 'login')) {
+                    desktopShortcuts.push(
+                        { id: 'login', label: 'Log In', defaultLabel: 'Log In', icon: '🔑', xIndex: 2, yIndex: 0, action: 'goToLoginPage()', isAuth: true },
+                        { id: 'register', label: 'Register', defaultLabel: 'Register', icon: '➕', xIndex: 2, yIndex: 1, action: 'window.location.href="/register"', isAuth: true }
+                    );
+                }
+            }
+        }
+
+        function saveShortcutsState() {
+            localStorage.setItem('desktop-shortcuts-state', JSON.stringify(desktopShortcuts));
+        }
+
+        function renderDesktopShortcuts() {
+            const container = document.getElementById('desktop-shortcuts-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            desktopShortcuts.forEach(shortcut => {
+                if (shortcut.deleted) return;
+                
+                const div = document.createElement('div');
+                div.id = `shortcut-${shortcut.id}`;
+                div.className = 'desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer pointer-events-auto select-none absolute md:w-[90px] md:h-[90px]';
+                
+                let left = shortcut.left;
+                let top = shortcut.top;
+                
+                if (left === undefined || top === undefined) {
+                    const x = shortcut.xIndex || 0;
+                    const y = shortcut.yIndex || 0;
+                    left = 20 + x * 100;
+                    top = 20 + y * 95;
+                    shortcut.left = left;
+                    shortcut.top = top;
+                }
+                
+                div.style.left = `${left}px`;
+                div.style.top = `${top}px`;
+                
+                div.addEventListener('click', (e) => {
+                    if (div.classList.contains('dragging-active')) return;
+                    eval(shortcut.action);
+                });
+                
+                div.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showContextMenu(e, shortcut.id);
+                });
+                
+                div.innerHTML = `
+                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">${shortcut.icon}</div>
+                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow truncate w-full max-w-[80px]">${shortcut.label}</span>
+                `;
+                
+                container.appendChild(div);
+                bindDragShortcut(div, shortcut);
+            });
+        }
+
+        function bindDragShortcut(div, shortcut) {
+            let isDragging = false;
+            let startX = 0, startY = 0;
+            let initialLeft = 0, initialTop = 0;
+            
+            const handleStart = (e) => {
+                if (e.button === 2) return; // Ignore right click
+                
+                if (window.innerWidth < 768) return; 
+
+                div.classList.remove('dragging-active');
+                
+                const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+                
+                startX = clientX;
+                startY = clientY;
+                initialLeft = shortcut.left;
+                initialTop = shortcut.top;
+                
+                isDragging = false;
+                
+                document.addEventListener('mousemove', handleMove, { passive: false });
+                document.addEventListener('mouseup', handleEnd);
+                document.addEventListener('touchmove', handleMove, { passive: false });
+                document.addEventListener('touchend', handleEnd);
+            };
+            
+            const handleMove = (e) => {
+                const clientX = e.type.startsWith('touch') ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type.startsWith('touch') ? e.touches[0].clientY : e.clientY;
+                
+                const dx = clientX - startX;
+                const dy = clientY - startY;
+                
+                if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+                    isDragging = true;
+                    div.classList.add('dragging-active');
+                }
+                
+                if (isDragging) {
+                    const workspace = document.getElementById('desktop-shortcuts-container');
+                    const rect = workspace.getBoundingClientRect();
+                    
+                    let newLeft = initialLeft + dx;
+                    let newTop = initialTop + dy;
+                    
+                    newLeft = Math.max(10, Math.min(newLeft, rect.width - 95));
+                    newTop = Math.max(10, Math.min(newTop, rect.height - 95));
+                    
+                    div.style.left = `${newLeft}px`;
+                    div.style.top = `${newTop}px`;
+                    
+                    shortcut.left = newLeft;
+                    shortcut.top = newTop;
+                }
+            };
+            
+            const handleEnd = (e) => {
+                document.removeEventListener('mousemove', handleMove);
+                document.removeEventListener('mouseup', handleEnd);
+                document.removeEventListener('touchmove', handleMove);
+                document.removeEventListener('touchend', handleEnd);
+                
+                if (isDragging) {
+                    saveShortcutsState();
+                    setTimeout(() => {
+                        div.classList.remove('dragging-active');
+                    }, 50);
+                }
+            };
+            
+            div.addEventListener('mousedown', handleStart);
+            div.addEventListener('touchstart', handleStart, { passive: false });
+        }
+
+        let activeShortcutId = null;
+        
+        function showContextMenu(e, shortcutId) {
+            const menu = document.getElementById('desktop-context-menu');
+            if (!menu) return;
+            
+            activeShortcutId = shortcutId;
+            
+            const openOpt = menu.children[0];
+            const renameOpt = menu.children[1];
+            const deleteOpt = menu.children[2];
+            const separator = document.getElementById('context-restore-separator');
+            const restoreOpt = document.getElementById('context-restore-option');
+            
+            if (shortcutId) {
+                openOpt.classList.remove('hidden');
+                renameOpt.classList.remove('hidden');
+                deleteOpt.classList.remove('hidden');
+                separator.classList.add('hidden');
+                restoreOpt.classList.add('hidden');
+            } else {
+                openOpt.classList.add('hidden');
+                renameOpt.classList.add('hidden');
+                deleteOpt.classList.add('hidden');
+                separator.classList.remove('hidden');
+                restoreOpt.classList.remove('hidden');
+            }
+            
+            menu.classList.remove('hidden');
+            menu.classList.add('flex');
+            
+            const menuWidth = 176;
+            const menuHeight = 110;
+            
+            let x = e.clientX;
+            let y = e.clientY;
+            
+            if (x + menuWidth > window.innerWidth) {
+                x = window.innerWidth - menuWidth - 10;
+            }
+            if (y + menuHeight > window.innerHeight) {
+                y = window.innerHeight - menuHeight - 10;
+            }
+            
+            menu.style.left = `${x}px`;
+            menu.style.top = `${y}px`;
+        }
+        
+        function hideContextMenu() {
+            const menu = document.getElementById('desktop-context-menu');
+            if (menu) {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            }
+        }
+
+        function executeContextMenuAction(action) {
+            hideContextMenu();
+            
+            if (action === 'open') {
+                if (!activeShortcutId) return;
+                const shortcut = desktopShortcuts.find(s => s.id === activeShortcutId);
+                if (shortcut) eval(shortcut.action);
+            } 
+            else if (action === 'rename') {
+                if (!activeShortcutId) return;
+                const shortcut = desktopShortcuts.find(s => s.id === activeShortcutId);
+                if (shortcut) {
+                    openRenameDialog(shortcut);
+                }
+            } 
+            else if (action === 'delete') {
+                if (!activeShortcutId) return;
+                const shortcut = desktopShortcuts.find(s => s.id === activeShortcutId);
+                if (shortcut) {
+                    shortcut.deleted = true;
+                    saveShortcutsState();
+                    renderDesktopShortcuts();
+                }
+            } 
+            else if (action === 'restore') {
+                localStorage.removeItem('desktop-shortcuts-state');
+                initShortcutsState();
+                checkAuth();
+            }
+        }
+
+        let renamingShortcutId = null;
+        
+        function openRenameDialog(shortcut) {
+            renamingShortcutId = shortcut.id;
+            const modal = document.getElementById('rename-modal');
+            const input = document.getElementById('rename-input');
+            
+            input.value = shortcut.label;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            input.focus();
+            input.select();
+        }
+        
+        function closeRenameDialog() {
+            const modal = document.getElementById('rename-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            renamingShortcutId = null;
+        }
+        
+        function saveRenameAction() {
+            if (!renamingShortcutId) return;
+            const input = document.getElementById('rename-input');
+            const newName = input.value.trim();
+            
+            if (newName) {
+                const shortcut = desktopShortcuts.find(s => s.id === renamingShortcutId);
+                if (shortcut) {
+                    shortcut.label = newName;
+                    saveShortcutsState();
+                    renderDesktopShortcuts();
+                }
+            }
+            
+            closeRenameDialog();
+        }
+
         // Theme Personalization system
         function openPersonalizeWindow() {
             const modal = document.getElementById('personalize-modal');
@@ -2265,6 +2562,22 @@
                 });
             }
 
+            // Initialize desktop shortcuts state
+            initShortcutsState();
+
+            // Bind right-click empty desktop
+            const desktopWorkspace = document.getElementById('desktop-shortcuts-container');
+            if (desktopWorkspace) {
+                desktopWorkspace.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    showContextMenu(e, null);
+                });
+            }
+            // Bind general click to dismiss context menu
+            document.addEventListener('click', () => {
+                hideContextMenu();
+            });
+
             checkAuth();
             
             // Parse URL query parameter for category landing pages (SEO/Backlinks support)
@@ -2308,6 +2621,59 @@
         
         initDesktopApp();
     </script>
+
+    <!-- Desktop Context Menu -->
+    <div id="desktop-context-menu" class="fixed z-50 bg-[#16172d]/95 backdrop-blur-md border border-white/20 text-white text-xs hidden flex-col w-44 rounded-lg select-none shadow-2xl py-1">
+        <div onclick="executeContextMenuAction('open')" class="px-3 py-2 hover:bg-purple-600/80 cursor-pointer flex items-center space-x-2.5 transition">
+            <span class="text-sm">📂</span>
+            <span class="font-semibold text-white/90">Open Shortcut</span>
+        </div>
+        <div onclick="executeContextMenuAction('rename')" class="px-3 py-2 hover:bg-purple-600/80 cursor-pointer flex items-center space-x-2.5 transition">
+            <span class="text-sm">✍️</span>
+            <span class="font-semibold text-white/90">Rename Folder</span>
+        </div>
+        <div onclick="executeContextMenuAction('delete')" class="px-3 py-2 hover:bg-red-600/80 cursor-pointer flex items-center space-x-2.5 transition">
+            <span class="text-sm">🗑️</span>
+            <span class="font-semibold text-white/90">Remove Shortcut</span>
+        </div>
+        <div id="context-restore-separator" class="border-b border-white/10 my-1 hidden"></div>
+        <div id="context-restore-option" onclick="executeContextMenuAction('restore')" class="px-3 py-2 hover:bg-blue-600/80 cursor-pointer flex items-center space-x-2.5 transition hidden">
+            <span class="text-sm">🔄</span>
+            <span class="font-semibold text-white/90">Restore Defaults</span>
+        </div>
+    </div>
+
+    <!-- Rename Shortcut Dialog Modal -->
+    <div id="rename-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/55 backdrop-blur-sm" onclick="closeRenameDialog()"></div>
+        
+        <div id="rename-window" class="aero-glass rounded-xl border border-white/25 flex flex-col w-full max-w-sm overflow-hidden shadow-2xl z-10">
+            <!-- Window Header (Title Bar) -->
+            <div class="win-header h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm">✍️</span>
+                    <span class="text-sm font-semibold text-white/95 tracking-wide">Rename Shortcut</span>
+                </div>
+                <!-- Window Controls -->
+                <div class="flex items-center space-x-1.5 z-20">
+                    <button onclick="closeRenameDialog()" class="win-btn win-btn-close bg-white/5 text-lg">×</button>
+                </div>
+            </div>
+
+            <!-- Window Content -->
+            <div class="p-5 bg-[#101126]/60 flex flex-col space-y-4">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-semibold text-white/70">New name for the folder:</label>
+                    <input type="text" id="rename-input" class="w-full px-3 py-2 rounded text-xs bg-[#101126]/80 border border-white/15 outline-none focus:border-purple-500 text-white" placeholder="Enter name...">
+                </div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button onclick="closeRenameDialog()" class="aero-btn px-4 py-1.5 rounded text-xs font-semibold">Cancel</button>
+                    <button onclick="saveRenameAction()" class="aero-btn aero-btn-blue px-4 py-1.5 rounded text-xs font-semibold">Rename</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Google Translate API scripts -->
     <script type="text/javascript">

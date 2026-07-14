@@ -119,6 +119,172 @@
                 inset 0 1.5px 4px rgba(255, 255, 255, 0.5);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        /* ==========================================================================
+           WINDOWS 98 THEME OVERRIDES (PROFILE)
+           ========================================================================== */
+        body.theme-win98 {
+            background-image: none !important;
+            background-color: #008080 !important; /* Classic Windows 98 Teal */
+            font-family: 'Tahoma', 'Arial', sans-serif !important;
+        }
+        
+        .theme-win98 nav {
+            background: #c0c0c0 !important;
+            border-bottom: 2px solid #ffffff !important;
+            box-shadow: none !important;
+        }
+        
+        .theme-win98 nav a, .theme-win98 nav button {
+            background: #c0c0c0 !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            border-radius: 0px !important;
+            color: #000000 !important;
+            box-shadow: none !important;
+        }
+        
+        .theme-win98 nav a:active, .theme-win98 nav button:active {
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+        }
+
+        .theme-win98 #profile-window {
+            background: #c0c0c0 !important;
+            border-radius: 0px !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #808080, 2px 2px 10px rgba(0,0,0,0.5) !important;
+            color: #000000 !important;
+        }
+        
+        .theme-win98 .win-header {
+            background: linear-gradient(90deg, #000080 0%, #1084d0 100%) !important;
+            color: #ffffff !important;
+            height: 26px !important;
+            padding: 2px 8px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        .theme-win98 .win-header span {
+            color: #ffffff !important;
+            font-family: 'Tahoma', sans-serif !important;
+            font-weight: bold !important;
+        }
+
+        .theme-win98 #profile-content {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            border-radius: 0px !important;
+            box-shadow: inset 1px 1px 0px #0a0a0a !important;
+        }
+        
+        .theme-win98 #profile-content > div {
+            background: #e0e0e0 !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            color: #000000 !important;
+            border-radius: 0px !important;
+            box-shadow: none !important;
+        }
+        
+        .theme-win98 #profile-content h2, 
+        .theme-win98 #profile-content p, 
+        .theme-win98 #profile-content span, 
+        .theme-win98 #profile-content h3 {
+            color: #000000 !important;
+        }
+        
+        .theme-win98 .grid > div {
+            background: #ffffff !important;
+            border: 1px solid #c0c0c0 !important;
+            border-radius: 0px !important;
+            color: #000000 !important;
+            box-shadow: none !important;
+        }
+        
+        .theme-win98 .grid > div:hover {
+            background: #000080 !important;
+            color: #ffffff !important;
+        }
+        
+        .theme-win98 .grid > div:hover h4, 
+        .theme-win98 .grid > div:hover p, 
+        .theme-win98 .grid > div:hover span, 
+        .theme-win98 .grid > div:hover a {
+            color: #ffffff !important;
+        }
+
+        .theme-win98 .win-btn {
+            background: #c0c0c0 !important;
+            border-top: 1.5px solid #ffffff !important;
+            border-left: 1.5px solid #ffffff !important;
+            border-right: 1.5px solid #808080 !important;
+            border-bottom: 1.5px solid #808080 !important;
+            color: #000000 !important;
+            width: 18px !important;
+            height: 16px !important;
+            font-size: 10px !important;
+            font-weight: bold !important;
+            border-radius: 0px !important;
+            box-shadow: none !important;
+        }
+        
+        .theme-win98 * {
+            font-family: 'Tahoma', sans-serif !important;
+        }
+
+        /* ==========================================================================
+           WINDOWS 11 THEME OVERRIDES (PROFILE)
+           ========================================================================== */
+        body.theme-win11 {
+            background-image: url('/images/win11-wallpaper.png') !important;
+            background-size: cover !important;
+            font-family: 'Segoe UI Variable', 'Inter', sans-serif !important;
+        }
+
+        .theme-win11 nav {
+            background: rgba(32, 32, 32, 0.8) !important;
+            backdrop-filter: blur(25px) !important;
+            border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+        }
+        
+        .theme-win11 .aero-glass {
+            background: rgba(32, 32, 32, 0.75) !important;
+            border-radius: 12px !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        }
+        
+        .theme-win11 #profile-content {
+            background: rgba(255, 255, 255, 0.03) !important;
+        }
+        
+        .theme-win11 .grid > div {
+            border-radius: 8px !important;
+            background: rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+        }
+        
+        .theme-win11 .grid > div:hover {
+            background: rgba(255,255,255,0.08) !important;
+            border-color: rgba(255,255,255,0.2) !important;
+        }
+        
+        .theme-win11 * {
+            font-family: 'Segoe UI Variable', 'Inter', sans-serif !important;
+        }
     </style>
 </head>
 <body class="w-screen min-h-[100dvh] overflow-x-hidden">
@@ -154,7 +320,7 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
             <div id="profile-window" class="aero-glass rounded-xl border border-white/25 flex flex-col overflow-hidden w-full">
                 <!-- Window Header (Title Bar) -->
-                <div class="h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+                <div class="win-header h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
                     <div class="flex items-center space-x-2">
                         <span>👤</span>
                         <span class="text-xs font-semibold text-white/90">User Account Properties</span>
@@ -185,6 +351,16 @@
     </div>
 
     <script>
+        // Apply saved theme preference
+        const savedTheme = localStorage.getItem('selected-theme') || 'win7';
+        if (savedTheme === 'win98') {
+            document.body.classList.add('theme-win98');
+        } else if (savedTheme === 'win11') {
+            document.body.classList.add('theme-win11');
+        } else {
+            document.body.classList.add('theme-win7');
+        }
+
         async function checkAuth() {
             try {
                 const response = await fetch('/api/auth/me', { credentials: 'include' });

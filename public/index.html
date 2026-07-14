@@ -267,6 +267,413 @@
             width: 100% !important;
             cursor: pointer !important;
         }
+
+        /* ==========================================================================
+           WINDOWS 98 CLASSIC THEME OVERRIDES
+           ========================================================================== */
+        .theme-win98 .desktop-env {
+            background-image: none !important;
+            background-color: #008080 !important; /* Classic Windows 98 Teal */
+        }
+        
+        .theme-win98 .desktop-shortcut span {
+            color: #ffffff !important;
+            text-shadow: none !important;
+            font-family: 'Tahoma', 'Arial', sans-serif !important;
+            background-color: transparent !important;
+        }
+
+        .theme-win98 .aero-glass {
+            background: #c0c0c0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-radius: 0px !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #808080, 2px 2px 10px rgba(0,0,0,0.5) !important;
+            color: #000000 !important;
+        }
+
+        /* Title Bars */
+        .theme-win98 .win-header {
+            background: linear-gradient(90deg, #000080 0%, #1084d0 100%) !important;
+            color: #ffffff !important;
+            height: 26px !important;
+            padding: 2px 8px !important;
+            border-bottom: none !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .theme-win98 .win-header span {
+            color: #ffffff !important;
+            font-family: 'Tahoma', 'Arial', sans-serif !important;
+            font-weight: bold !important;
+            font-size: 11px !important;
+        }
+
+        .theme-win98 .win-header img {
+            width: 14px !important;
+            height: 14px !important;
+        }
+
+        /* Buttons */
+        .theme-win98 .win-btn {
+            background: #c0c0c0 !important;
+            border-top: 1.5px solid #ffffff !important;
+            border-left: 1.5px solid #ffffff !important;
+            border-right: 1.5px solid #808080 !important;
+            border-bottom: 1.5px solid #808080 !important;
+            color: #000000 !important;
+            width: 18px !important;
+            height: 16px !important;
+            font-size: 10px !important;
+            font-weight: bold !important;
+            border-radius: 0px !important;
+            box-shadow: none !important;
+        }
+
+        .theme-win98 .win-btn:active {
+            border-top: 1.5px solid #808080 !important;
+            border-left: 1.5px solid #808080 !important;
+            border-right: 1.5px solid #ffffff !important;
+            border-bottom: 1.5px solid #ffffff !important;
+            padding-top: 1px !important;
+            padding-left: 1px !important;
+        }
+
+        .theme-win98 .win-btn-close:hover {
+            background-color: #c0c0c0 !important;
+            color: #000000 !important;
+        }
+
+        /* Taskbar */
+        .theme-win98 #taskbar {
+            background: #c0c0c0 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-top: 2px solid #ffffff !important;
+            box-shadow: none !important;
+            height: 40px !important;
+        }
+
+        /* Taskbar Buttons & Tabs */
+        .theme-win98 #start-button {
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            background: #c0c0c0 !important;
+            border-radius: 0px !important;
+            width: auto !important;
+            height: 28px !important;
+            padding: 0 8px !important;
+            box-shadow: none !important;
+        }
+
+        .theme-win98 #start-button:active {
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+        }
+
+        .theme-win98 #taskbar-active-tabs button, 
+        .theme-win98 #taskbar button:not(#start-button):not(#language-tray-btn) {
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            background: #c0c0c0 !important;
+            border-radius: 0px !important;
+            height: 28px !important;
+            box-shadow: none !important;
+            color: #000000 !important;
+        }
+
+        .theme-win98 #taskbar-active-tabs button.bg-white\/15 {
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            background: #e0e0e0 !important;
+            font-weight: bold !important;
+        }
+
+        /* Tray Clock and Items */
+        .theme-win98 #tray-clock, 
+        .theme-win98 #language-tray-btn {
+            background: #c0c0c0 !important;
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            border-radius: 0px !important;
+            color: #000000 !important;
+            box-shadow: none !important;
+            height: 28px !important;
+        }
+
+        .theme-win98 #tray-clock {
+            min-width: 80px !important;
+            font-family: 'Tahoma', sans-serif !important;
+            font-size: 11px !important;
+            text-align: center !important;
+            padding: 2px 4px !important;
+        }
+
+        /* Sunken Inset areas */
+        .theme-win98 #explorer-nav-tree, 
+        .theme-win98 #explorer-content-pane,
+        .theme-win98 #explorer-search-input,
+        .theme-win98 #explorer-address-path-container {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            border-radius: 0px !important;
+        }
+        
+        .theme-win98 #explorer-address-path-container span,
+        .theme-win98 #explorer-search-input {
+            color: #000000 !important;
+        }
+
+        .theme-win98 #explorer-address-path-container {
+            background: #ffffff !important;
+            border: 2px solid !important;
+            border-color: #808080 #ffffff #ffffff #808080 !important;
+        }
+
+        /* Service Cards in Win98 */
+        .theme-win98 #services-grid > div {
+            background: #ffffff !important;
+            border: 1px solid #c0c0c0 !important;
+            box-shadow: none !important;
+            border-radius: 0px !important;
+            color: #000000 !important;
+        }
+
+        .theme-win98 #services-grid > div:hover {
+            background: #000080 !important;
+            color: #ffffff !important;
+            border-color: #000080 !important;
+        }
+
+        .theme-win98 #services-grid > div:hover h4,
+        .theme-win98 #services-grid > div:hover p,
+        .theme-win98 #services-grid > div:hover span,
+        .theme-win98 #services-grid > div:hover button,
+        .theme-win98 #services-grid > div:hover a {
+            color: #ffffff !important;
+        }
+
+        .theme-win98 #services-grid > div button,
+        .theme-win98 #services-grid > div a {
+            color: #000080;
+        }
+
+        /* Start Menu Win98 */
+        .theme-win98 #start-menu {
+            padding-left: 24px !important;
+            background: #c0c0c0 !important;
+            border-radius: 0px !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            box-shadow: inset 1px 1px 0px #ffffff, inset -1px -1px 0px #808080, 2px 2px 10px rgba(0,0,0,0.5) !important;
+        }
+
+        .theme-win98 #start-menu::before {
+            content: "Windows 98" !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            width: 22px !important;
+            background: linear-gradient(180deg, #000080 0%, #1084d0 100%) !important;
+            color: #ffffff !important;
+            font-family: 'Arial Black', sans-serif !important;
+            font-weight: bold !important;
+            font-size: 11px !important;
+            text-transform: uppercase !important;
+            writing-mode: vertical-lr !important;
+            transform: rotate(180deg) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-end !important;
+            padding-bottom: 8px !important;
+        }
+
+        .theme-win98 #start-menu-categories div,
+        .theme-win98 #start-menu div {
+            color: #000000 !important;
+            border-radius: 0px !important;
+        }
+
+        .theme-win98 #start-menu-categories div:hover,
+        .theme-win98 #start-menu div:hover {
+            background: #000080 !important;
+            color: #ffffff !important;
+        }
+        
+        .theme-win98 #start-menu-categories div:hover span,
+        .theme-win98 #start-menu div:hover span {
+            color: #ffffff !important;
+        }
+
+        .theme-win98 #start-menu-username,
+        .theme-win98 #start-menu-user-role {
+            color: #000000 !important;
+        }
+
+        .theme-win98 #start-menu-user-role {
+            opacity: 0.7 !important;
+        }
+
+        /* General Font */
+        .theme-win98 * {
+            font-family: 'Tahoma', 'Arial', sans-serif !important;
+        }
+
+
+        /* ==========================================================================
+           WINDOWS 11 MODERN THEME OVERRIDES
+           ========================================================================== */
+        .theme-win11 .desktop-env {
+            background-image: url('/images/win11-wallpaper.png') !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .theme-win11 .aero-glass {
+            background: rgba(32, 32, 32, 0.72) !important;
+            backdrop-filter: blur(35px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(35px) saturate(180%) !important;
+            border-radius: 12px !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5) !important;
+            color: #ffffff !important;
+        }
+
+        .theme-win11 .win-btn {
+            border-radius: 4px !important;
+            width: 32px !important;
+            height: 24px !important;
+            font-size: 11px !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .theme-win11 .win-btn-close:hover {
+            background-color: #c42b1c !important;
+            color: #ffffff !important;
+        }
+
+        /* Taskbar Centering & Mica Styling */
+        .theme-win11 #taskbar {
+            background: rgba(32, 32, 32, 0.75) !important;
+            backdrop-filter: blur(35px) !important;
+            -webkit-backdrop-filter: blur(35px) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3) !important;
+            height: 48px !important;
+        }
+
+        .theme-win11 #taskbar-main-group {
+            position: absolute !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: auto !important;
+            max-width: 60% !important;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .theme-win11 #start-button {
+            background: transparent !important;
+            border: none !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 4px !important;
+            transition: background 0.2s !important;
+        }
+
+        .theme-win11 #start-button:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .theme-win11 #taskbar button:not(#start-button):not(#language-tray-btn) {
+            border-radius: 4px !important;
+            border: 1px solid rgba(255, 255, 255, 0.06) !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            transition: all 0.2s !important;
+        }
+
+        .theme-win11 #taskbar button:not(#start-button):not(#language-tray-btn):hover {
+            background: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Centered Start Menu */
+        .theme-win11 #start-menu {
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            bottom: 56px !important;
+            border-radius: 12px !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            background: rgba(32, 32, 32, 0.85) !important;
+            backdrop-filter: blur(40px) !important;
+            -webkit-backdrop-filter: blur(40px) !important;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6) !important;
+        }
+
+        /* General Fonts for Windows 11 */
+        .theme-win11 * {
+            font-family: 'Segoe UI Variable', 'Inter', sans-serif !important;
+        }
+        
+        .theme-win11 .win-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+        }
+        
+        .theme-win11 .win-header span {
+            color: #ffffff !important;
+        }
+        
+        .theme-win11 .win-header img {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)) !important;
+        }
+        
+        .theme-win11 .desktop-shortcut span {
+            font-family: 'Segoe UI Variable', 'Inter', sans-serif !important;
+            font-weight: 500 !important;
+        }
+        
+        .theme-win11 .start-orb span {
+            display: none !important;
+        }
+        
+        .theme-win11 #services-grid > div {
+            border-radius: 8px !important;
+            background: rgba(255,255,255,0.05) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+        }
+        
+        .theme-win11 #services-grid > div:hover {
+            background: rgba(255,255,255,0.08) !important;
+            border-color: rgba(255,255,255,0.2) !important;
+        }
+        
+        .theme-win11 #explorer-search-input,
+        .theme-win11 #category-filter {
+            border-radius: 6px !important;
+            background: rgba(255,255,255,0.06) !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+        }
     </style>
 </head>
 <body class="w-screen h-screen h-[100dvh] overflow-hidden">
@@ -311,6 +718,12 @@
                     <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Contact Us</span>
                 </div>
 
+                <!-- Personalization Shortcut -->
+                <div onclick="openPersonalizeWindow()" class="desktop-shortcut flex flex-col items-center justify-center p-3 text-center cursor-pointer">
+                    <div class="text-4xl filter drop-shadow-[0_2px_5px_rgba(0,0,0,0.5)]">🎨</div>
+                    <span class="text-xs text-white mt-1.5 font-semibold text-shadow">Personalize</span>
+                </div>
+
                 <!-- Auth Shortcuts Dynamic Placeholder -->
                 <div id="auth-shortcuts" class="contents"></div>
 
@@ -343,7 +756,7 @@
             <div id="explorer-window" class="aero-glass flex-grow rounded-xl border border-white/25 flex flex-col overflow-hidden w-full h-full max-w-6xl mx-auto z-20">
                 
                 <!-- Window Header (Title Bar) -->
-                <div class="h-10 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+                <div class="win-header h-10 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
                     <div class="flex items-center space-x-2">
                         <img src="/images/aie-logo.png?v=8" alt="AI Entity icon" class="w-5 h-5 object-contain">
                         <span id="explorer-window-title" class="text-sm font-semibold text-white/95 tracking-wide">AI Entity Explorer</span>
@@ -460,24 +873,27 @@
         </div>
 
         <!-- Taskbar (Bottom Control Bar) -->
-        <div class="h-12 bg-black/35 backdrop-blur-md border-t border-white/15 flex items-center justify-between px-3 select-none z-50">
-            <!-- Start orb and Quick launch indicators -->
-            <div class="flex items-center space-x-2">
-                <!-- Start Button (Orb) -->
-                <button onclick="toggleStartMenu(event)" class="start-orb w-10 h-10 rounded-full flex items-center justify-center outline-none">
-                    <img src="/images/aie-logo.png?v=8" alt="Start Orb Logo" class="w-7 h-7 object-contain">
-                </button>
+        <div id="taskbar" class="h-12 bg-black/35 backdrop-blur-md border-t border-white/15 flex items-center justify-between px-3 select-none z-50">
+            <!-- Main Group (Start, Quick Launch, and Tabs) -->
+            <div id="taskbar-main-group" class="flex items-center space-x-2 flex-grow">
+                <!-- Start orb and Quick launch indicators -->
+                <div class="flex items-center space-x-2">
+                    <!-- Start Button (Orb) -->
+                    <button id="start-button" onclick="toggleStartMenu(event)" class="start-orb w-10 h-10 rounded-full flex items-center justify-center outline-none">
+                        <img src="/images/aie-logo.png?v=8" alt="Start Orb Logo" class="w-7 h-7 object-contain">
+                    </button>
 
-                <!-- Explorer Shortcut in Taskbar -->
-                <button onclick="toggleExplorer()" class="h-9 px-3 rounded bg-white/5 border border-white/10 flex items-center space-x-1.5 hover:bg-white/10 transition">
-                    <span class="text-base">💻</span>
-                    <span class="text-xs text-white/90 hidden sm:inline font-semibold">Directory Explorer</span>
-                </button>
-            </div>
+                    <!-- Explorer Shortcut in Taskbar -->
+                    <button onclick="toggleExplorer()" class="h-9 px-3 rounded bg-white/5 border border-white/10 flex items-center space-x-1.5 hover:bg-white/10 transition">
+                        <span class="text-base">💻</span>
+                        <span class="text-xs text-white/90 hidden sm:inline font-semibold">Directory Explorer</span>
+                    </button>
+                </div>
 
-            <!-- Taskbar Tabs Center (Active Windows) -->
-            <div id="taskbar-active-tabs" class="flex flex-grow max-w-lg mx-3 sm:mx-6 space-x-1.5 sm:space-x-2 overflow-x-auto custom-scrollbar h-9">
-                <!-- Populate app tab status dynamically -->
+                <!-- Taskbar Tabs Center (Active Windows) -->
+                <div id="taskbar-active-tabs" class="flex flex-grow max-w-lg mx-3 sm:mx-6 space-x-1.5 sm:space-x-2 overflow-x-auto custom-scrollbar h-9">
+                    <!-- Populate app tab status dynamically -->
+                </div>
             </div>
 
             <!-- System Tray (Clock, Network, Show Desktop) -->
@@ -543,6 +959,10 @@
                             <span>✉️</span>
                             <span>Contact Us</span>
                         </div>
+                        <div onclick="openPersonalizeWindow(); toggleStartMenu();" class="flex items-center space-x-2 px-2 py-1.5 rounded hover:bg-white/10 text-xs text-white/95 font-semibold cursor-pointer">
+                            <span>🎨</span>
+                            <span>Personalize</span>
+                        </div>
                         <div id="start-admin-link">
                             <!-- Injected dynamically -->
                         </div>
@@ -564,7 +984,7 @@
             <!-- Properties Window Frame -->
             <div class="aero-glass rounded-xl border border-white/30 w-full max-w-lg shadow-2xl z-10 flex flex-col overflow-hidden relative">
                 <!-- Title Bar -->
-                <div class="h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+                <div class="win-header h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
                     <div class="flex items-center space-x-2">
                         <span>🏷️</span>
                         <span id="prop-window-title" class="text-xs font-semibold text-white/90">Service Properties</span>
@@ -631,7 +1051,7 @@
         <!-- AI Assistant Chat Window -->
         <div id="assistant-chat-window" class="aero-glass fixed bottom-16 right-4 sm:right-6 w-80 h-[380px] hidden flex-col overflow-hidden rounded-xl border border-white/25 z-40 shadow-2xl">
             <!-- Title Bar -->
-            <div class="h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+            <div class="win-header h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
                 <div class="flex items-center space-x-2">
                     <span>🤖</span>
                     <span class="text-xs font-semibold text-white/90">AI Entity Assistant</span>
@@ -676,7 +1096,7 @@
             <!-- Properties Window Frame -->
             <div class="aero-glass rounded-xl border border-white/30 w-full max-w-lg shadow-2xl z-10 flex flex-col overflow-hidden relative">
                 <!-- Title Bar -->
-                <div class="h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+                <div class="win-header h-9 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
                     <div class="flex items-center space-x-2">
                         <span>✉️</span>
                         <span id="contact-window-title" class="text-xs font-semibold text-white/90">Contact properties</span>
@@ -747,6 +1167,63 @@
                     <button onclick="closeContactModal()" class="aero-btn aero-btn-blue px-4 py-1.5 rounded text-xs font-semibold">
                         OK
                     </button>
+                </div>
+            </div>
+        </div>
+        <!-- Personalization Modal (Theme Settings) -->
+        <div id="personalize-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+            <!-- Backdrop -->
+            <div class="absolute inset-0 bg-black/55 backdrop-blur-sm" onclick="closePersonalizeWindow()"></div>
+            
+            <div id="personalize-window" class="aero-glass rounded-xl border border-white/25 flex flex-col w-full max-w-md overflow-hidden shadow-2xl z-10">
+                <!-- Window Header (Title Bar) -->
+                <div class="win-header h-10 border-b border-white/10 flex items-center justify-between px-4 select-none relative z-10">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm">🎨</span>
+                        <span class="text-sm font-semibold text-white/95 tracking-wide">Personalization Properties</span>
+                    </div>
+                    <!-- Window Controls -->
+                    <div class="flex items-center space-x-1.5 z-20">
+                        <button onclick="closePersonalizeWindow()" class="win-btn win-btn-close bg-white/5 text-lg">×</button>
+                    </div>
+                </div>
+
+                <!-- Window Content -->
+                <div class="p-5 bg-[#101126]/60 flex flex-col space-y-4">
+                    <p class="text-xs text-white/70">Select your preferred user interface option:</p>
+                    
+                    <div class="grid grid-cols-1 gap-3">
+                        <!-- Windows 7 Option -->
+                        <label class="theme-option-card flex items-center space-x-4 p-3.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer transition select-none">
+                            <input type="radio" name="theme-selection" value="win7" class="accent-purple-500">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-semibold text-white">Windows 7 (Aero Glass)</span>
+                                <span class="text-[10px] text-white/50">Glassmorphism, glowing curves, Frutiger Aero wave wallpaper.</span>
+                            </div>
+                        </label>
+
+                        <!-- Windows 98 Option -->
+                        <label class="theme-option-card flex items-center space-x-4 p-3.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer transition select-none">
+                            <input type="radio" name="theme-selection" value="win98" class="accent-purple-500">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-semibold text-white">Windows 98 (Classic)</span>
+                                <span class="text-[10px] text-white/50">Retro 90s grey bevels, solid teal desktop background, Tahoma font.</span>
+                            </div>
+                        </label>
+
+                        <!-- Windows 11 Option -->
+                        <label class="theme-option-card flex items-center space-x-4 p-3.5 rounded-lg border border-white/15 bg-white/5 hover:bg-white/10 cursor-pointer transition select-none">
+                            <input type="radio" name="theme-selection" value="win11" class="accent-purple-500">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-semibold text-white">Windows 11 (26H1)</span>
+                                <span class="text-[10px] text-white/50">Modern mica blur, rounded corners, centered taskbar, Bloom wallpaper.</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="flex justify-end space-x-3 pt-3 border-t border-white/10">
+                        <button onclick="closePersonalizeWindow()" class="px-4 py-2 bg-white/10 hover:bg-white/15 text-white text-xs rounded border border-white/10 transition">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1494,6 +1971,56 @@
             `;
         }
 
+        // Theme Personalization system
+        function openPersonalizeWindow() {
+            const modal = document.getElementById('personalize-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Pre-select current theme
+            const activeTheme = localStorage.getItem('selected-theme') || 'win7';
+            const radios = document.getElementsByName('theme-selection');
+            for (const radio of radios) {
+                if (radio.value === activeTheme) {
+                    radio.checked = true;
+                }
+            }
+        }
+        
+        function closePersonalizeWindow() {
+            const modal = document.getElementById('personalize-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function applyTheme(themeName) {
+            document.body.classList.remove('theme-win7', 'theme-win98', 'theme-win11');
+            
+            if (themeName === 'win98') {
+                document.body.classList.add('theme-win98');
+            } else if (themeName === 'win11') {
+                document.body.classList.add('theme-win11');
+            } else {
+                document.body.classList.add('theme-win7');
+            }
+            
+            localStorage.setItem('selected-theme', themeName);
+            updateThemeAssets(themeName);
+        }
+        
+        function updateThemeAssets(themeName) {
+            const startBtn = document.getElementById('start-button');
+            if (startBtn) {
+                if (themeName === 'win98') {
+                    startBtn.innerHTML = '<span class="text-xs font-bold text-black flex items-center space-x-1"><span>❖</span><span>Start</span></span>';
+                } else if (themeName === 'win11') {
+                    startBtn.innerHTML = '<svg class="w-5 h-5 text-blue-500 fill-current" viewBox="0 0 24 24"><path d="M0 0h11.4v11.4H0V0zm12.6 0H24v11.4H12.6V0zM0 12.6h11.4V24H0V12.6zm12.6 0H24V24H12.6V12.6z"/></svg>';
+                } else {
+                    startBtn.innerHTML = '<img src="/images/aie-logo.png?v=8" alt="Start Orb Logo" class="w-7 h-7 object-contain">';
+                }
+            }
+        }
+
         // Navigation shortcuts helper
         function goToLoginPage() { window.location.href = '/login'; }
         function goToSubmitPage() { window.location.href = '/submit'; }
@@ -1692,6 +2219,18 @@
 
         // Initialize Desktop app
         async function initDesktopApp() {
+            // Apply saved theme preference
+            const savedTheme = localStorage.getItem('selected-theme') || 'win7';
+            applyTheme(savedTheme);
+
+            // Bind personalization radio selectors
+            const radios = document.getElementsByName('theme-selection');
+            for (const radio of radios) {
+                radio.addEventListener('change', (e) => {
+                    applyTheme(e.target.value);
+                });
+            }
+
             checkAuth();
             
             // Parse URL query parameter for category landing pages (SEO/Backlinks support)

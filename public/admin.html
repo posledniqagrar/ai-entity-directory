@@ -58,6 +58,126 @@
             background: #8b5cf6;
             border-radius: 4px;
         }
+
+        /* ==========================================================================
+           WINDOWS 98 THEME OVERRIDES (ADMIN)
+           ========================================================================== */
+        body.theme-win98 {
+            background-image: none !important;
+            background-color: #008080 !important; /* Classic Windows 98 Teal */
+            font-family: 'Tahoma', 'Arial', sans-serif !important;
+        }
+        
+        .theme-win98 header,
+        .theme-win98 nav {
+            background: #c0c0c0 !important;
+            border-bottom: 2px solid #ffffff !important;
+            box-shadow: none !important;
+        }
+        
+        .theme-win98 h1, 
+        .theme-win98 h2, 
+        .theme-win98 h3, 
+        .theme-win98 p, 
+        .theme-win98 span,
+        .theme-win98 label,
+        .theme-win98 table {
+            color: #000000 !important;
+            font-family: 'Tahoma', sans-serif !important;
+        }
+        
+        .theme-win98 .bg-gray-900\/50,
+        .theme-win98 .bg-gray-800\/40,
+        .theme-win98 .bg-gray-800\/50 {
+            background: #c0c0c0 !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            border-radius: 0px !important;
+            box-shadow: none !important;
+            color: #000000 !important;
+        }
+
+        .theme-win98 input,
+        .theme-win98 textarea,
+        .theme-win98 select {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            border-radius: 0px !important;
+            box-shadow: inset 1px 1px 0px #0a0a0a !important;
+        }
+        
+        .theme-win98 button,
+        .theme-win98 .tab-button {
+            background: #c0c0c0 !important;
+            border-top: 2px solid #ffffff !important;
+            border-left: 2px solid #ffffff !important;
+            border-right: 2px solid #808080 !important;
+            border-bottom: 2px solid #808080 !important;
+            border-radius: 0px !important;
+            color: #000000 !important;
+            box-shadow: none !important;
+        }
+
+        .theme-win98 .tab-button.active {
+            border-top: 2px solid #808080 !important;
+            border-left: 2px solid #808080 !important;
+            border-right: 2px solid #ffffff !important;
+            border-bottom: 2px solid #ffffff !important;
+            background: #e0e0e0 !important;
+            font-weight: bold !important;
+            text-shadow: none !important;
+        }
+        
+        .theme-win98 table {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border: 2px solid !important;
+            border-color: #808080 #ffffff #ffffff #808080 !important;
+        }
+        
+        .theme-win98 th {
+            background: #c0c0c0 !important;
+            color: #000000 !important;
+            border: 1px solid #808080 !important;
+        }
+        
+        .theme-win98 td {
+            border: 1px solid #c0c0c0 !important;
+            color: #000000 !important;
+        }
+
+        /* ==========================================================================
+           WINDOWS 11 THEME OVERRIDES (ADMIN)
+           ========================================================================== */
+        body.theme-win11 {
+            background-image: url('/images/win11-wallpaper.png') !important;
+            background-size: cover !important;
+            font-family: 'Segoe UI Variable', 'Inter', sans-serif !important;
+        }
+
+        .theme-win11 .bg-gray-900\/50,
+        .theme-win11 .bg-gray-800\/40,
+        .theme-win11 .bg-gray-800\/50 {
+            background: rgba(32, 32, 32, 0.75) !important;
+            backdrop-filter: blur(35px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(35px) saturate(180%) !important;
+            border-radius: 12px !important;
+            border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        }
+        
+        .theme-win11 input,
+        .theme-win11 textarea,
+        .theme-win11 select {
+            border-radius: 6px !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
     </style>
 </head>
 <body class="min-h-screen text-white">
@@ -194,6 +314,16 @@
     </footer>
 
     <script>
+        // Apply saved theme preference
+        const savedTheme = localStorage.getItem('selected-theme') || 'win7';
+        if (savedTheme === 'win98') {
+            document.body.classList.add('theme-win98');
+        } else if (savedTheme === 'win11') {
+            document.body.classList.add('theme-win11');
+        } else {
+            document.body.classList.add('theme-win7');
+        }
+
         let currentUser = null;
 
         async function checkAdmin() {

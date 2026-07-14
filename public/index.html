@@ -785,6 +785,13 @@
         .theme-win11 #desktop-context-menu div:hover {
             background: rgba(255, 255, 255, 0.08) !important;
         }
+
+        /* Mobile Safe Area Top Padding to prevent overlap with status bar notches */
+        @media (max-width: 767px) {
+            #desktop-workspace {
+                padding-top: calc(env(safe-area-inset-top, 24px) + 8px) !important;
+            }
+        }
     </style>
 </head>
 <body class="w-screen h-screen h-[100dvh] overflow-hidden">
@@ -794,7 +801,7 @@
     <div class="desktop-env flex flex-col justify-between relative p-0 m-0">
 
         <!-- Top/Middle Area: Desktop Workspace -->
-        <div class="flex-grow flex p-2 sm:p-6 relative h-[calc(100dvh-48px)] overflow-hidden">
+        <div id="desktop-workspace" class="flex-grow flex p-2 sm:p-6 relative h-[calc(100dvh-48px)] overflow-hidden">
 
             <!-- Desktop Shortcuts Container (Dynamically Rendered & Draggable) -->
             <div id="desktop-shortcuts-container" class="absolute inset-0 z-10 select-none p-4 pointer-events-none grid grid-cols-4 gap-2 md:block">

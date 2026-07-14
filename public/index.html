@@ -1864,6 +1864,51 @@
             document.getElementById('language-popup').classList.add('hidden');
         }
 
+        const LANGUAGES_FALLBACK = [
+            { code: 'es', name: 'Español', flag: '🇪🇸' },
+            { code: 'fr', name: 'Français', flag: '🇫🇷' },
+            { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+            { code: 'bg', name: 'Български', flag: '🇧🇬' },
+            { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+            { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+            { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+            { code: 'zh-CN', name: '中文', flag: '🇨🇳' }
+        ];
+
+        function renderLanguageFallback() {
+            const el = document.getElementById('google_translate_element');
+            if (!el) return;
+            
+            let html = `<div class="grid grid-cols-2 gap-1 px-1 mt-1 font-sans">`;
+            // Add English (Reset)
+            html += `
+                <div onclick="translateRedirect('en')" class="flex items-center space-x-1.5 p-1 rounded hover:bg-white/10 cursor-pointer text-[10px] text-white/90 transition select-none">
+                    <span>🇺🇸</span>
+                    <span class="truncate">English</span>
+                </div>
+            `;
+            LANGUAGES_FALLBACK.forEach(lang => {
+                html += `
+                    <div onclick="translateRedirect('${lang.code}')" class="flex items-center space-x-1.5 p-1 rounded hover:bg-white/10 cursor-pointer text-[10px] text-white/90 transition select-none">
+                        <span>${lang.flag}</span>
+                        <span class="truncate">${lang.name}</span>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            el.innerHTML = html;
+        }
+
+        function translateRedirect(langCode) {
+            if (langCode === 'en') {
+                window.location.href = window.location.origin + window.location.pathname;
+            } else {
+                const currentUrl = window.location.origin + window.location.pathname;
+                const proxyUrl = `https://translate.google.com/translate?sl=en&tl=${langCode}&u=${encodeURIComponent(currentUrl)}`;
+                window.open(proxyUrl, '_blank');
+            }
+        }
+
         function loadGoogleTranslate() {
             if (document.querySelector('script[src*="translate_a/element.js"]')) {
                 if (window.google && window.google.translate) {
@@ -1876,6 +1921,9 @@
             const script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+            script.onerror = () => {
+                renderLanguageFallback();
+            };
             document.body.appendChild(script);
         }
 
@@ -1889,17 +1937,23 @@
             document.getElementById('network-popup').classList.add('hidden');
             
             if (isLanguageOpen) {
+                const el = document.getElementById('google_translate_element');
                 if (window.google && window.google.translate) {
-                    const el = document.getElementById('google_translate_element');
                     if (el && (el.innerHTML === '' || el.innerHTML.includes('Loading translation...'))) {
                         try {
                             googleTranslateElementInit();
                         } catch(err) {
-                            console.error(err);
+                            renderLanguageFallback();
                         }
                     }
                 } else {
                     loadGoogleTranslate();
+                    // Set a fast 2-second timeout. If still stuck on loading, render the clean fallback options!
+                    setTimeout(() => {
+                        if (el && el.innerHTML.includes('Loading translation...')) {
+                            renderLanguageFallback();
+                        }
+                    }, 2000);
                 }
             }
         }

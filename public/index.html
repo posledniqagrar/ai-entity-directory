@@ -438,6 +438,40 @@
             border-radius: 0px !important;
         }
         
+        .theme-win98 #explorer-sidebar {
+            background: #c0c0c0 !important;
+            border-right: 2px solid #808080 !important;
+        }
+
+        .theme-win98 #explorer-sidebar > span {
+            color: #000000 !important;
+        }
+
+        .theme-win98 #explorer-nav-tree div,
+        .theme-win98 #explorer-nav-tree span {
+            color: #000000 !important;
+            border-radius: 0px !important;
+        }
+
+        .theme-win98 #explorer-nav-tree div.bg-white\/10 {
+            background: #000080 !important;
+            border: none !important;
+            color: #ffffff !important;
+        }
+
+        .theme-win98 #explorer-nav-tree div.bg-white\/10 span {
+            color: #ffffff !important;
+        }
+
+        .theme-win98 #explorer-nav-tree div:hover {
+            background: #000080 !important;
+            color: #ffffff !important;
+        }
+
+        .theme-win98 #explorer-nav-tree div:hover span {
+            color: #ffffff !important;
+        }
+        
         .theme-win98 #explorer-address-path-container span,
         .theme-win98 #explorer-search-input {
             color: #000000 !important;
@@ -832,7 +866,7 @@
                 <div class="flex-grow flex overflow-hidden">
                     
                     <!-- Sidebar Navigation Pane -->
-                    <div class="hidden md:flex flex-col w-52 bg-black/25 border-r border-white/10 p-3 select-none flex-shrink-0">
+                    <div id="explorer-sidebar" class="hidden md:flex flex-col w-52 bg-black/25 border-r border-white/10 p-3 select-none flex-shrink-0">
                         <span class="text-[10px] font-bold text-white/40 tracking-wider uppercase px-3 mb-2">Navigation Pane</span>
                         <div id="explorer-nav-tree" class="space-y-1">
                             <!-- Populate categories dynamically -->

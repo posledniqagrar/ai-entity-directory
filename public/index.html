@@ -874,7 +874,7 @@
                     <!-- Navigation Address Path -->
                     <div class="hidden sm:flex items-center space-x-1 flex-grow bg-[#1a1b32]/80 border border-white/10 rounded-md px-3 py-1.5 text-xs text-white/90">
                         <span class="text-sm">🖥️</span>
-                        <span id="explorer-address-path" class="font-medium truncate">Computer > AI Entity > All Services</span>
+                        <span id="explorer-address-path" class="font-medium truncate">AI Browser > AI Entity > All Services</span>
                     </div>
                     <!-- Search Field -->
                     <div class="w-full sm:w-72 relative flex-grow sm:flex-grow-0">
@@ -1001,7 +1001,7 @@
                     <div class="space-y-1.5">
                         <div onclick="openExplorer(); toggleStartMenu();" class="flex items-center space-x-2 px-2 py-1.5 rounded hover:bg-white/10 text-xs text-white/95 font-semibold cursor-pointer">
                             <span>💻</span>
-                            <span>Computer</span>
+                            <span>AI Browser</span>
                         </div>
                         <div onclick="goToFavoritesPage()" class="flex items-center space-x-2 px-2 py-1.5 rounded hover:bg-white/10 text-xs text-white/95 font-semibold cursor-pointer">
                             <span>⭐</span>
@@ -1087,7 +1087,7 @@
         <!-- Language Bar Tray Popup -->
         <div id="language-popup" class="aero-glass fixed bottom-14 right-2 sm:right-48 rounded-lg border border-white/25 w-52 p-3 hidden flex-col z-50">
             <div class="text-[10px] text-white/40 font-bold uppercase tracking-wider mb-2">Language Bar</div>
-            <div id="google_translate_element" class="w-full text-xs"></div>
+            <div id="google_translate_element" class="w-full text-xs text-white/50">Loading translation...</div>
         </div>
 
         <!-- AI Assistant Floating Orb -->
@@ -1294,6 +1294,7 @@
         let allLoadedServices = [];
         
         let isExplorerOpen = true;
+        let isExplorerRunning = true;
         let isExplorerMaximized = false;
         let isStartMenuOpen = false;
         let activePropertiesTab = 'general';
@@ -1459,7 +1460,7 @@
             
             const pathEl = document.getElementById('explorer-address-path');
             if (pathEl) {
-                pathEl.textContent = `Computer > AI Entity > ${cat === 'all' ? 'All Services' : cat}`;
+                pathEl.textContent = `AI Browser > AI Entity > ${cat === 'all' ? 'All Services' : cat}`;
             }
             
             loadServices();
@@ -1622,6 +1623,7 @@
             const win = document.getElementById('explorer-window');
             win.classList.remove('hidden');
             isExplorerOpen = true;
+            isExplorerRunning = true;
             updateTaskbarTabs();
         }
 
@@ -1645,14 +1647,23 @@
         }
 
         function closeExplorer() {
-            minimizeExplorer();
+            const win = document.getElementById('explorer-window');
+            win.classList.add('hidden');
+            isExplorerOpen = false;
+            isExplorerRunning = false;
+            updateTaskbarTabs();
         }
 
         function toggleExplorer() {
-            if (isExplorerOpen) {
+            if (!isExplorerRunning) {
+                openExplorer();
+            } else if (isExplorerOpen) {
                 minimizeExplorer();
             } else {
-                openExplorer();
+                const win = document.getElementById('explorer-window');
+                win.classList.remove('hidden');
+                isExplorerOpen = true;
+                updateTaskbarTabs();
             }
         }
 
@@ -1666,16 +1677,23 @@
 
         function updateTaskbarTabs() {
             const tabsContainer = document.getElementById('taskbar-active-tabs');
+            if (!tabsContainer) return;
+            
+            if (!isExplorerRunning) {
+                tabsContainer.innerHTML = '';
+                return;
+            }
+            
             if (isExplorerOpen) {
                 tabsContainer.innerHTML = `
                     <button onclick="toggleExplorer()" class="h-9 px-3 rounded border border-white/20 bg-white/15 flex items-center space-x-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)]">
-                        <span class="text-xs text-white font-semibold">💻 AI Explorer</span>
+                        <span class="text-xs text-white font-semibold">💻 AI Browser</span>
                     </button>
                 `;
             } else {
                 tabsContainer.innerHTML = `
                     <button onclick="toggleExplorer()" class="h-9 px-3 rounded border border-white/5 bg-white/5 flex items-center space-x-1.5 hover:bg-white/10">
-                        <span class="text-xs text-white/50">💻 AI Explorer</span>
+                        <span class="text-xs text-white/50">💻 AI Browser</span>
                     </button>
                 `;
             }
@@ -1717,8 +1735,17 @@
                 isNetworkOpen = false;
             }
             if (isLanguageOpen && !langPopup.contains(e.target)) {
-                langPopup.classList.add('hidden');
-                isLanguageOpen = false;
+                const isGoogleTranslateClick = e.target.closest('.goog-te-menu-value') || 
+                                              e.target.closest('.goog-te-combo') || 
+                                              e.target.closest('.skiptranslate') || 
+                                              e.target.closest('[class*="goog-"]') ||
+                                              e.target.id === 'language-tray-btn' ||
+                                              e.target.closest('#language-tray-btn');
+                                              
+                if (!isGoogleTranslateClick) {
+                    langPopup.classList.add('hidden');
+                    isLanguageOpen = false;
+                }
             }
             
             // Close explorer dropdown menu items
@@ -2018,7 +2045,7 @@
         // ==========================================================================
         let desktopShortcuts = [];
         const DEFAULT_SHORTCUTS = [
-            { id: 'computer', label: 'Computer', defaultLabel: 'Computer', icon: '💻', xIndex: 0, yIndex: 0, action: 'openExplorer()' },
+            { id: 'computer', label: 'AI Browser', defaultLabel: 'AI Browser', icon: '💻', xIndex: 0, yIndex: 0, action: 'openExplorer()' },
             { id: 'favorites', label: 'Favorites', defaultLabel: 'Favorites', icon: '⭐', xIndex: 0, yIndex: 1, action: 'goToFavoritesPage()' },
             { id: 'submit', label: 'Submit AI', defaultLabel: 'Submit AI', icon: '📝', xIndex: 0, yIndex: 2, action: 'goToSubmitPage()' },
             { id: 'recycle', label: 'Recycle Bin', defaultLabel: 'Recycle Bin', icon: '🗑️', xIndex: 0, yIndex: 3, action: 'showRecycleBin()' },
@@ -2035,6 +2062,12 @@
             if (saved) {
                 try {
                     desktopShortcuts = JSON.parse(saved);
+                    desktopShortcuts.forEach(s => {
+                        if (s.id === 'computer' && s.label === 'Computer') {
+                            s.label = 'AI Browser';
+                            s.defaultLabel = 'AI Browser';
+                        }
+                    });
                 } catch(e) {
                     desktopShortcuts = JSON.parse(JSON.stringify(DEFAULT_SHORTCUTS));
                 }
